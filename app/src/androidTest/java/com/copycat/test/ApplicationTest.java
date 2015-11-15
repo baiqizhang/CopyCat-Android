@@ -1,4 +1,4 @@
-package com.example.baiqizhang.copycat;
+package com.copycat.test;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package com.example.baiqizhang.copycat;
+package com.copycat.controller;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import com.example.baiqizhang.copycat.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

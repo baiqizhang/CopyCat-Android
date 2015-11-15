@@ -1,4 +1,4 @@
-package com.example.baiqizhang.copycat;
+package com.copycat.controller;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

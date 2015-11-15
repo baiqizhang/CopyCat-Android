@@ -1,4 +1,4 @@
-package com.example.baiqizhang.copycat;
+package com.copycat.controller;
 
 import android.content.Context;
 import android.view.View;
@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+
+import com.example.baiqizhang.copycat.R;
 
 /**
  * Created by frankluo on 11/6/15.
