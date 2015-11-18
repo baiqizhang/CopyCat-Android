@@ -29,15 +29,18 @@ public class CategoryActivity extends AppCompatActivity {
         mListView.setDividerHeight(0);
 
         // create the grid item mapping
-        String[] from = new String[] {};
-        int[] to = new int[] {};
+        String[] from = new String[] {"title"};
+        int[] to = new int[] {R.id.listitem_category_title};
 
         // prepare the list of all records
         List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
-        for(int i = 0; i < 6; i++){
-            HashMap<String, String> map = new HashMap<String, String>();
-            fillMaps.add(map);
-        }
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("title", "Selfie"); fillMaps.add(map); map = new HashMap<String, String>();
+        map.put("title", "Nature"); fillMaps.add(map); map = new HashMap<String, String>();
+        map.put("title", "People"); fillMaps.add(map); map = new HashMap<String, String>();
+        map.put("title", "Food"); fillMaps.add(map); map = new HashMap<String, String>();
+        map.put("title", "Lifestyle"); fillMaps.add(map); map = new HashMap<String, String>();
+
 
         // fill in the grid_item layout
         SimpleAdapter adapter = new SimpleAdapter(this, fillMaps, R.layout.listitem_category, from, to);

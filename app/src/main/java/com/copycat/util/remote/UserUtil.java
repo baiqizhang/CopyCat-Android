@@ -21,7 +21,7 @@ public class UserUtil {
         return null;
     }
 
-    public static Category syncCategory(User User){
+    public static Category syncCategory(Category category){
         return null;
     }
 

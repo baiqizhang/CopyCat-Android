@@ -52,7 +52,7 @@ public class TimelineActivity extends AppCompatActivity {
         // fill in the grid_item layout
         SimpleAdapter adapter = new SimpleAdapter(this, fillMaps, R.layout.listitem_timeline, from, to);
 
-        ListView mListView = (ListView) findViewById(R.id.listView2);
+        ListView mListView = (ListView) findViewById(R.id.timelineListView);
         mListView.setAdapter(adapter);
     }
 
