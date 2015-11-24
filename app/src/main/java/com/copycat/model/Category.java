@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Category {
     private int categoryId;
     private String categoryName;
+    private Picture banner;
     List <Photo> photoList = new ArrayList<Photo> ();
 
     public String getCategoryName() {

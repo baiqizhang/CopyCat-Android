@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class CoreUtil {
     //Category
-    public static List<Category> getCategoryList(){return null;}
+    public static List<Category> getCategoryListFromStorage(){return null;}
     public static boolean addCategory(Category category){return false;}
     public static boolean removeCategory(Category category){return false;}
 
