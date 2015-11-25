@@ -23,7 +23,6 @@
             android:theme="@style/FullscreenTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -42,8 +41,10 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="com.copycat.controller.GalleryGridViewActivity"
-            android:label="@string/title_activity_gallerygridview">
+            android:name="com.copycat.controller.GalleryActivity"
+            android:label="@string/title_activity_gallerygridview"
+            android:theme="@style/AppTheme.NoActionBar" >
+
         </activity>
         <activity
             android:name="com.copycat.controller.PhotoViewActivity"

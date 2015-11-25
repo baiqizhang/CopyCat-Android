@@ -21,7 +21,7 @@ public class PhotoViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_photoview);
+        setContentView(R.layout.content_photoview);
 
         //Hide actionbar and status bar
         ActionBar actionBar = getSupportActionBar();
