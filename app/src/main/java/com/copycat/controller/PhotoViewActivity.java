@@ -6,6 +6,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.baiqizhang.copycat.R;
@@ -22,10 +23,14 @@ public class PhotoViewActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_photoview);
 
+        //Hide actionbar and status bar
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         Button mYesButton = (Button)findViewById(R.id.yesPreviewButton);
         mYesButton.setOnClickListener(new View.OnClickListener() {
             @Override

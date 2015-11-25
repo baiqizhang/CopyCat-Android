@@ -11,7 +11,25 @@
 
         <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
             android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:background="#3b3b3b"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:textAlignment="center" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="INSPIRE"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_title"
+                android:phoneNumber="false"
+                android:textColor="#ffffff"
+                android:textAlignment="center"
+                android:elegantTextHeight="false"
+                android:textSize="25sp"
+                android:fontFamily="sans-serif-condensed" />
+
+        </android.support.v7.widget.Toolbar>
+
 
     </android.support.design.widget.AppBarLayout>
 
@@ -20,6 +38,7 @@
     <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_menu_edit" />
+        android:src="@android:drawable/ic_menu_edit"
+        app:backgroundTint="#6f6f6f" />
 
 </android.support.design.widget.CoordinatorLayout>
