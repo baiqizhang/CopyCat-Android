@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="500px"
         android:id="@+id/listitem_timeline_imageView"
-        android:src="@android:drawable/ic_menu_gallery" />
+        android:src="@drawable/img1_1" />
 
     <LinearLayout
         android:orientation="horizontal"

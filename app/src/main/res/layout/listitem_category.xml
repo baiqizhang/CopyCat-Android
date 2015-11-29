@@ -1,32 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#000000">
 
-    <FrameLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/category_height"
+        android:id="@+id/listitem_timeline_imageView"
+        android:src="@drawable/banner"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:background="@color/design_snackbar_background_color"
+        android:scaleType="centerCrop" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="350px"
-            android:id="@+id/listitem_timeline_imageView"
-            android:src="@android:drawable/ic_menu_gallery"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="0dp"
-            android:background="@color/design_snackbar_background_color" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/category_height">
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_weight="1.3" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/listitem_category_title"
-            android:layout_gravity="center"
+            android:id="@+id/titleTextView"
+            android:layout_gravity="center_horizontal"
             android:textColor="#FFFFFF"
-            android:textSize="30dp" />
-    </FrameLayout>
+            android:textSize="25sp"
+            android:layout_weight="0"
+            android:textAlignment="center" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="2px"
+            android:layout_weight="0.2" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="- 1 -"
+            android:id="@+id/countTextView"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:layout_weight="0"
+            android:textAlignment="center" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </RelativeLayout>

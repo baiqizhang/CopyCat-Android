@@ -46,7 +46,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         // create the grid item mapping
         String[] from = new String[] {"title"};
-        int[] to = new int[] {R.id.listitem_category_title};
+        int[] to = new int[] {R.id.titleTextView};
 
         // prepare the list of all records
         List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
