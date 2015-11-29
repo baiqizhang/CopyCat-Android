@@ -8,8 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-
-import com.example.baiqizhang.copycat.R;
+import com.copycat.R;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.

@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.example.baiqizhang.copycat.R;
+import com.copycat.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

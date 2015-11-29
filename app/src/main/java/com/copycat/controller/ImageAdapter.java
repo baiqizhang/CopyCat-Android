@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 
 import com.copycat.view.SquareImageView;
-import com.example.baiqizhang.copycat.R;
+import com.copycat.R;
 
 /**
  * Created by frankluo on 11/6/15.

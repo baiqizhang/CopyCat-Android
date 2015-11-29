@@ -8,8 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
-
-import com.example.baiqizhang.copycat.R;
+import com.copycat.R;
 
 public class IntroductionActivity extends AppCompatActivity {
 

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import com.example.baiqizhang.copycat.R;
+import com.copycat.R;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -19,7 +19,9 @@ public class WelcomeActivity extends AppCompatActivity {
     private Button mGalleryButton;
     private Button mSettingsButton;
     private Button mLoginButton;
+    private Button mCameraButton;
 
+    CameraActivity ca = new CameraActivity();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,7 @@ public class WelcomeActivity extends AppCompatActivity {
         mGalleryButton = (Button)findViewById(R.id.welcome_galleryButton);
         mSettingsButton = (Button)findViewById(R.id.welcome_SettingsButton);
         mLoginButton = (Button)findViewById(R.id.welcome_LoginButton);
+        mCameraButton = (Button)findViewById(R.id.welcome_cameraButton);
 
         mTimelineButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,5 +75,14 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(showLogin); // start the Activity
             }
         });
+        mCameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+        public void onClick(View v) {
+                Intent showCamera =
+                        new Intent(WelcomeActivity.this, CameraActivity.class);
+                startActivity(showCamera);
+            }
+            });
+        }
+
     }
-}

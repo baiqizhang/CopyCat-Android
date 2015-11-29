@@ -11,7 +11,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.baiqizhang.copycat.R;
+import com.copycat.R;
 
 public class GalleryActivity extends AppCompatActivity {
 

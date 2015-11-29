@@ -6,8 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-
-import com.example.baiqizhang.copycat.R;
+import com.copycat.R;
 
 public class UserProfileActivity extends AppCompatActivity {
 

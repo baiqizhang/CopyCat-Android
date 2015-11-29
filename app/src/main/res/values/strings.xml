@@ -10,6 +10,7 @@
     <string name="title_activity_photoview">PhotoViewer</string>
     <string name="title_activity_category">Category</string>
     <string name="title_activity_timeline">Timeline</string>
+    <string name="title_activity_camera">Camera</string>
 
 
     <!-- Strings related to login -->

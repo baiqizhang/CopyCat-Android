@@ -19,8 +19,7 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
-
-import com.example.baiqizhang.copycat.R;
+import com.copycat.R;
 
 import java.util.List;
 
