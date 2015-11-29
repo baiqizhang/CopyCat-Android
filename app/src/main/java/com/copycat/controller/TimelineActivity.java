@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -67,6 +68,15 @@ public class TimelineActivity extends AppCompatActivity {
 
         ListView mListView = (ListView) findViewById(R.id.timelineListView);
         mListView.setAdapter(adapter);
+
+        ImageButton mBackButton = (ImageButton) findViewById(R.id.toolbar_back);
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
 }

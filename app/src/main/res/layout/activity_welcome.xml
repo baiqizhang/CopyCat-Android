@@ -6,19 +6,30 @@
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
-    <TextView android:id="@+id/fullscreen_content" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:keepScreenOn="true" android:textColor="#33b5e5"
-        android:textStyle="bold" android:textSize="50sp" android:gravity="center"
-        android:text="DUMMY CONTENT" />
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-        android:id="@+id/welcome_SettingsButton" />
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageView2"
+        android:src="@drawable/launchimage"
+        android:cropToPadding="false"
+        android:scaleType="centerCrop"
+        android:nestedScrollingEnabled="true" />
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:src="@drawable/circleuser"
+
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/welcome_SettingsButton"
+        />
 
     <LinearLayout
         android:orientation="vertical"
@@ -41,24 +52,66 @@
                 android:layout_height="20px"
                 android:layout_weight="1" />
 
-            <Button
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="GALLERY"
-                android:id="@+id/welcome_galleryButton"
-                android:layout_gravity="center_vertical" />
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:src="@drawable/photo"
+
+                    android:id="@+id/welcome_galleryButton"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Gallery"
+                    android:id="@+id/textView"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-light" />
+            </LinearLayout>
 
             <Space
                 android:layout_width="20px"
                 android:layout_height="20px"
                 android:layout_weight="1" />
 
-            <Button
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Inspire"
-                android:id="@+id/welcome_InspireButton"
-                android:layout_gravity="center_vertical" />
+                android:layout_height="wrap_content" >
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:src="@drawable/gallery"
+
+                    android:id="@+id/welcome_InspireButton"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Inspire"
+                    android:id="@+id/textView2"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-light" />
+            </LinearLayout>
 
             <Space
                 android:layout_width="wrap_content"
@@ -72,13 +125,6 @@
             android:layout_width="20px"
             android:layout_height="20px"
             android:layout_weight="0.6" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:id="@+id/welcome_LoginButton"
-            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 

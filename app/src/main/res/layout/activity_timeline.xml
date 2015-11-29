@@ -10,11 +10,27 @@
         android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
-            android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-            android:background="#3b3b3b"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/actionbar_height"
+            android:background="@color/colorPrimary"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            android:textAlignment="center" >
+            android:textAlignment="center"
+            >
+
+
+            <ImageButton
+                android:layout_width="@dimen/barbutton_size"
+                android:layout_height="@dimen/barbutton_size"
+                android:scaleType="fitCenter"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="left"
+                android:id="@+id/toolbar_back"
+                android:textSize="25sp"
+                android:fontFamily="sans-serif-condensed"
+                android:src="@drawable/back"
+                android:background="@null" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -25,7 +41,7 @@
                 android:textColor="#ffffff"
                 android:textAlignment="center"
                 android:elegantTextHeight="false"
-                android:textSize="25sp"
+                android:textSize="@dimen/title_text"
                 android:fontFamily="sans-serif-condensed" />
 
         </android.support.v7.widget.Toolbar>

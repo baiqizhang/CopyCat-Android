@@ -7,10 +7,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.copycat.model.Category;
 import com.example.baiqizhang.copycat.R;
 
 import java.util.ArrayList;
@@ -64,9 +67,20 @@ public class CategoryActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent showGallery =
                         new Intent(CategoryActivity.this, GalleryActivity.class);
+                showGallery.putExtra("index", position);
                 startActivity(showGallery); // start the Activity
             }
         });
+
+        ImageButton mBackButton = (ImageButton) findViewById(R.id.toolbar_back);
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
     }
 
 }

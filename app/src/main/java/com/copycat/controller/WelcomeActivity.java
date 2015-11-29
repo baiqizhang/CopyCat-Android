@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.baiqizhang.copycat.R;
 
@@ -15,10 +16,10 @@ import com.example.baiqizhang.copycat.R;
  * status bar and navigation/system bar) with user interaction.
  */
 public class WelcomeActivity extends AppCompatActivity {
-    private Button mTimelineButton;
-    private Button mGalleryButton;
-    private Button mSettingsButton;
-    private Button mLoginButton;
+    private ImageButton mTimelineButton;
+    private ImageButton mGalleryButton;
+    private ImageButton mSettingsButton;
+//    private Button mLoginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +36,10 @@ public class WelcomeActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
-        mTimelineButton = (Button)findViewById(R.id.welcome_InspireButton);
-        mGalleryButton = (Button)findViewById(R.id.welcome_galleryButton);
-        mSettingsButton = (Button)findViewById(R.id.welcome_SettingsButton);
-        mLoginButton = (Button)findViewById(R.id.welcome_LoginButton);
+        mTimelineButton = (ImageButton)findViewById(R.id.welcome_InspireButton);
+        mGalleryButton = (ImageButton)findViewById(R.id.welcome_galleryButton);
+        mSettingsButton = (ImageButton)findViewById(R.id.welcome_SettingsButton);
+//        mLoginButton = (Button)findViewById(R.id.welcome_LoginButton);
 
         mTimelineButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,17 +61,17 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent showSettings =
-                        new Intent(WelcomeActivity.this, SettingsActivity.class);
+                        new Intent(WelcomeActivity.this, UserProfileActivity.class);
                 startActivity(showSettings); // start the Activity
             }
         });
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent showLogin =
-                        new Intent(WelcomeActivity.this, LoginActivity.class);
-                startActivity(showLogin); // start the Activity
-            }
-        });
+//        mLoginButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent showLogin =
+//                        new Intent(WelcomeActivity.this, LoginActivity.class);
+//                startActivity(showLogin); // start the Activity
+//            }
+//        });
     }
 }

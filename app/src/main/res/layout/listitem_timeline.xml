@@ -17,49 +17,72 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/listitem_timeline_userButton"
-            android:layout_width="38dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/userImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@android:drawable/sym_def_app_icon"
-            app:civ_border_width="2dp"
+            app:civ_border_width="1dp"
             app:civ_border_color="#FFFFFFFF"/>
 
         <Space
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="0.2" />
+            android:layout_weight="0.05" />
 
-        <TextView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="User AAA"
-            android:id="@+id/textView"
-            android:gravity="center_vertical"
-            android:textColor="#dcf3f3f3"
-            android:layout_weight="1.00" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="User AAA"
+                android:id="@+id/usernameTextView"
+                android:gravity="center_vertical"
+                android:textColor="#dcf3f3f3"
+                android:layout_weight="0.49" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Mountain View"
+                android:id="@+id/gpsTestView"
+                android:gravity="center_vertical"
+                android:textColor="#dc757575"
+                android:layout_weight="0.49" />
+        </LinearLayout>
 
         <Space
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <Button
-            android:layout_width="49dp"
+        <TextView
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:text="Save"
-            android:id="@+id/listitem_timeline_button4" />
+            android:text="0"
+            android:id="@+id/likeTextView"
+            android:layout_gravity="center_vertical"
+            android:textColor="#f1f1f1"
+            android:textSize="18sp"
+            android:textAlignment="center" />
 
-        <Button
-            android:layout_width="49dp"
-            android:layout_height="wrap_content"
-            android:text="Like"
-            android:id="@+id/listitem_timeline_button3" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.01" />
 
-        <Button
-            android:layout_width="49dp"
-            android:layout_height="wrap_content"
-            android:text="shar"
-            android:id="@+id/listitem_timeline_button2" />
+        <ImageButton
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:scaleType="fitCenter"
+            android:gravity="center_vertical"
+            android:background="@null"
+            android:id="@+id/likeButton"
+            android:src="@drawable/like2"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="1dp" />
 
     </LinearLayout>
 
