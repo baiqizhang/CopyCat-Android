@@ -10,12 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.copycat.model.User;
+import com.copycat.view.ImageAdapter;
 import com.example.baiqizhang.copycat.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,6 +15,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.copycat.model.Category;
+import com.copycat.view.TimelineAdapter;
 import com.example.baiqizhang.copycat.R;
 
 import java.util.ArrayList;
@@ -48,6 +52,7 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
+        /*
         // create the grid item mapping
         String[] from = new String[] {};
         int[] to = new int[] { };
@@ -56,18 +61,26 @@ public class TimelineActivity extends AppCompatActivity {
         List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
         for(int i = 0; i < 10; i++){
             HashMap<String, String> map = new HashMap<String, String>();
-//            map.put("rowid", "" + i);
-//            map.put("col_1", "col_1_item_" + i);
-//            map.put("col_2", "col_2_item_" + i);
-//            map.put("col_3", "col_3_item_" + i);
             fillMaps.add(map);
         }
 
         // fill in the grid_item layout
         SimpleAdapter adapter = new SimpleAdapter(this, fillMaps, R.layout.listitem_timeline, from, to);
-
-        ListView mListView = (ListView) findViewById(R.id.timelineListView);
         mListView.setAdapter(adapter);
+*/
+        Category[] categories = new Category[5];
+        TimelineAdapter timelineAdapter = new TimelineAdapter(categories,this);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.timelineListView);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(false);
+
+        // use a linear layout manager
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mRecyclerView.setAdapter(timelineAdapter);
 
         ImageButton mBackButton = (ImageButton) findViewById(R.id.toolbar_back);
         mBackButton.setOnClickListener(new View.OnClickListener() {

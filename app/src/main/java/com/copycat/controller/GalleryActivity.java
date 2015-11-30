@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.copycat.view.ImageAdapter;
 import com.example.baiqizhang.copycat.R;
 
 public class GalleryActivity extends AppCompatActivity {
