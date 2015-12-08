@@ -61,17 +61,17 @@ public class CoreUtil {
         return directory.getAbsolutePath();
     }
 
-    private void loadImageFromStorage(String path)
+    private Bitmap loadImageFromStorage(String path, String filename)
     {
         try {
-            File f=new File(path, "profile.jpg");
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-//            ImageView img=(ImageView)findViewById(R.id.imgPicker);
-//            img.setImageBitmap(b);
+            File f=new File(path, filename);
+            return BitmapFactory.decodeStream(new FileInputStream(f));
+//            imgView.setImageBitmap(b);
         }
         catch (FileNotFoundException e)
         {
             e.printStackTrace();
+            return null;
         }
     }
 

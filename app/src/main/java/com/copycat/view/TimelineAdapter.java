@@ -47,9 +47,9 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
         }
     }
 
-    public Category[] categories;
     public RecyclerView.OnItemTouchListener mItemClickListener;
 
+    public Category[] categories;
     private Context context;
 
     // Provide a suitable constructor (depends on the kind of dataset)
