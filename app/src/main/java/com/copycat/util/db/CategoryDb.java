@@ -10,5 +10,4 @@ public abstract class CategoryDb implements BaseColumns{
     public static final String TABLE_NAME = "categoryTbl";
     public static final String CATEGORY_ID = "categoryId";
     public static final String CATEGORY_NAME = "categoryName";
-    public static final String PHOTO_ID_LIST = "photoIdList";
 }

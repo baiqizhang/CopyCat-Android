@@ -14,9 +14,8 @@ public class CategoryDbHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_CATEGORY_TABLE =
             "CREATE TABLE" + CategoryDb.TABLE_NAME + " (" +
-                    CategoryDb.CATEGORY_ID + TEXT_TYPE + "," +
+                    CategoryDb.CATEGORY_ID + "INTEGER AUTOINCREMENT" + "," +
                     CategoryDb.CATEGORY_NAME + TEXT_TYPE + "," +
-                    CategoryDb.PHOTO_ID_LIST + TEXT_TYPE +
                     " )";
 
     private static final String SQL_DELETE_ENTRIES =

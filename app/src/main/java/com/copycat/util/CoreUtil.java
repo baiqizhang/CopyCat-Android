@@ -22,13 +22,23 @@ import java.util.List;
  */
 public class CoreUtil {
     //Category
-    public static List<Category> getCategoryListFromStorage(){return null;}
+    public static List<Category> getCategoryListFromStorage(){
+
+
+
+        return null;
+
+
+    }
+
     public static boolean addCategory(Category category){return false;}
     public static boolean removeCategory(Category category){return false;}
 
     //Photo
     public static boolean addPhotoListToCategory(List<Photo> photoList,Category category){return false;}
     public static boolean removePhotoListFromCategory(List<Photo> photoList,Category category){return false;}
+
+
 
 
     private String saveToInternalSorage(Bitmap bitmapImage,Context context){
@@ -64,7 +74,6 @@ public class CoreUtil {
             e.printStackTrace();
         }
     }
-
 
     public static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
