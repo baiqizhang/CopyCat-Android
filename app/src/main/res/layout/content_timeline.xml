@@ -11,9 +11,18 @@
     tools:context="com.copycat.controller.TimelineActivity"
     android:padding="0dp">
 
-    <android.support.v7.widget.RecyclerView
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/timelineListView"
-        android:background="#000000" />
+        android:id="@+id/ultimate_recycler_view"
+        android:background="#000000"
+        app:recyclerviewFloatingActionView="@layout/support_simple_spinner_dropdown_item"
+        >
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:id="@+id/timelineListView"-->
+            <!--android:background="#000000" />-->
+    </com.marshalchen.ultimaterecyclerview.UltimateRecyclerView>
+
 </RelativeLayout>

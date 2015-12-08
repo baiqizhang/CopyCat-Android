@@ -27,4 +27,5 @@ dependencies {
     compile 'com.android.support:design:23.1.0'
 
     compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.marshalchen.ultimaterecyclerview:library:0.3.18'
 }
