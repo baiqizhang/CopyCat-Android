@@ -10,19 +10,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class CategoryDbHelper extends SQLiteOpenHelper {
 
-    private static final String TEXT_TYPE = "TEXT";
+    public static final int DATABASE_VERSION = 1;
+
+    public static final String DATABASE_NAME = "CopyCat.db";
+
+    public static final String TABLE_NAME = "categoryTbl";
+    public static final String CATEGORY_ID = "categoryId";
+    public static final String CATEGORY_NAME = "categoryName";
+    public static final String BANNER_IMAGE = "bannerImage";
 
     private static final String CREATE_CATEGORY_TABLE =
-            "CREATE TABLE" + CategoryDb.TABLE_NAME + " (" +
-                    CategoryDb.CATEGORY_ID + "INTEGER AUTOINCREMENT" + "," +
-                    CategoryDb.CATEGORY_NAME + TEXT_TYPE + "," +
-                    " )";
+            "CREATE TABLE" + TABLE_NAME + " (" +
+                    CATEGORY_ID + "INTEGER AUTOINCREMENT" + "," +
+                    CATEGORY_NAME + "TEXT" + "," +
+                    BANNER_IMAGE + "BLOB);";
 
     private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + CategoryDb.TABLE_NAME;
-
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "CopyCat.db";
+            "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     public CategoryDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

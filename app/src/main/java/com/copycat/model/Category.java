@@ -8,21 +8,29 @@ import java.util.ArrayList;
  * Created by ningtuffy on 11/13/15.
  */
 public class Category {
-    private int categoryId;
     private String categoryName;
-    List <Bitmap> photoList = new ArrayList<Bitmap> ();
+    private Bitmap banner;
+
+    public Category(String categoryName, Bitmap banner) {
+        this.categoryName = categoryName;
+        this.banner = banner;
+    }
+
+
+    public Bitmap getBanner() {
+        return banner;
+    }
 
     public String getCategoryName() {
         return categoryName;
     }
-    public void setCategoryName(String name) {
-        this.categoryName = name;
+
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
-    public int getCategoryId() {
-        return categoryId;
-    }
-    public void setCategoryId(int Id) {
-        this.categoryId = Id;
+    public void setBanner(Bitmap banner) {
+        this.banner = banner;
     }
 }

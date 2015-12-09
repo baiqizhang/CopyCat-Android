@@ -1,20 +1,26 @@
 package com.copycat.util;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
 import com.copycat.model.Category;
 import com.copycat.model.Photo;
+import com.copycat.util.db.BitmapUtility;
+import com.copycat.util.db.CategoryDbHelper;
 import com.example.baiqizhang.copycat.R;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,16 +28,40 @@ import java.util.List;
  */
 public class CoreUtil {
     //Category
-    public static List<Category> getCategoryListFromStorage(){
+    public static List<Category> getCategoryListFromDB(Context context){
+        CategoryDbHelper dbHelper = new CategoryDbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String[] tableName = new String[2];
+        tableName[0] = CategoryDbHelper.CATEGORY_NAME;
+        tableName[1] = CategoryDbHelper.BANNER_IMAGE;
+        Cursor cursor = db.query(CategoryDbHelper.TABLE_NAME,tableName,null,null,null,null,null,null);
 
+        List<Category> cList = new ArrayList<>();
 
+        for( cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            byte[] bBanner = (byte[])cursor.getBlob(1);
+            Bitmap banner = BitmapUtility.getImage(bBanner);
+            cList.add(new Category(cursor.getString(0),banner));
+        }
 
-        return null;
-
-
+        return cList;
     }
 
-    public static boolean addCategory(Category category){return false;}
+    public static void addCategory(Category category, Context context){
+        String cName = category.getCategoryName();
+        Bitmap banner = category.getBanner();
+        byte[] bBanner = BitmapUtility.getBytes(banner);
+
+        ContentValues values = new ContentValues();
+        values.put(CategoryDbHelper.BANNER_IMAGE, bBanner);
+        values.put(CategoryDbHelper.CATEGORY_NAME,cName);
+
+        //insert into db
+        CategoryDbHelper dbHelper = new CategoryDbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.insert(CategoryDbHelper.TABLE_NAME, null, values);
+
+    }
     public static boolean removeCategory(Category category){return false;}
 
     //Photo
