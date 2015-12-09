@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TimelineActivity extends AppCompatActivity {
-//    SwipeRefreshLayout mSwipeRefreshLayout;
+    //    SwipeRefreshLayout mSwipeRefreshLayout;
     UltimateRecyclerView mUltimateRecyclerView;
     TextView mTitleTextView;
     RecyclerView mRecyclerView;
@@ -99,7 +99,7 @@ public class TimelineActivity extends AppCompatActivity {
                     public void run() {
                         newAdapter.insert(new Post(), newAdapter.getAdapterItemCount());
                         mUltimateRecyclerView.disableLoadmore();
-                        newAdapter.remove(newAdapter.getAdapterItemCount());
+                        newAdapter.remove(newAdapter.getAdapterItemCount()-1);
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             public void run() {

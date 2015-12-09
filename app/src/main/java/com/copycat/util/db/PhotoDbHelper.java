@@ -8,39 +8,43 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by frankluo on 11/13/15.
  */
 public class PhotoDbHelper extends SQLiteOpenHelper {
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "CopyCat.db";
 
-        private static final String TEXT_TYPE = "TEXT";
+    public static final String TABLE_NAME = "photoTbl";
+    public static final String PHOTO_ID = "photoId";
+    public static final String PHOTO_URL = "photoUrl";
+    public static final String PHOTO_NAME = "photoName";
 
-        private static final String CREATE_PHOTO_TABLE =
-                "CREATE TABLE" + PhotoDb.TABLE_NAME + " (" +
-                        PhotoDb.PHOTO_ID + TEXT_TYPE + "," +
-                        PhotoDb.OWNER_ID + TEXT_TYPE + "," +
-                        PhotoDb.PHOTO_URL + TEXT_TYPE +
-                        " )";
+    private static final String TEXT_TYPE = "TEXT";
 
-        private static final String SQL_DELETE_ENTRIES =
-                "DROP TABLE IF EXISTS " + CategoryDb.TABLE_NAME;
+    private static final String CREATE_PHOTO_TABLE =
+            "CREATE TABLE" + TABLE_NAME + " (" +
+                    PHOTO_ID + "INTEGER AUTOINCREMENT" + "," +
+                    PHOTO_NAME + "TEXT, " +
+                    PHOTO_URL + "TEXT NOT NULL" +TEXT_TYPE +
+                    " )";
 
-        public static final int DATABASE_VERSION = 1;
-        public static final String DATABASE_NAME = "CopyCat.db";
+    private static final String SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + TABLE_NAME;
 
-        public PhotoDbHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        }
+    public PhotoDbHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
 
-        public void onCreate(SQLiteDatabase db) {
-            db.execSQL(CREATE_PHOTO_TABLE);
-        }
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CREATE_PHOTO_TABLE);
+    }
 
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            // This database is only a cache for online data, so its upgrade policy is
-            // to simply to discard the data and start over
-            db.execSQL(SQL_DELETE_ENTRIES);
-            onCreate(db);
-        }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // This database is only a cache for online data, so its upgrade policy is
+        // to simply to discard the data and start over
+        db.execSQL(SQL_DELETE_ENTRIES);
+        onCreate(db);
+    }
 
-        public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            onUpgrade(db, oldVersion, newVersion);
-        }
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onUpgrade(db, oldVersion, newVersion);
+    }
 
 }
