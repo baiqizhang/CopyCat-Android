@@ -92,13 +92,13 @@ public class NewAdapter extends UltimateViewAdapter<NewAdapter.SimpleAdapterView
         insert(categories, category, position);
     }
 //
-//    public void remove(int position) {
-//        remove(stringList, position);
-//    }
-//
-//    public void clear() {
-//        clear(stringList);
-//    }
+    public void remove(int position) {
+        remove(categories, position);
+    }
+
+    public void clear() {
+        clear(categories);
+    }
 
     @Override
     public void toggleSelection(int pos) {
