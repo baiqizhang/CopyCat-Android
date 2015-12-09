@@ -11,13 +11,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.copycat.model.Category;
 import com.copycat.model.Post;
+import com.copycat.model.User;
 import com.copycat.util.CoreUtil;
 import com.example.baiqizhang.copycat.R;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -40,14 +45,28 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
         if (position < getItemCount()
                 && (customHeaderView != null ? position <= posts.size() : position < posts.size())
                 && (customHeaderView != null ? position > 0 : true)) {
-//        holder.image.setImageBitmap(
-//                CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.img1_1, 30, 100));
 
-            ((SimpleAdapterViewHolder) holder).image.setImageBitmap(
-                    CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.img1_1, 30, 100));
+//            holder.image.setImageBitmap(
+//                    CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.img1_1, 30, 100));
+            Picasso.with(context)
+                    .load(posts.get(position).getPhotoURI())
+                    .into(holder.image, new com.squareup.picasso.Callback() {
+                        @Override
+                        public void onSuccess() {
+                            if (holder.loadingTextView != null) {
+                                holder.loadingTextView.setVisibility(View.GONE);
+                            }
+                        }
 
-//            ((SimpleAdapterViewHolder) holder).textViewSample.setText(stringList.get(customHeaderView != null ? position - 1 : position));
-            // ((ViewHolder) holder).itemView.setActivated(selectedItems.get(position, false));
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
+            holder.geoTagTextView.setText(posts.get(position).getGeoTag());
+            holder.likeCountTextView.setText(String.valueOf(posts.get(position).getLikeCount()));
+
+//            ((ViewHolder) holder).itemView.setActivated(selectedItems.get(position, false));
             if (mDragStartListener != null) {
 //                ((ViewHolder) holder).imageViewSample.setOnTouchListener(new View.OnTouchListener() {
 //                    @Override
@@ -175,7 +194,7 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
     @Override
     public void onItemDismiss(int position) {
 //        remove(position);
-        // notifyItemRemoved(position);
+//        notifyItemRemoved(position);
 //        notifyDataSetChanged();
         super.onItemDismiss(position);
     }
@@ -197,8 +216,16 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
 
         //public TextView tvtinfo_text;
         public ImageView image;
+        //user name
+        public TextView usernameTextView;
         //Profile image
         public CircleImageView profileImageView;
+        //likes
+        public TextView likeCountTextView;
+        //geotag
+        public TextView geoTagTextView;
+        //loading
+        public TextView loadingTextView;
 
         public  SimpleAdapterViewHolder(View itemView, boolean isItem) {
             super(itemView);
@@ -219,7 +246,9 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
             if (isItem) {
                 image = (ImageView)itemView.findViewById(R.id.imageView);
                 profileImageView= (CircleImageView)itemView.findViewById(R.id.userImageView);
-
+                likeCountTextView = (TextView)itemView.findViewById(R.id.likeTextView);
+                geoTagTextView = (TextView)itemView.findViewById(R.id.geoTagTextView);
+                loadingTextView = (TextView)itemView.findViewById(R.id.loadingTextView);
             }
 
         }

@@ -4,11 +4,25 @@
     android:layout_height="wrap_content"
     android:background="#191919">
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="400px"
-        android:id="@+id/imageView"
-        android:scaleType="centerCrop" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="400px"
+            android:id="@+id/imageView"
+            android:scaleType="centerCrop"
+            android:background="@null" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loading..."
+            android:id="@+id/loadingTextView"
+            android:layout_gravity="center"
+            android:textColor="#ffffff" />
+    </FrameLayout>
 
     <Space
         android:layout_width="0dp"
@@ -58,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Mountain View"
-                android:id="@+id/gpsTestView"
+                android:id="@+id/geoTagTextView"
                 android:gravity="center_vertical"
                 android:textColor="#dc757575"
                 android:layout_weight="0.49" />

@@ -1,6 +1,10 @@
 package com.copycat.controller;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,19 +24,21 @@ import android.widget.Toast;
 
 import com.copycat.model.Category;
 import com.copycat.model.Post;
+import com.copycat.util.remote.PostUtil;
 import com.copycat.view.TimelineAdapter;
 import com.example.baiqizhang.copycat.R;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TimelineActivity extends AppCompatActivity {
-    //    SwipeRefreshLayout mSwipeRefreshLayout;
     UltimateRecyclerView mUltimateRecyclerView;
     TextView mTitleTextView;
     RecyclerView mRecyclerView;
     ImageButton mBackButton;
+    TimelineAdapter mTimelineAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +68,12 @@ public class TimelineActivity extends AppCompatActivity {
         });
 
         List<Post> placeholders = new ArrayList<Post>();
-        placeholders.add(new Post());
-        placeholders.add(new Post());
-        placeholders.add(new Post());
-        placeholders.add(new Post());
+//        placeholders.add(new Post());
+//        placeholders.add(new Post());
+//        placeholders.add(new Post());
+//        placeholders.add(new Post());
 
-        final TimelineAdapter newAdapter = new TimelineAdapter(placeholders,this);
+        mTimelineAdapter = new TimelineAdapter(placeholders,this);
         mUltimateRecyclerView = (UltimateRecyclerView)findViewById(R.id.ultimate_recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -77,9 +84,9 @@ public class TimelineActivity extends AppCompatActivity {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mUltimateRecyclerView.setLayoutManager(mLayoutManager);
 
-        mUltimateRecyclerView.setAdapter(newAdapter);
+        mUltimateRecyclerView.setAdapter(mTimelineAdapter);
 
-        newAdapter.setCustomLoadMoreView(LayoutInflater.from(this)
+        mTimelineAdapter.setCustomLoadMoreView(LayoutInflater.from(this)
                 .inflate(R.layout.loadmore_progressbar, null));
 
         mBackButton = (ImageButton) findViewById(R.id.toolbar_back);
@@ -97,15 +104,15 @@ public class TimelineActivity extends AppCompatActivity {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        newAdapter.insert(new Post(), newAdapter.getAdapterItemCount());
+                        mTimelineAdapter.insert(new Post(), mTimelineAdapter.getAdapterItemCount());
                         mUltimateRecyclerView.disableLoadmore();
-                        newAdapter.remove(newAdapter.getAdapterItemCount()-1);
+                        mTimelineAdapter.remove(mTimelineAdapter.getAdapterItemCount()-1);
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             public void run() {
                                 mUltimateRecyclerView.enableLoadmore();
                             }
-                        }, 2000);
+                        }, 5000);
                     }
                 }, 1000);
             }
@@ -134,6 +141,15 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            new GetPostTask().execute();
+        } else {
+            Log.e("error","No network connection available.");
+        }
+
     }
 
     void refreshItems() {
@@ -158,4 +174,26 @@ public class TimelineActivity extends AppCompatActivity {
 
 
 
+    // Uses AsyncTask to create a task away from the main UI thread. This task takes a
+    // URL string and uses it to create an HttpUrlConnection. Once the connection
+    // has been established, the AsyncTask downloads the contents of the webpage as
+    // an InputStream. Finally, the InputStream is converted into a string, which is
+    // displayed in the UI by the AsyncTask's onPostExecute method.
+    private class GetPostTask extends AsyncTask<String, Void, String> {
+        List<Post> list;
+        @Override
+        protected String doInBackground(String... urls) {
+
+            // params comes from the execute() call: params[0] is the url.
+            list = PostUtil.getUserFeed(null,0,0);
+            return "200";
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            Log.v("result:", list.toString());
+            for (Post p : list)
+                mTimelineAdapter.insert(p,0);
+        }
+    }
 }
