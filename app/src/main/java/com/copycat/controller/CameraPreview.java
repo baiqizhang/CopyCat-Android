@@ -78,4 +78,5 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
         return c; // returns null if camera is unavailable
     }
+
 }

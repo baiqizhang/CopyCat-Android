@@ -19,8 +19,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import java.net.URI;
+import android.os.Handler;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import android.widget.SeekBar;
@@ -59,7 +58,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
         overlay.setImageURI(Uri.parse("file:///storage/emulated/0/DCIM/Camera/Baoshu.jpg"));
 
-
         barOpacity = (SeekBar) findViewById(R.id.opacity);
         int alpha = barOpacity.getProgress();
         overlay.setAlpha(alpha);
@@ -72,9 +70,18 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     public void onClick(View v) {
                         // get an image from the camera
                         preview.getCamera().takePicture(null, null, mPicture);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                preview.getCamera().stopPreview();
+                                preview.getCamera().startPreview();
+                            }
+                        }, 2000);
+
                     }
                 }
         );
+
     }
 
     OnSeekBarChangeListener barOpacityOnSeekBarChangeListener =
