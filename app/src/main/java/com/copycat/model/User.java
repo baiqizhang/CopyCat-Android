@@ -1,41 +1,52 @@
 package com.copycat.model;
 
-import android.graphics.Picture;
-
 /**
  * Created by ningtuffy on 11/13/15.
  */
 public class User {
-    private int userId;
+    private long userId;
     private String name;
-    private String info;
-    private Picture profilePicture;
+    private int followerCount;
+    private int followingCount;
+    private String profilePictureURI;
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
     public String getName() {
         return name;
     }
-    public String getInfo() {
-        return info;
-    }
 
-    public Picture getPicture() {
-        return this.profilePicture;
-    }
-    public void setUserId(int id) {
-        this.userId = id;
-    }
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
-    }
-    public void setPicture(Picture picture) {
-        this.profilePicture = picture;
+    public int getFollowerCount() {
+        return followerCount;
     }
 
+    public void setFollowerCount(int followerCount) {
+        this.followerCount = followerCount;
+    }
+
+    public int getFollowingCount() {
+        return followingCount;
+    }
+
+    public void setFollowingCount(int followingCount) {
+        this.followingCount = followingCount;
+    }
+
+    public String getProfilePictureURI() {
+        return profilePictureURI;
+    }
+
+    public void setProfilePictureURI(String profilePictureURI) {
+        this.profilePictureURI = profilePictureURI;
+    }
 }

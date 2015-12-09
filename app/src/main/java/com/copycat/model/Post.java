@@ -7,53 +7,75 @@ package com.copycat.model;
 public class Post {
 
     private String postId;
-    private int likeNumber;
-    private String photoId;
-    private String userId;
+    private String photoURI;
+    private User user;
+    private int likeCount;
+    private String geoTag;
     private long timeStamp;
 
-    public Post(String postId, int likeNumber, String photoId, String userId, long timeStamp) {
+    public Post() {
+        this.postId = "";
+        this.photoURI = "";
+        this.user = new User();
+        this.likeCount = 0;
+        this.geoTag = "Mountain View";
+        this.timeStamp = 0;
+    }
+
+    public Post(String postId, String photoURI, User user, int likeCount, String geoTag, long timeStamp) {
         this.postId = postId;
-        this.likeNumber = likeNumber;
-        this.photoId = photoId;
-        this.userId = userId;
+        this.photoURI = photoURI;
+        this.user = user;
+        this.likeCount = likeCount;
+        this.geoTag = geoTag;
         this.timeStamp = timeStamp;
     }
 
-    //Common Getter and Setter for every attributes
     public String getPostId() {
         return postId;
     }
+
     public void setPostId(String postId) {
         this.postId = postId;
     }
 
-    public int getLikeNumber() {
-        return likeNumber;
-    }
-    public void setLikeNumber(int likeNumber) {
-        this.likeNumber = likeNumber;
+    public String getPhotoURI() {
+        return photoURI;
     }
 
-    public String getPhotoId() {
-        return photoId;
-    }
-    public void setPhotoId(String photoId) {
-        this.photoId = photoId;
+    public void setPhotoURI(String photoURI) {
+        this.photoURI = photoURI;
     }
 
-    public String getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
-    public void setUserId(String userId) {
-        this.userId = userId;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public String getGeoTag() {
+        return geoTag;
+    }
+
+    public void setGeoTag(String geoTag) {
+        this.geoTag = geoTag;
     }
 
     public long getTimeStamp() {
         return timeStamp;
     }
+
     public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
     }
-
 }

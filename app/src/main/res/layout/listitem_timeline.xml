@@ -32,7 +32,8 @@
             android:layout_height="25dp"
             android:src="@android:drawable/sym_def_app_icon"
             app:civ_border_width="1dp"
-            app:civ_border_color="#FFFFFFFF"/>
+            app:civ_border_color="#FFFFFFFF"
+            android:layout_gravity="center_vertical" />
 
         <Space
             android:layout_width="0dp"
