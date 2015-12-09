@@ -19,6 +19,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private ImageButton mTimelineButton;
     private ImageButton mGalleryButton;
     private ImageButton mSettingsButton;
+    private Button mCameraButton;
 //    private Button mLoginButton;
 
     @Override
@@ -39,6 +40,7 @@ public class WelcomeActivity extends AppCompatActivity {
         mTimelineButton = (ImageButton)findViewById(R.id.welcome_InspireButton);
         mGalleryButton = (ImageButton)findViewById(R.id.welcome_galleryButton);
         mSettingsButton = (ImageButton)findViewById(R.id.welcome_SettingsButton);
+        mCameraButton = (Button)findViewById(R.id.welcome_cameraButton);
 //        mLoginButton = (Button)findViewById(R.id.welcome_LoginButton);
 
         mTimelineButton.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +67,15 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(showSettings); // start the Activity
             }
         });
+        mCameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent showCamera =
+                        new Intent(WelcomeActivity.this, CameraActivity.class);
+                startActivity(showCamera);
+            }
+        });
+
 //        mLoginButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

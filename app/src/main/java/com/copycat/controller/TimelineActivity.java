@@ -1,5 +1,6 @@
 package com.copycat.controller;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,20 +11,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.copycat.model.Category;
-import com.copycat.model.Post;
+import com.copycat.view.NewAdapter;
 import com.copycat.view.TimelineAdapter;
 import com.example.baiqizhang.copycat.R;
+import com.marshalchen.ultimaterecyclerview.ObservableScrollState;
+import com.marshalchen.ultimaterecyclerview.ObservableScrollViewCallbacks;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TimelineActivity extends AppCompatActivity {
@@ -76,13 +84,10 @@ public class TimelineActivity extends AppCompatActivity {
         SimpleAdapter adapter = new SimpleAdapter(this, fillMaps, R.layout.listitem_timeline, from, to);
         mListView.setAdapter(adapter);
 */
-        List<Post> placeholders = new ArrayList<Post>();
-        placeholders.add(new Post());
-        placeholders.add(new Post());
-        placeholders.add(new Post());
-        placeholders.add(new Post());
-
-        final TimelineAdapter newAdapter = new TimelineAdapter(placeholders,this);
+        Category[] categories = new Category[5];
+        TimelineAdapter timelineAdapter = new TimelineAdapter(categories,this);
+        //NewAdapter newAdapter = new NewAdapter(categories, this);
+//        mRecyclerView = (RecyclerView) findViewById(R.id.timelineListView);
         mUltimateRecyclerView = (UltimateRecyclerView)findViewById(R.id.ultimate_recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -93,10 +98,7 @@ public class TimelineActivity extends AppCompatActivity {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mUltimateRecyclerView.setLayoutManager(mLayoutManager);
 
-        mUltimateRecyclerView.setAdapter(newAdapter);
-
-        newAdapter.setCustomLoadMoreView(LayoutInflater.from(this)
-                .inflate(R.layout.loadmore_progressbar, null));
+        //mUltimateRecyclerView.setAdapter(newAdapter);
 
         mBackButton = (ImageButton) findViewById(R.id.toolbar_back);
         mBackButton.setOnClickListener(new View.OnClickListener() {
@@ -113,15 +115,9 @@ public class TimelineActivity extends AppCompatActivity {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        newAdapter.insert(new Post(), newAdapter.getAdapterItemCount());
-                        mUltimateRecyclerView.disableLoadmore();
-                        newAdapter.remove(newAdapter.getAdapterItemCount());
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            public void run() {
-                                mUltimateRecyclerView.enableLoadmore();
-                            }
-                        }, 2000);
+//                        simpleRecyclerViewAdapter.insert("More " + moreNum++, simpleRecyclerViewAdapter.getAdapterItemCount());
+                        Toast.makeText(TimelineActivity.this, "" + itemsCount,
+                                Toast.LENGTH_SHORT).show();
                     }
                 }, 1000);
             }
@@ -138,12 +134,17 @@ public class TimelineActivity extends AppCompatActivity {
                 toolbar.setBackgroundDrawable(c);
             }
         });
-
         mUltimateRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 Toast.makeText(TimelineActivity.this, "onRefresh",
                         Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mUltimateRecyclerView.mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
                 // Refresh items
                 refreshItems();
             }
