@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.net.Uri;
@@ -17,10 +19,14 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import java.net.URL;
+
 
 import com.example.baiqizhang.copycat.R;
 
@@ -36,6 +42,8 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     SeekBar barOpacity;
     ImageView overlay;
     Camera camera;
+    URL url;
+    Bitmap bmp;
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
 
@@ -48,6 +56,10 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
         preview = (CameraPreview) findViewById(R.id.cameraPreview);
         overlay = (ImageView) findViewById(R.id.imageView1);
+
+        overlay.setImageURI(Uri.parse("file:///storage/emulated/0/DCIM/Camera/Baoshu.jpg"));
+
+
         barOpacity = (SeekBar) findViewById(R.id.opacity);
         int alpha = barOpacity.getProgress();
         overlay.setAlpha(alpha);
@@ -66,7 +78,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     }
 
     OnSeekBarChangeListener barOpacityOnSeekBarChangeListener =
-            new OnSeekBarChangeListener(){
+            new OnSeekBarChangeListener() {
 
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress,
@@ -78,10 +90,12 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 }
 
                 @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {}
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                }
 
                 @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {}
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                }
 
             };
 
@@ -175,10 +189,10 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     }
 
     private void releaseCamera() {
-        if(camera != null){
+        if (camera != null) {
             camera.release();
             camera = null;
         }
     }
-}
 
+}
