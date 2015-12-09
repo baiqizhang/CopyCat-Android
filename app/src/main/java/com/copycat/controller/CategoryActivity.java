@@ -53,6 +53,7 @@ public class CategoryActivity extends AppCompatActivity {
         placeholders.add(new Category("Food",null));
 
         CategoryAdapter categoryAdapter = new CategoryAdapter(placeholders,this);
+
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.category_recyclerview);
 
 

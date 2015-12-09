@@ -1,6 +1,7 @@
 package com.copycat.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,7 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.copycat.controller.CategoryActivity;
+import com.copycat.controller.GalleryActivity;
 import com.copycat.model.Category;
 import com.copycat.util.CoreUtil;
 import com.example.baiqizhang.copycat.R;
@@ -32,6 +36,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         public TextView categoryName;
         public ImageView banner;
         public TextView photoCount;
+        public int position;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
@@ -44,7 +49,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-            //do sth
+            Intent showGallery =
+                    new Intent(context, GalleryActivity.class);
+            showGallery.putExtra("index", position);
+            context.startActivity(showGallery); // start the Activity
+            Toast.makeText(context, "pos:" + position,
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -80,14 +90,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.banner, 30, 100));
         holder.categoryName.setText(categories.get(position).getCategoryName());
         holder.photoCount.setText("- "+ "" +" -");
+        holder.position = position;
     }
 
     @Override
     public int getItemCount() {
         return categories.size();
     }
-
-
 
     public void setmItemClickListener(final RecyclerView.OnItemTouchListener onItemClickListener) {
         this.mItemClickListener = onItemClickListener;
