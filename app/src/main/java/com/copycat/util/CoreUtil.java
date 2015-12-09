@@ -83,10 +83,19 @@ public class CoreUtil {
     }
 
     //Photo
-    public static boolean addPhotoListToCategory(List<Photo> photoList,Category category){return false;}
-    public static boolean removePhotoListFromCategory(List<Photo> photoList,Category category){return false;}
+    public static boolean addPhotoListToCategory(List<Photo> photoList,Category category){
 
-    private Photo storePhoto(Bitmap bitmapImage,String imageName, Context context){
+
+        return false;
+
+    }
+    public static boolean removePhotoListFromCategory(List<Photo> photoList,Category category){
+
+        return false;
+
+    }
+
+    private Photo storePhotoLocally(Bitmap bitmapImage,String imageName, Context context) {
         ContextWrapper cw = new ContextWrapper(context);
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
