@@ -16,6 +16,7 @@ import com.copycat.model.Photo;
 import com.copycat.util.db.BitmapUtility;
 import com.copycat.util.db.CategoryDbHelper;
 import com.copycat.util.db.PhotoDbHelper;
+import com.copycat.util.db.PhotoInCategoryDbHelper;
 import com.example.baiqizhang.copycat.R;
 
 import java.io.File;
@@ -31,11 +32,11 @@ public class CoreUtil {
     //Category
     public static List<Category> getCategoryListFromDB(Context context){
         CategoryDbHelper dbHelper = new CategoryDbHelper(context);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String[] tableName = new String[2];
-        tableName[0] = CategoryDbHelper.CATEGORY_NAME;
-        tableName[1] = CategoryDbHelper.BANNER_IMAGE;
-        Cursor cursor = db.query(CategoryDbHelper.TABLE_NAME,tableName,null,null,null,null,null,null);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] columns = new String[2];
+        columns[0] = CategoryDbHelper.CATEGORY_NAME;
+        columns[1] = CategoryDbHelper.BANNER_IMAGE;
+        Cursor cursor = db.query(CategoryDbHelper.TABLE_NAME,columns,null,null,null,null,null,null);
 
         List<Category> cList = new ArrayList<>();
 
@@ -83,15 +84,65 @@ public class CoreUtil {
     }
 
     //Photo
-    public static boolean addPhotoListToCategory(List<Photo> photoList,Category category){
+    public static boolean addPhotoListToCategory(List<Photo> photoList,Category category, Context context){
 
-
-        return false;
-
+        try {
+            PhotoInCategoryDbHelper dbHelper = new PhotoInCategoryDbHelper(context);
+            for(Photo photo : photoList) {
+                String photoUri = photo.getPhotoUrl();
+                String categoryName = category.getCategoryName();
+                ContentValues values = new ContentValues();
+                values.put(PhotoInCategoryDbHelper.CATEGORY_NAME, categoryName);
+                values.put(PhotoInCategoryDbHelper.PHOTO_URI, photoUri);
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                db.insert(PhotoInCategoryDbHelper.TABLE_NAME, null, values);
+            }
+            return true;
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-    public static boolean removePhotoListFromCategory(List<Photo> photoList,Category category){
 
-        return false;
+    public static List<Photo> getPhotoListWithCategory(String categoryName, Context context) {
+        PhotoInCategoryDbHelper dbHelper = new PhotoInCategoryDbHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] columns = new String[2];
+        columns[0] = PhotoInCategoryDbHelper.CATEGORY_NAME;
+        columns[1] = PhotoInCategoryDbHelper.PHOTO_URI;
+        Cursor cursor = db.query(PhotoInCategoryDbHelper.TABLE_NAME,
+                columns,
+                PhotoInCategoryDbHelper.CATEGORY_NAME + "=" + categoryName,
+                null,null,null,null,null);
+
+        List<Photo> pList = new ArrayList<>();
+
+        for( cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            String photoUri = (String)cursor.getString(0);
+            File f = new File(photoUri);
+            String photoName = f.getName();
+
+            pList.add(new Photo(photoName,photoUri));
+        }
+        return pList;
+    }
+
+    public static boolean removePhotoListFromCategory(List<Photo> photoList,Category category, Context context){
+        try {
+            PhotoInCategoryDbHelper dbHelper = new PhotoInCategoryDbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            for(Photo photo: photoList) {
+                db.delete(PhotoInCategoryDbHelper.TABLE_NAME,
+                        PhotoInCategoryDbHelper.CATEGORY_NAME + "=" + category.getCategoryName() + "AND" +
+                                PhotoInCategoryDbHelper.PHOTO_URI + "=" + photo.getPhotoUrl(),
+                        null);
+            }
+            return true;
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+            return false;
+        }
 
     }
 
@@ -115,7 +166,7 @@ public class CoreUtil {
             return null;
         }
 
-        //store URL to database
+        //store photo uri and name to database
         try {
 
             byte[] bBanner = BitmapUtility.getBytes(bitmapImage);
@@ -136,10 +187,10 @@ public class CoreUtil {
         return new Photo(imageName, directory.getAbsolutePath());
     }
 
-    private Bitmap loadImageFromStorage(String path, String filename)
+    private Bitmap loadImageFromStorage(String uri)
     {
         try {
-            File f=new File(path, filename);
+            File f=new File(uri);
             return BitmapFactory.decodeStream(new FileInputStream(f));
             //imgView.setImageBitmap(b);
         }

@@ -14,14 +14,14 @@ public class PhotoInCategoryDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "CopyCat.db";
 
     public static final String TABLE_NAME = "photoInCategoryTbl";
-    public static final String CATEGORY_ID = "categoryId";
-    public static final String PHOTO_ID = "photoId";
+    public static final String CATEGORY_NAME = "categoryName";
+    public static final String PHOTO_URI = "photoUri";
 
     private static final String CREATE_PHOTO_CATEGORY_TABLE =
             "CREATE TABLE" + TABLE_NAME + " (" +
-                    CATEGORY_ID + "INTEGER, " +
-                    PHOTO_ID + "INTEGER, " +
-                    "PRIMARY KEY("+ CATEGORY_ID + "," +PHOTO_ID + "));";
+                    CATEGORY_NAME + "INTEGER, " +
+                    PHOTO_URI + "INTEGER, " +
+                    "PRIMARY KEY("+ CATEGORY_NAME + "," + PHOTO_URI + "));";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME;
