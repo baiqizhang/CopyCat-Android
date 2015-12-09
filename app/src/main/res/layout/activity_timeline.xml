@@ -55,6 +55,7 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_menu_edit"
-        app:backgroundTint="#6f6f6f" />
+        app:backgroundTint="#6f6f6f"
+        android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>

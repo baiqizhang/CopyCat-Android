@@ -1,83 +1,96 @@
 package com.copycat.view;
 
-import android.app.LauncherActivity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.copycat.model.Category;
 import com.copycat.util.CoreUtil;
 import com.example.baiqizhang.copycat.R;
 
+import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
- * Created by frankluo on 11/6/15.
+ * Created by baiqizhang on 11/18/15.
  */
-public class CategoryAdapter extends BaseAdapter {
-    private Context mContext;
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>  {
 
-    public CategoryAdapter(Context c) {
-        mContext = c;
-    }
+    // inner class to hold a reference to each item of RecyclerView
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        public TextView categoryName;
+        public ImageView banner;
+        public TextView photoCount;
 
-    public int getCount() {
-        return mThumbIds.length;
-    }
+        public ViewHolder(View itemLayoutView) {
+            super(itemLayoutView);
+            banner = (ImageView)itemLayoutView.findViewById(R.id.timeline_imageView);
+            categoryName= (TextView)itemLayoutView.findViewById(R.id.titleTextView);
+            photoCount= (TextView)itemLayoutView.findViewById(R.id.count_textview);
 
-    public Object getItem(int position) {
-        return null;
-    }
-
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    // references to our images
-    private Integer[] mThumbIds = {
-            R.drawable.img1_1, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7
-    };
-
-    // create a new ImageView for each item referenced by the Adapter
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        SquareImageView mImageView;
-        if (convertView == null) {
-            // if it's not recycled, initialize some attributes
-            mImageView = new SquareImageView(mContext);
-//            imageView.setLayoutParams(new GridView.LayoutParams(100, 100));
-            mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            mImageView.setPadding(0, 0, 0, 0);
-        } else {
-            mImageView = (SquareImageView) convertView;
+            itemLayoutView.setOnClickListener(this);
         }
 
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(mContext.getResources(),mThumbIds[position], options);
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
-        String imageType = options.outMimeType;
+        @Override
+        public void onClick(View v) {
+            //do sth
+        }
+    }
 
-        mImageView.setImageBitmap(
-                CoreUtil.decodeSampledBitmapFromResource(mContext.getResources(),R.drawable.img1_1,
-                        imageWidth/10, imageHeight/10));
-//        mImageView.setImageResource(mThumbIds[position]);
-        return mImageView;
+    public List<Category> categories;
+    private Context context;
+
+    public RecyclerView.OnItemTouchListener mItemClickListener;
+
+
+    // Provide a suitable constructor (depends on the kind of dataset)
+    public CategoryAdapter(List<Category> categories, Context context) {
+        this.categories = categories;
+        this.context = context;
+    }
+
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // create a new view
+        View rootView = LayoutInflater.from(context).inflate(R.layout.listitem_category, null, false);
+        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        rootView.setLayoutParams(lp);
+        ViewHolder holder = new ViewHolder(rootView);
+
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        // get data from your itemsData at this position
+        holder.banner.setImageBitmap(
+                CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.banner, 30, 100));
+        holder.categoryName.setText(categories.get(position).getCategoryName());
+        holder.photoCount.setText("- "+ "" +" -");
+    }
+
+    @Override
+    public int getItemCount() {
+        return categories.size();
     }
 
 
 
-
+    public void setmItemClickListener(final RecyclerView.OnItemTouchListener onItemClickListener) {
+        this.mItemClickListener = onItemClickListener;
+    }
 
 }

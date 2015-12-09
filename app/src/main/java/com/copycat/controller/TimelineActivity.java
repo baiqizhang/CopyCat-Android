@@ -60,22 +60,6 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        // create the grid item mapping
-        String[] from = new String[] {};
-        int[] to = new int[] { };
-
-        // prepare the list of all records
-        List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
-        for(int i = 0; i < 10; i++){
-            HashMap<String, String> map = new HashMap<String, String>();
-            fillMaps.add(map);
-        }
-
-        // fill in the grid_item layout
-        SimpleAdapter adapter = new SimpleAdapter(this, fillMaps, R.layout.listitem_timeline, from, to);
-        mListView.setAdapter(adapter);
-*/
         List<Post> placeholders = new ArrayList<Post>();
         placeholders.add(new Post());
         placeholders.add(new Post());
@@ -127,17 +111,18 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
-        mUltimateRecyclerView.setParallaxHeader(getLayoutInflater().inflate(R.layout.listitem_category,
-                mUltimateRecyclerView.mRecyclerView, false));
+//        mUltimateRecyclerView.setParallaxHeader(getLayoutInflater().inflate(R.layout.listitem_category,
+//                mUltimateRecyclerView.mRecyclerView, false));
+//
+//        mUltimateRecyclerView.setOnParallaxScroll(new UltimateRecyclerView.OnParallaxScroll() {
+//            @Override
+//            public void onParallaxScroll(float percentage, float offset, View parallax) {
+//                Drawable c = toolbar.getBackground();
+//                c.setAlpha(Math.round(127 + percentage * 128));
+//                toolbar.setBackgroundDrawable(c);
+//            }
+//        });
 
-        mUltimateRecyclerView.setOnParallaxScroll(new UltimateRecyclerView.OnParallaxScroll() {
-            @Override
-            public void onParallaxScroll(float percentage, float offset, View parallax) {
-                Drawable c = toolbar.getBackground();
-                c.setAlpha(Math.round(127 + percentage * 128));
-                toolbar.setBackgroundDrawable(c);
-            }
-        });
 
         mUltimateRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

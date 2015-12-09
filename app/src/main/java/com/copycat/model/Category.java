@@ -11,6 +11,7 @@ public class Category {
     private String categoryName;
     private Bitmap banner;
 
+
     public Category(String categoryName, Bitmap banner) {
         this.categoryName = categoryName;
         this.banner = banner;

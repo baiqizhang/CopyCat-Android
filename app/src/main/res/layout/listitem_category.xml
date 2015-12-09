@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/category_height"
-        android:id="@+id/listitem_timeline_imageView"
+        android:id="@+id/timeline_imageView"
         android:src="@drawable/banner"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="0dp"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="- 1 -"
-            android:id="@+id/countTextView"
+            android:id="@+id/count_textview"
             android:layout_gravity="center_horizontal"
             android:textColor="#FFFFFF"
             android:textSize="17sp"
