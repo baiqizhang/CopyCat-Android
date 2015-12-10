@@ -50,7 +50,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
         Category Animal = new Category("Animal", banner_animal, null);
         Category City = new Category("City", banner_city, null);
+        Category UserCategory = new Category("UserCategory", banner_animal,null);
 
+        UserCategory = CoreUtil.addCategory(UserCategory,this);
         Animal = CoreUtil.addCategory(Animal, this);
         City = CoreUtil.addCategory(City,this);
 
@@ -64,6 +66,12 @@ public class WelcomeActivity extends AppCompatActivity {
         photoList.add(bB);
         photoList.add(pC);
         CoreUtil.addPhotoListToCategory(photoList, City.getCategoryUri(), this);
+
+        photoList = new ArrayList<>();
+        photoList.add(pA);
+        photoList.add(bB);
+        photoList.add(pC);
+        CoreUtil.addPhotoListToCategory(photoList, UserCategory.getCategoryUri(), this);
 
         mTimelineButton = (ImageButton)findViewById(R.id.welcome_InspireButton);
         mGalleryButton = (ImageButton)findViewById(R.id.welcome_galleryButton);
@@ -100,6 +108,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent showCamera =
                         new Intent(WelcomeActivity.this, CameraActivity.class);
+
                 startActivity(showCamera);
             }
         });
