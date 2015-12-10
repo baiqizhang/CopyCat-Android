@@ -6,8 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.net.Uri;
@@ -25,12 +27,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.os.Handler;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import java.net.URL;
+import java.util.List;
 
 
+import com.copycat.model.Photo;
 import com.copycat.util.CoreUtil;
 import com.example.baiqizhang.copycat.R;
 
@@ -73,12 +78,16 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         overlay = (ImageView) findViewById(R.id.imageView1);
 //        overlay.setImageURI(Uri.parse("file:///storage/emulated/0/DCIM/Camera/Baoshu.jpg"));
 
-        if (uri.substring(0,4).equals("draw")){
-            int id = Integer.valueOf(uri.substring(7));
-            overlay.setImageBitmap(
-                    CoreUtil.decodeSampledBitmapFromResource(getResources(), id, 100, 100));
-        } else if (uri.substring(0,4).equals("file")){
-
+        if(uri!=null) {
+            if (uri.substring(0, 4).equals("draw")) {
+                int id = Integer.valueOf(uri.substring(7));
+                overlay.setImageBitmap(
+                        CoreUtil.decodeSampledBitmapFromResource(getResources(), id, 100, 100));
+            } else if (uri.substring(0, 4).equals("file")) {
+                Bitmap tempPhoto = BitmapFactory.decodeFile(uri.substring(4));
+                overlay.setImageBitmap(tempPhoto);
+                return;
+            }
         }
 
 
@@ -167,6 +176,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 FileOutputStream fos = new FileOutputStream(pictureFile);
                 fos.write(data);
                 fos.close();
+                List<Photo> tempPList = new ArrayList<Photo>();
+                tempPList.add(new Photo(pictureFile.getName(),pictureFile.getAbsolutePath()));
+                CoreUtil.addPhotoListToCategory(tempPList, CoreUtil.getCategoryListFromDB(getContext()).get(0).getCategoryUri(),getContext());
             } catch (FileNotFoundException e) {
                 System.out.print("File not found: " + e.getMessage());
             } catch (IOException e) {
@@ -176,6 +188,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     };
 
 
+    private Context getContext() {
+        return (Context) this;
+    }
     private static Uri getOutputMediaFileUri(int type) {
         return Uri.fromFile(getOutputMediaFile(type));
     }

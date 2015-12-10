@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import com.copycat.model.Photo;
+import com.copycat.util.CoreUtil;
 import com.copycat.util.remote.UserUtil;
 import com.copycat.view.GalleryAdapter;
 import com.example.baiqizhang.copycat.R;
@@ -57,15 +58,15 @@ public class UserProfileActivity extends AppCompatActivity {
         LayerDrawable ld = new LayerDrawable(new Drawable[]{color, image});
         imageView.setImageDrawable(ld);
 
+//        //Content adapter
+//        List<Photo> placeholders = new ArrayList<Photo>();
+//        placeholders.add(new Photo("","draw://" + R.drawable.sample_0));
+//        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+//        placeholders.add(new Photo("","draw://" + R.drawable.sample_2));
+//        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+//        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
 
-        //Content adapter
-        List<Photo> placeholders = new ArrayList<Photo>();
-        placeholders.add(new Photo("","draw://" + R.drawable.sample_0));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
-        placeholders.add(new Photo("","draw://" + R.drawable.sample_2));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
-
+        List<Photo> placeholders = CoreUtil.getPhotoListWithCategory(CoreUtil.getCategoryListFromDB(this).get(0).getCategoryUri(),this);
         GalleryAdapter galleryAdapter = new GalleryAdapter(placeholders,this);
 
         //RecyclerView
@@ -74,7 +75,6 @@ public class UserProfileActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setAdapter(galleryAdapter);
-
 
         //back
         ImageButton mBackButton = (ImageButton)findViewById(R.id.backButton);
