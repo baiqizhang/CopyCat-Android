@@ -4,7 +4,7 @@
 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
+    android:background="@color/colorPrimary">
     <FrameLayout
         android:id="@+id/camera_preview"
         android:layout_width="fill_parent"
@@ -17,16 +17,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+
             <com.copycat.controller.CameraPreview
                 android:id="@+id/cameraPreview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
 
             <SeekBar
                 android:id="@+id/opacity"
@@ -38,12 +38,31 @@
         </RelativeLayout>
     </FrameLayout>
 
-    <ImageButton
-        android:id="@+id/captureButton"
-        android:src="@drawable/camera"
-        android:layout_width="70dip"
-        android:layout_height="70dip"
-        android:layout_gravity="center"
-        android:background="@color/black_overlay"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/captureButton"
+            android:src="@drawable/shutter"
+            android:layout_width="70dip"
+            android:layout_height="70dip"
+            android:layout_gravity="center_vertical"
+            android:focusableInTouchMode="false"
+            android:background="@null"
+            android:scaleType="fitCenter" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </LinearLayout>

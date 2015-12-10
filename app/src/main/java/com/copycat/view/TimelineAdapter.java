@@ -46,8 +46,6 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
                 && (customHeaderView != null ? position <= posts.size() : position < posts.size())
                 && (customHeaderView != null ? position > 0 : true)) {
 
-//            holder.image.setImageBitmap(
-//                    CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.img1_1, 30, 100));
             Picasso.with(context)
                     .load(posts.get(position).getPhotoURI())
                     .into(holder.image, new com.squareup.picasso.Callback() {

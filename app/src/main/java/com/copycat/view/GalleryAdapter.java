@@ -3,20 +3,15 @@ package com.copycat.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.copycat.controller.GalleryActivity;
-import com.copycat.controller.PhotoViewActivity;
-import com.copycat.model.Category;
+import com.copycat.controller.PhotoPreviewActivity;
 import com.copycat.model.Photo;
 import com.copycat.util.CoreUtil;
 import com.example.baiqizhang.copycat.R;
@@ -66,7 +61,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             } else {
                 Toast.makeText(context, "" + position,
                         Toast.LENGTH_SHORT).show();
-                Intent loginIntent = new Intent(context, PhotoViewActivity.class);
+                Intent loginIntent = new Intent(context, PhotoPreviewActivity.class);
                 context.startActivity(loginIntent);
             }
         }
