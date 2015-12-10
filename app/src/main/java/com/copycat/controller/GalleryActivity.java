@@ -69,7 +69,7 @@ public class GalleryActivity extends AppCompatActivity {
         //RecyclerView
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.gridview);
         // use a linear layout manager
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setAdapter(galleryAdapter);
 

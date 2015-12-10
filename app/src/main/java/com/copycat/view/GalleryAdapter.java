@@ -1,5 +1,6 @@
 package com.copycat.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -55,12 +56,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                     Toast.LENGTH_SHORT).show();
 
             if (position == 0) {
-                Intent intent = new Intent(
-                        Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
+//                Intent intent = new Intent(
+//                        Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent intent = new Intent();
+                intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-//                context.startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
+                ((Activity)context).startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
             } else {
                 Toast.makeText(context, "" + position,
                         Toast.LENGTH_SHORT).show();
@@ -86,15 +88,22 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         ImageView mImageView = holder.imageView;
         mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        mImageView.setPadding(2, 2, 2, 2);
+        mImageView.setPadding(1, 1, 1, 1);
 
         Photo photo = photos.get(position);
         String uri = photo.getPhotoUrl();
         Log.d("uri", uri.substring(0, 4));
+        if (position == 0){
+            holder.imageView.setImageBitmap(
+                    CoreUtil.decodeSampledBitmapFromResource(context.getResources(),R.drawable.addnew, 100, 100));
+            return;
+        }
+
         if (uri.substring(0,4).equals("draw")){
             int id = Integer.valueOf(uri.substring(7));
             holder.imageView.setImageBitmap(
-                    CoreUtil.decodeSampledBitmapFromResource(context.getResources(),id, 30, 30));
+                    CoreUtil.decodeSampledBitmapFromResource(context.getResources(),id, 100, 100));
+        } else if (uri.substring(0,4).equals("draw")){
 
         }
 
