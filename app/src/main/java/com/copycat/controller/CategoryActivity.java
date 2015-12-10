@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.CircularPropagation;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -48,22 +49,9 @@ public class CategoryActivity extends AppCompatActivity {
         TextView mTitleTextView = (TextView) findViewById(R.id.toolbar_title);
         mTitleTextView.setLetterSpacing(0.13f);
 
-        Bitmap a = BitmapFactory.decodeResource(this.getResources(), R.drawable.sample_4);
-        Category cA = new Category("cA", a, null);
-        cA = CoreUtil.addCategory(cA,this);
-
-        Photo pA = CoreUtil.storePhotoLocally(a,"pA",this);
-        List<Photo> photoList = new ArrayList<>();
-        photoList.add(CoreUtil.storePhotoLocally(a,"pA",this));
-
-        CoreUtil.addPhotoListToCategory(photoList,cA,this);
-
         List<Category> placeholders = CoreUtil.getCategoryListFromDB(this);
 
-        //Content adapter
-//        List<Category> placeholders = new ArrayList<Category>();
 //        placeholders.add(new Category("Selfie",null));
-//        placeholders.add(new Category("Animal",null));
 //        placeholders.add(new Category("Lifestyle",null));
 //        placeholders.add(new Category("People",null));
 //        placeholders.add(new Category("Food",null));

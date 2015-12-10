@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.copycat.model.Category;
 import com.copycat.model.Photo;
+import com.copycat.util.CoreUtil;
 import com.copycat.view.CategoryAdapter;
 import com.copycat.view.GalleryAdapter;
 import com.copycat.view.ImageAdapter;
@@ -52,21 +53,17 @@ public class GalleryActivity extends AppCompatActivity {
         mTitleTextView.setLetterSpacing(0.13f);
 
         Intent intent = getIntent();
-        int index = intent.getIntExtra("index",0);
-        Toast.makeText(GalleryActivity.this, "" + index, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(GalleryActivity.this, "" + index, Toast.LENGTH_SHORT).show();
 
-        //Content adapter
-        List<Photo> placeholders = new ArrayList<Photo>();
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
+        //Get PhotoList by Category uri(absolutePath of it's banner named by category's name)
+        String categoryUri = intent.getStringExtra("cUri");
+        List<Photo> placeholders = CoreUtil.getPhotoListWithCategory(categoryUri,this);
 
         GalleryAdapter galleryAdapter = new GalleryAdapter(placeholders,this);
 
         //RecyclerView
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.gridview);
+
         // use a linear layout manager
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mRecyclerView.setHasFixedSize(false);
@@ -100,7 +97,6 @@ public class GalleryActivity extends AppCompatActivity {
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     String filePath = cursor.getString(columnIndex);
                     cursor.close();
-
 
                     Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
                 }
