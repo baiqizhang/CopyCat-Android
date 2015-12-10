@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
@@ -30,6 +31,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import java.net.URL;
 
 
+import com.copycat.util.CoreUtil;
 import com.example.baiqizhang.copycat.R;
 
 
@@ -66,9 +68,22 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
 
         preview = (CameraPreview) findViewById(R.id.cameraPreview);
-        overlay = (ImageView) findViewById(R.id.imageView1);
 
-        overlay.setImageURI(Uri.parse("file:///storage/emulated/0/DCIM/Camera/Baoshu.jpg"));
+        //get intent extra
+        Intent intent = getIntent();
+        String uri = intent.getStringExtra("uri");
+        overlay = (ImageView) findViewById(R.id.imageView1);
+//        overlay.setImageURI(Uri.parse("file:///storage/emulated/0/DCIM/Camera/Baoshu.jpg"));
+
+        if (uri.substring(0,4).equals("draw")){
+            int id = Integer.valueOf(uri.substring(7));
+            overlay.setImageBitmap(
+                    CoreUtil.decodeSampledBitmapFromResource(getResources(), id, 100, 100));
+        } else if (uri.substring(0,4).equals("file")){
+
+        }
+
+
 
         barOpacity = (SeekBar) findViewById(R.id.opacity);
         int alpha = barOpacity.getProgress();

@@ -11,15 +11,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.copycat.model.Photo;
 import com.copycat.util.remote.UserUtil;
 import com.copycat.view.GalleryAdapter;
-import com.copycat.view.ImageAdapter;
 import com.example.baiqizhang.copycat.R;
 
 import java.util.ArrayList;

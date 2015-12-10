@@ -8,7 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.copycat.util.CoreUtil;
 import com.example.baiqizhang.copycat.R;
 
 /**
@@ -31,14 +34,28 @@ public class PhotoPreviewActivity extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        //get intent extra
+        Intent intent = getIntent();
+        final String uri = intent.getStringExtra("uri");
+
+        ImageView imageView = (ImageView)findViewById(R.id.imageView);
+        if (uri.substring(0,4).equals("draw")){
+            int id = Integer.valueOf(uri.substring(7));
+            imageView.setImageBitmap(
+                    CoreUtil.decodeSampledBitmapFromResource(getResources(), id, 100, 100));
+        } else if (uri.substring(0,4).equals("file")){
+
+        }
+
+
+        //Buttons
         ImageButton mYesButton = (ImageButton)findViewById(R.id.yesPreviewButton);
         mYesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, 1);
-                }
+                Intent intent = new Intent(PhotoPreviewActivity.this, CameraActivity.class);
+                intent.putExtra("uri",uri);
+                startActivity(intent);
             }
         });
 

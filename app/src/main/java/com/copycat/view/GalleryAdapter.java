@@ -61,8 +61,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             } else {
                 Toast.makeText(context, "" + position,
                         Toast.LENGTH_SHORT).show();
-                Intent loginIntent = new Intent(context, PhotoPreviewActivity.class);
-                context.startActivity(loginIntent);
+                Intent intent = new Intent(context, PhotoPreviewActivity.class);
+                intent.putExtra("uri",photos.get(position).getPhotoUrl());
+                context.startActivity(intent);
             }
         }
     }
@@ -98,7 +99,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             int id = Integer.valueOf(uri.substring(7));
             holder.imageView.setImageBitmap(
                     CoreUtil.decodeSampledBitmapFromResource(context.getResources(),id, 100, 100));
-        } else if (uri.substring(0,4).equals("draw")){
+        } else if (uri.substring(0,4).equals("file")){
 
         }
 

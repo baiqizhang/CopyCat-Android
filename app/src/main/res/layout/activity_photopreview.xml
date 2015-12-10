@@ -34,7 +34,7 @@
             android:text="Yes"
             android:id="@+id/yesPreviewButton"
             android:src="@drawable/checkmark"
-            android:background="@null"></ImageButton>
+            android:background="@null"/>
 
         <Space
             android:layout_width="20px"
@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:background="#ffffff"></LinearLayout>
+                android:background="#ffffff"/>
 
             <Space
                 android:layout_width="fill_parent"

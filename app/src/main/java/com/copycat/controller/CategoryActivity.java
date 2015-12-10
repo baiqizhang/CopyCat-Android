@@ -60,14 +60,6 @@ public class CategoryActivity extends AppCompatActivity {
 
         List<Category> placeholders = CoreUtil.getCategoryListFromDB(this);
 
-        //Content adapter
-//        List<Category> placeholders = new ArrayList<Category>();
-//        placeholders.add(new Category("Selfie",null));
-//        placeholders.add(new Category("Animal",null));
-//        placeholders.add(new Category("Lifestyle",null));
-//        placeholders.add(new Category("People",null));
-//        placeholders.add(new Category("Food",null));
-
         CategoryAdapter categoryAdapter = new CategoryAdapter(placeholders,this);
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.category_recyclerview);

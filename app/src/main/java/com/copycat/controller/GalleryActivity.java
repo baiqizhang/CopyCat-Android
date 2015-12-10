@@ -2,29 +2,21 @@ package com.copycat.controller;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.copycat.model.Category;
 import com.copycat.model.Photo;
-import com.copycat.view.CategoryAdapter;
 import com.copycat.view.GalleryAdapter;
-import com.copycat.view.ImageAdapter;
 import com.example.baiqizhang.copycat.R;
 
 import java.util.ArrayList;
@@ -51,6 +43,7 @@ public class GalleryActivity extends AppCompatActivity {
         TextView mTitleTextView = (TextView) findViewById(R.id.toolbar_title);
         mTitleTextView.setLetterSpacing(0.13f);
 
+        //get intent extra
         Intent intent = getIntent();
         int index = intent.getIntExtra("index",0);
         Toast.makeText(GalleryActivity.this, "" + index, Toast.LENGTH_SHORT).show();
@@ -58,10 +51,11 @@ public class GalleryActivity extends AppCompatActivity {
         //Content adapter
         List<Photo> placeholders = new ArrayList<Photo>();
         placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
+        placeholders.add(new Photo("","draw://" + R.drawable.sample_2,null));
         placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
         placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
         placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
+        placeholders.add(new Photo("","draw://" + R.drawable.sample_6,null));
 
         GalleryAdapter galleryAdapter = new GalleryAdapter(placeholders,this);
 
@@ -102,20 +96,10 @@ public class GalleryActivity extends AppCompatActivity {
                     cursor.close();
 
 
-                    Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+
+//                    Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+
                 }
         }
-//        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-//            Uri selectedImage = data.getData();
-//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//            Cursor cursor = getContentResolver().query(selectedImage,
-//                    filePathColumn, null, null, null);
-//            cursor.moveToFirst();
-//
-//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//            String picturePath = cursor.getString(columnIndex);
-//            cursor.close();
-//            // String picturePath contains the path of selected Image
-//        }
     }
 }
