@@ -55,14 +55,13 @@ public class GalleryActivity extends AppCompatActivity {
         int index = intent.getIntExtra("index",0);
         Toast.makeText(GalleryActivity.this, "" + index, Toast.LENGTH_SHORT).show();
 
-
         //Content adapter
         List<Photo> placeholders = new ArrayList<Photo>();
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
 
         GalleryAdapter galleryAdapter = new GalleryAdapter(placeholders,this);
 
