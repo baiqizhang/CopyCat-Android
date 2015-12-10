@@ -88,7 +88,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         //        CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.banner, 30, 100));
         holder.banner.setImageBitmap(categories.get(position).getBanner());
         holder.categoryName.setText(categories.get(position).getCategoryName());
-        holder.photoCount.setText("- "+ "" +" -");
+        holder.photoCount.setText("- "+ categories.get(position).getCount() +" -");
         holder.position = position;
     }
 

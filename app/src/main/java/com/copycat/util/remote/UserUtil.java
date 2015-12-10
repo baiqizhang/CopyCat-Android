@@ -9,6 +9,10 @@ import com.copycat.model.User;
  */
 public class UserUtil {
 
+    public static User getCurrentUser(){
+        return null;
+    }
+
     public static User userLogin(String userName, String password){
         return null;
     }

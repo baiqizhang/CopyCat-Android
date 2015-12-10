@@ -6,16 +6,20 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,6 +31,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import java.net.URL;
 
 
+import com.copycat.util.CoreUtil;
 import com.example.baiqizhang.copycat.R;
 
 
@@ -41,8 +46,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     SeekBar barOpacity;
     ImageView overlay;
     Camera camera;
-    URL url;
-    Bitmap bmp;
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
 
@@ -53,10 +56,32 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        preview = (CameraPreview) findViewById(R.id.cameraPreview);
-        overlay = (ImageView) findViewById(R.id.imageView1);
+        //Hide actionbar and status bar
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        overlay.setImageURI(Uri.parse("file:///storage/emulated/0/DCIM/Camera/Baoshu.jpg"));
+
+        preview = (CameraPreview) findViewById(R.id.cameraPreview);
+
+        //get intent extra
+        Intent intent = getIntent();
+        String uri = intent.getStringExtra("uri");
+        overlay = (ImageView) findViewById(R.id.imageView1);
+//        overlay.setImageURI(Uri.parse("file:///storage/emulated/0/DCIM/Camera/Baoshu.jpg"));
+
+        if (uri.substring(0,4).equals("draw")){
+            int id = Integer.valueOf(uri.substring(7));
+            overlay.setImageBitmap(
+                    CoreUtil.decodeSampledBitmapFromResource(getResources(), id, 100, 100));
+        } else if (uri.substring(0,4).equals("file")){
+
+        }
+
+
 
         barOpacity = (SeekBar) findViewById(R.id.opacity);
         int alpha = barOpacity.getProgress();

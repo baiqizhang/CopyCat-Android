@@ -57,6 +57,11 @@
 
         </activity>
         <activity
+            android:name="com.copycat.controller.PhotoPreviewActivity"
+            android:label="@string/title_activity_photoview"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
             android:name="com.copycat.controller.PhotoViewActivity"
             android:label="@string/title_activity_photoview"
             android:theme="@style/AppTheme.NoActionBar" >
@@ -72,10 +77,11 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-        android:name="com.copycat.controller.CameraActivity"
-        android:label="@string/title_activity_camera"
-        android:screenOrientation="landscape">
-            </activity>
+            android:name="com.copycat.controller.CameraActivity"
+            android:label="@string/title_activity_camera"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
     </application>
 

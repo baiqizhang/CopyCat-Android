@@ -31,23 +31,12 @@ public class PhotoViewActivity extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        ImageButton mYesButton = (ImageButton)findViewById(R.id.yesPreviewButton);
-        mYesButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton mShareButton = (ImageButton)findViewById(R.id.share);
+        mShareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, 1);
-                }
             }
         });
 
-        ImageButton mNoButton = (ImageButton)findViewById(R.id.noPreviewButton);
-        mNoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 }
