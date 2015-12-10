@@ -30,6 +30,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by baiqizhang on 11/18/15.
  */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>  {
+    private List<Category> categories;
+    private Context context;
+    private RecyclerView.OnItemTouchListener mItemClickListener;
+
 
     // inner class to hold a reference to each item of RecyclerView
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -57,11 +61,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     Toast.LENGTH_SHORT).show();
         }
     }
-
-    public List<Category> categories;
-    private Context context;
-
-    public RecyclerView.OnItemTouchListener mItemClickListener;
 
 
     // Provide a suitable constructor (depends on the kind of dataset)

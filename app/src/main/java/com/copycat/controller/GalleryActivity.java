@@ -2,10 +2,15 @@ package com.copycat.controller;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,11 +20,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.copycat.model.Category;
+import com.copycat.model.Photo;
+import com.copycat.view.CategoryAdapter;
+import com.copycat.view.GalleryAdapter;
 import com.copycat.view.ImageAdapter;
 import com.example.baiqizhang.copycat.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GalleryActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 666;
+    RecyclerView mRecyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,26 +56,22 @@ public class GalleryActivity extends AppCompatActivity {
         Toast.makeText(GalleryActivity.this, "" + index, Toast.LENGTH_SHORT).show();
 
 
-        //GridView
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
+        //Content adapter
+        List<Photo> placeholders = new ArrayList<Photo>();
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                if (position == 0) {
-                    Intent i = new Intent(
-                            Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        GalleryAdapter galleryAdapter = new GalleryAdapter(placeholders,this);
 
-                    startActivityForResult(i, RESULT_LOAD_IMAGE);
-                }
-                Toast.makeText(GalleryActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
-                Intent loginIntent = new Intent(GalleryActivity.this, PhotoViewActivity.class);
-                startActivity(loginIntent);
-
-            }
-        });
+        //RecyclerView
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.gridview);
+        // use a linear layout manager
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        mRecyclerView.setHasFixedSize(false);
+        mRecyclerView.setAdapter(galleryAdapter);
 
         ImageButton mBackButton = (ImageButton) findViewById(R.id.toolbar_back);
         mBackButton.setOnClickListener(new View.OnClickListener() {
@@ -75,21 +84,39 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+        switch(requestCode) {
+            case RESULT_LOAD_IMAGE:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
+                    Cursor cursor = getContentResolver().query(
+                            selectedImage, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
 
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            // String picturePath contains the path of selected Image
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String filePath = cursor.getString(columnIndex);
+                    cursor.close();
+
+
+                    Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+                }
         }
+//        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+//            Uri selectedImage = data.getData();
+//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//            Cursor cursor = getContentResolver().query(selectedImage,
+//                    filePathColumn, null, null, null);
+//            cursor.moveToFirst();
+//
+//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//            String picturePath = cursor.getString(columnIndex);
+//            cursor.close();
+//            // String picturePath contains the path of selected Image
+//        }
     }
 }

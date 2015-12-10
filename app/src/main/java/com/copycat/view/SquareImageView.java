@@ -7,7 +7,7 @@ import android.widget.ImageView;
 /**
  * Created by baiqizhang on 11/25/15.
  */
-public class SquareImageView extends ImageView {
+public class SquareImageView extends android.support.v7.widget.AppCompatImageView {
     public SquareImageView(Context context) {
         super(context);
     }
