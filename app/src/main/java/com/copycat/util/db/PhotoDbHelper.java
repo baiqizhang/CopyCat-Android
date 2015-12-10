@@ -12,18 +12,14 @@ public class PhotoDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "CopyCat.db";
 
     public static final String TABLE_NAME = "photoTbl";
-    public static final String PHOTO_ID = "photoId";
     public static final String PHOTO_URL = "photoUrl";
     public static final String PHOTO_NAME = "photoName";
 
-    private static final String TEXT_TYPE = "TEXT";
-
     private static final String CREATE_PHOTO_TABLE =
-            "CREATE TABLE" + TABLE_NAME + " (" +
-                    PHOTO_ID + "INTEGER AUTOINCREMENT" + "," +
-                    PHOTO_NAME + "TEXT, " +
-                    PHOTO_URL + "TEXT NOT NULL" +TEXT_TYPE +
-                    " )";
+            "CREATE TABLE " + TABLE_NAME + " (" +
+                    PHOTO_URL + " TEXT NOT NULL UNIQUE," +
+                    PHOTO_NAME + " TEXT NOT NULL" +
+                    " );";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME;

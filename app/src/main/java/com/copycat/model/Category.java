@@ -10,12 +10,21 @@ import java.util.ArrayList;
 public class Category {
     private String categoryName;
     private Bitmap banner;
+    private String categoryUri;
     private int count = 0;
 
+    public String getCategoryUri() {
+        return categoryUri;
+    }
 
-    public Category(String categoryName, Bitmap banner) {
+    public void setCategoryUri(String categoryUri) {
+        this.categoryUri = categoryUri;
+    }
+
+    public Category(String categoryName, Bitmap banner, String categoryUri) {
         this.categoryName = categoryName;
         this.banner = banner;
+        this.categoryUri = categoryUri;
     }
 
     public Category(String categoryName, Bitmap banner, int count) {

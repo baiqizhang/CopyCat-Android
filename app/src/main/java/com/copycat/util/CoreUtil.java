@@ -9,21 +9,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.widget.ImageView;
 
 import com.copycat.model.Category;
 import com.copycat.model.Photo;
-import com.copycat.util.db.BitmapUtility;
 import com.copycat.util.db.CategoryDbHelper;
-import com.copycat.util.db.PhotoDbHelper;
 import com.copycat.util.db.PhotoInCategoryDbHelper;
-import com.example.baiqizhang.copycat.R;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,40 +27,58 @@ public class CoreUtil {
         CategoryDbHelper dbHelper = new CategoryDbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = new String[2];
-        columns[0] = CategoryDbHelper.CATEGORY_NAME;
-        columns[1] = CategoryDbHelper.BANNER_IMAGE;
+        columns[0] = CategoryDbHelper.CATEGORY_URI;
+        columns[1] = CategoryDbHelper.CATEGORY_NAME;
         Cursor cursor = db.query(CategoryDbHelper.TABLE_NAME,columns,null,null,null,null,null,null);
 
         List<Category> cList = new ArrayList<>();
 
         for( cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            byte[] bBanner = (byte[])cursor.getBlob(1);
-            Bitmap banner = BitmapUtility.getImage(bBanner);
-            cList.add(new Category(cursor.getString(0),banner));
+            String cUri = cursor.getString(0);
+            String cName = cursor.getString(1);
+            Bitmap banner = BitmapFactory.decodeFile(cUri);
+
+            cList.add(new Category(cName,banner,cUri));
         }
 
         return cList;
     }
 
-    public static boolean addCategory(Category category, Context context){
+    public static Category addCategory(Category category, Context context){
         try {
             String cName = category.getCategoryName();
-
             Bitmap banner = category.getBanner();
-            byte[] bBanner = BitmapUtility.getBytes(banner);
 
-            ContentValues values = new ContentValues();
-            values.put(CategoryDbHelper.BANNER_IMAGE, bBanner);
-            values.put(CategoryDbHelper.CATEGORY_NAME, cName);
+            //store locally
+            ContextWrapper cw = new ContextWrapper(context);
+            // path to /data/data/yourapp/app_data/categoryImageDir
+            File directory = cw.getDir("categoryImageDir", Context.MODE_PRIVATE);
+            File myPath=new File(directory,cName +".png");
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(myPath);
+                // Use the compress method on the BitMap object to write image to the OutputStream
+                banner.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
 
             //insert into db
+            ContentValues values = new ContentValues();
+            values.put(CategoryDbHelper.CATEGORY_URI, myPath.getAbsolutePath());
+            values.put(CategoryDbHelper.CATEGORY_NAME, cName);
+
             CategoryDbHelper dbHelper = new CategoryDbHelper(context);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             db.insert(CategoryDbHelper.TABLE_NAME, null, values);
-            return true;
+            db.close();
+            category.setCategoryUri(myPath.getAbsolutePath());
+            return category;
         } catch (SQLiteException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -75,7 +86,8 @@ public class CoreUtil {
         try {
             CategoryDbHelper dbHelper = new CategoryDbHelper(context);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
-            db.delete(CategoryDbHelper.TABLE_NAME,CategoryDbHelper.CATEGORY_NAME + "=" + category.getCategoryName(),null);
+            db.delete(CategoryDbHelper.TABLE_NAME,CategoryDbHelper.CATEGORY_URI + "=" + category.getCategoryUri(),null);
+            db.close();
             return true;
         } catch (SQLiteException e) {
             e.printStackTrace();
@@ -84,19 +96,23 @@ public class CoreUtil {
     }
 
     //Photo
+    //Category should have been stored in db so that it has uri value
     public static boolean addPhotoListToCategory(List<Photo> photoList,Category category, Context context){
 
         try {
             PhotoInCategoryDbHelper dbHelper = new PhotoInCategoryDbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
             for(Photo photo : photoList) {
+
                 String photoUri = photo.getPhotoUrl();
-                String categoryName = category.getCategoryName();
+                String categoryUri = category.getCategoryUri();
                 ContentValues values = new ContentValues();
-                values.put(PhotoInCategoryDbHelper.CATEGORY_NAME, categoryName);
+                values.put(PhotoInCategoryDbHelper.CATEGORY_URI, categoryUri);
                 values.put(PhotoInCategoryDbHelper.PHOTO_URI, photoUri);
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
                 db.insert(PhotoInCategoryDbHelper.TABLE_NAME, null, values);
             }
+            db.close();
             return true;
         } catch (SQLiteException e) {
             e.printStackTrace();
@@ -104,28 +120,38 @@ public class CoreUtil {
         }
     }
 
-    public static List<Photo> getPhotoListWithCategory(String categoryName, Context context) {
+    //category must be stored in DB in advance, so that it have absolutePath/URI
+    public static List<Photo> getPhotoListWithCategory(Category category, Context context) {
+
         PhotoInCategoryDbHelper dbHelper = new PhotoInCategoryDbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] columns = new String[2];
-        columns[0] = PhotoInCategoryDbHelper.CATEGORY_NAME;
+        columns[0] = PhotoInCategoryDbHelper.CATEGORY_URI;
         columns[1] = PhotoInCategoryDbHelper.PHOTO_URI;
+
         Cursor cursor = db.query(PhotoInCategoryDbHelper.TABLE_NAME,
                 columns,
-                PhotoInCategoryDbHelper.CATEGORY_NAME + "=" + categoryName,
+                PhotoInCategoryDbHelper.CATEGORY_URI + " MATCH " + category.getCategoryUri(),
                 null,null,null,null,null);
 
-        List<Photo> pList = new ArrayList<>();
+        if(cursor!=null) {
+            List<Photo> pList = new ArrayList<>();
 
-        for( cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            String photoUri = (String)cursor.getString(0);
-            File f = new File(photoUri);
-            String photoName = f.getName();
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                String photoUri = cursor.getString(1);
+                Bitmap photo = BitmapFactory.decodeFile(photoUri);
 
-            pList.add(new Photo(photoName,photoUri));
+                File f = new File(photoUri);
+                String photoName = f.getName();
+
+                pList.add(new Photo(photoName, photoUri, photo));
+            }
+            db.close();
+            return pList;
         }
-        return pList;
+        db.close();
+        return  null;
     }
 
     public static boolean removePhotoListFromCategory(List<Photo> photoList,Category category, Context context){
@@ -134,30 +160,28 @@ public class CoreUtil {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             for(Photo photo: photoList) {
                 db.delete(PhotoInCategoryDbHelper.TABLE_NAME,
-                        PhotoInCategoryDbHelper.CATEGORY_NAME + "=" + category.getCategoryName() + "AND" +
-                                PhotoInCategoryDbHelper.PHOTO_URI + "=" + photo.getPhotoUrl(),
+                        PhotoInCategoryDbHelper.CATEGORY_URI + " MATCH " + category.getCategoryName() + "AND" +
+                                PhotoInCategoryDbHelper.PHOTO_URI + " MATCH " + photo.getPhotoUrl(),
                         null);
             }
+            db.close();
             return true;
         } catch (SQLiteException e) {
             e.printStackTrace();
             return false;
         }
-
     }
 
-    private Photo storePhotoLocally(Bitmap bitmapImage,String imageName, Context context) {
-        ContextWrapper cw = new ContextWrapper(context);
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        File myPath=new File(directory,imageName +".png");
+    public static Photo storePhotoLocally(Bitmap bitmapImage,String imageName, Context context) {
 
         //store locally
+        ContextWrapper cw = new ContextWrapper(context);
+        // path to /data/data/yourapp/app_data/categoryImageDir
+        File directory = cw.getDir("photoImageDir", Context.MODE_PRIVATE);
+        File myPath=new File(directory,imageName +".png");
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(myPath);
-
             // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();
@@ -166,35 +190,26 @@ public class CoreUtil {
             return null;
         }
 
-        //store photo uri and name to database
-        try {
+        //insert into db
+        ContentValues values = new ContentValues();
+        values.put(PhotoInCategoryDbHelper.PHOTO_URI, myPath.getAbsolutePath());
+        values.put(PhotoInCategoryDbHelper.CATEGORY_URI, imageName);
 
-            byte[] bBanner = BitmapUtility.getBytes(bitmapImage);
+        PhotoInCategoryDbHelper dbHelper = new PhotoInCategoryDbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.insert(PhotoInCategoryDbHelper.TABLE_NAME, null, values);
+        db.close();
 
-            ContentValues values = new ContentValues();
-            values.put(PhotoDbHelper.PHOTO_URL, directory.getAbsolutePath());
-            values.put(PhotoDbHelper.PHOTO_NAME, imageName);
-
-            //insert into db
-            CategoryDbHelper dbHelper = new CategoryDbHelper(context);
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            db.insert(PhotoDbHelper.TABLE_NAME, null, values);
-
-        } catch (SQLiteException e ) {
-            e.printStackTrace();
-            return null;
-        }
-        return new Photo(imageName, directory.getAbsolutePath());
+        return new Photo(imageName, myPath.getAbsolutePath(),bitmapImage);
     }
 
-    private Bitmap loadImageFromStorage(String uri)
+    private Bitmap loadImageFromStorage(String absolutePath)
     {
         try {
-            File f=new File(uri);
-            return BitmapFactory.decodeStream(new FileInputStream(f));
+            return BitmapFactory.decodeFile(absolutePath);
             //imgView.setImageBitmap(b);
         }
-        catch (FileNotFoundException e)
+        catch (Exception e)
         {
             e.printStackTrace();
             return null;

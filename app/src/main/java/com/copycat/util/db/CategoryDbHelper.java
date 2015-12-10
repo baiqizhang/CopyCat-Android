@@ -15,15 +15,14 @@ public class CategoryDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "CopyCat.db";
 
     public static final String TABLE_NAME = "categoryTbl";
-    public static final String CATEGORY_ID = "categoryId";
+
+    public static final String CATEGORY_URI = "categoryUri";
     public static final String CATEGORY_NAME = "categoryName";
-    public static final String BANNER_IMAGE = "bannerImage";
 
     private static final String CREATE_CATEGORY_TABLE =
-            "CREATE TABLE" + TABLE_NAME + " (" +
-                    CATEGORY_ID + "INTEGER AUTOINCREMENT, " +
-                    CATEGORY_NAME + "TEXT NOT NULL UNIQUE, " +
-                    BANNER_IMAGE + "BLOB);";
+            "CREATE TABLE " + TABLE_NAME + " (" +
+                    CATEGORY_URI + " TEXT NOT NULL UNIQUE, " +
+                    CATEGORY_NAME + " TEXT NOT NULL); ";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME;

@@ -34,7 +34,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private Context context;
     private RecyclerView.OnItemTouchListener mItemClickListener;
 
-
     // inner class to hold a reference to each item of RecyclerView
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView categoryName;
@@ -62,7 +61,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
     }
 
-
     // Provide a suitable constructor (depends on the kind of dataset)
     public CategoryAdapter(List<Category> categories, Context context) {
         this.categories = categories;
@@ -85,8 +83,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // get data from your itemsData at this position
-        holder.banner.setImageBitmap(
-                CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.banner, 30, 100));
+        //holder.banner.setImageBitmap(
+        //        CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.banner, 30, 100));
+        holder.banner.setImageBitmap(categories.get(position).getBanner());
         holder.categoryName.setText(categories.get(position).getCategoryName());
         holder.photoCount.setText("- "+ categories.get(position).getCount() +" -");
         holder.position = position;
