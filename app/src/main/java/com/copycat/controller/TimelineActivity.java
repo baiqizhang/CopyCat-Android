@@ -68,10 +68,6 @@ public class TimelineActivity extends AppCompatActivity {
         });
 
         List<Post> placeholders = new ArrayList<Post>();
-//        placeholders.add(new Post());
-//        placeholders.add(new Post());
-//        placeholders.add(new Post());
-//        placeholders.add(new Post());
 
         mTimelineAdapter = new TimelineAdapter(placeholders,this);
         mUltimateRecyclerView = (UltimateRecyclerView)findViewById(R.id.ultimate_recycler_view);
@@ -86,8 +82,6 @@ public class TimelineActivity extends AppCompatActivity {
 
         mUltimateRecyclerView.setAdapter(mTimelineAdapter);
 
-        mTimelineAdapter.setCustomLoadMoreView(LayoutInflater.from(this)
-                .inflate(R.layout.loadmore_progressbar, null));
 
         mBackButton = (ImageButton) findViewById(R.id.toolbar_back);
         mBackButton.setOnClickListener(new View.OnClickListener() {
@@ -97,26 +91,29 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
-        mUltimateRecyclerView.enableLoadmore();
-        mUltimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void loadMore(final int itemsCount, final int maxLastVisiblePosition) {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        mTimelineAdapter.insert(new Post(), mTimelineAdapter.getAdapterItemCount());
-                        mUltimateRecyclerView.disableLoadmore();
-                        mTimelineAdapter.remove(mTimelineAdapter.getAdapterItemCount()-1);
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            public void run() {
-                                mUltimateRecyclerView.enableLoadmore();
-                            }
-                        }, 5000);
-                    }
-                }, 1000);
-            }
-        });
+//        mTimelineAdapter.setCustomLoadMoreView(LayoutInflater.from(this)
+//                .inflate(R.layout.loadmore_progressbar, null));
+
+//        mUltimateRecyclerView.enableLoadmore();
+//        mUltimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+//            @Override
+//            public void loadMore(final int itemsCount, final int maxLastVisiblePosition) {
+//                Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    public void run() {
+//                        mTimelineAdapter.insert(new Post(), mTimelineAdapter.getAdapterItemCount());
+//                        mUltimateRecyclerView.disableLoadmore();
+//                        mTimelineAdapter.remove(mTimelineAdapter.getAdapterItemCount()-1);
+//                        Handler handler = new Handler();
+//                        handler.postDelayed(new Runnable() {
+//                            public void run() {
+//                                mUltimateRecyclerView.enableLoadmore();
+//                            }
+//                        }, 5000);
+//                    }
+//                }, 1000);
+//            }
+//        });
 
 //        mUltimateRecyclerView.setParallaxHeader(getLayoutInflater().inflate(R.layout.listitem_category,
 //                mUltimateRecyclerView.mRecyclerView, false));

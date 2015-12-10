@@ -16,11 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.copycat.model.Photo;
-<<<<<<< HEAD
-import com.copycat.util.CoreUtil;
-import com.copycat.view.CategoryAdapter;
-=======
->>>>>>> 165e6daced5a721e5567d5fc5f7f78655054a34e
 import com.copycat.view.GalleryAdapter;
 import com.example.baiqizhang.copycat.R;
 
@@ -50,28 +45,22 @@ public class GalleryActivity extends AppCompatActivity {
 
         //get intent extra
         Intent intent = getIntent();
-        //Toast.makeText(GalleryActivity.this, "" + index, Toast.LENGTH_SHORT).show();
+        int index = intent.getIntExtra("index",0);
+        Toast.makeText(GalleryActivity.this, "" + index, Toast.LENGTH_SHORT).show();
 
-<<<<<<< HEAD
-        //Get PhotoList by Category uri(absolutePath of it's banner named by category's name)
-        String categoryUri = intent.getStringExtra("cUri");
-        List<Photo> placeholders = CoreUtil.getPhotoListWithCategory(categoryUri,this);
-=======
         //Content adapter
         List<Photo> placeholders = new ArrayList<Photo>();
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.sample_2,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.sample_6,null));
->>>>>>> 165e6daced5a721e5567d5fc5f7f78655054a34e
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+        placeholders.add(new Photo("","draw://" + R.drawable.sample_2));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+        placeholders.add(new Photo("","draw://" + R.drawable.sample_6));
 
         GalleryAdapter galleryAdapter = new GalleryAdapter(placeholders,this);
 
         //RecyclerView
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.gridview);
-
         // use a linear layout manager
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         mRecyclerView.setHasFixedSize(false);
@@ -106,14 +95,10 @@ public class GalleryActivity extends AppCompatActivity {
                     String filePath = cursor.getString(columnIndex);
                     cursor.close();
 
-<<<<<<< HEAD
-                    Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-=======
 
 
 //                    Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
 
->>>>>>> 165e6daced5a721e5567d5fc5f7f78655054a34e
                 }
         }
     }

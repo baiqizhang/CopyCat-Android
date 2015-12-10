@@ -7,10 +7,12 @@ import com.copycat.model.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -20,9 +22,10 @@ import java.util.*;
  */
 public class PostUtil {
 
+    private static final String DNS = "ec2-52-90-164-203.compute-1.amazonaws.com";
+    private static final Gson gson = new Gson();
     //Timeline
     public static List<Post> getUserFeed(User user,int skipCount,int count){
-        final Gson gson = new Gson();
         String json = gson.toJson(user);
         Log.v("user json:",json);
 
@@ -30,7 +33,7 @@ public class PostUtil {
 
         try {
 
-            URL url = new URL("http://10.0.0.8:8080/CopyCatServer/PostUtil/GetPost");
+            URL url = new URL("http://"+DNS+"/CopyCatServer/PostUtil/GetPost");
             URLConnection conn = url.openConnection();
 
             HttpURLConnection httpConn = (HttpURLConnection) conn;
@@ -40,7 +43,7 @@ public class PostUtil {
             httpConn.connect();
 
             InputStream is = httpConn.getInputStream();
-            parsedString = convertinputStreamToString(is);
+            parsedString = convertInputStreamToString(is);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,7 +56,52 @@ public class PostUtil {
     }
 
     //Post
-    public static boolean uploadUserPost(User user, Post post){
+    public static boolean uploadUserPost(User user, Post post)
+    {
+        InputStream is;
+        OutputStream os;
+        HttpURLConnection conn;
+        //can catch a variety of wonderful things
+        try {
+            //constants
+            URL url = new URL("http://myhost.com/ajax");
+            String message = gson.toJson(post);
+
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout( 10000 /*milliseconds*/ );
+            conn.setConnectTimeout( 15000 /* milliseconds */ );
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            conn.setFixedLengthStreamingMode(message.getBytes().length);
+
+            //make some HTTP header nicety
+            conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+            conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
+
+            //open
+            conn.connect();
+
+            //setup send
+            OutputStream os = new BufferedOutputStream(conn.getOutputStream());
+            os.write(message.getBytes());
+            //clean up
+            os.flush();
+
+            //do somehting with response
+            is = conn.getInputStream();
+            String contentAsString = convertInputStreamToString(is);
+        } catch (Exception e ){
+            e.printStackTrace();
+        }
+        finally {
+            //clean up
+            os.close();
+            is.close();
+            conn.disconnect();
+        }
+
+
         return false;
     }
     public static boolean deleteUserPost(User user, Post post){
@@ -68,7 +116,7 @@ public class PostUtil {
 
 
     //Helper
-    public static String convertinputStreamToString(InputStream ists)
+    public static String convertInputStreamToString(InputStream ists)
             throws IOException {
         if (ists != null) {
             StringBuilder sb = new StringBuilder();
