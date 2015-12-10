@@ -60,11 +60,11 @@ public class UserProfileActivity extends AppCompatActivity {
 
         //Content adapter
         List<Photo> placeholders = new ArrayList<Photo>();
-        placeholders.add(new Photo("","draw://" + R.drawable.sample_0,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.sample_2,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
+        placeholders.add(new Photo("","draw://" + R.drawable.sample_0));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+        placeholders.add(new Photo("","draw://" + R.drawable.sample_2));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
+        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
 
         GalleryAdapter galleryAdapter = new GalleryAdapter(placeholders,this);
 

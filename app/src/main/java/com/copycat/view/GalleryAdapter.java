@@ -3,6 +3,8 @@ package com.copycat.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -100,7 +102,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             holder.imageView.setImageBitmap(
                     CoreUtil.decodeSampledBitmapFromResource(context.getResources(),id, 100, 100));
         } else if (uri.substring(0,4).equals("file")){
-
+            Bitmap tempPhoto = BitmapFactory.decodeFile(uri.substring(4));
+            holder.imageView.setImageBitmap(tempPhoto);
+            return;
         }
 
         holder.position = position;

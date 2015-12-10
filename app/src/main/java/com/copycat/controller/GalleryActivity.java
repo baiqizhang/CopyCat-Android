@@ -2,6 +2,8 @@ package com.copycat.controller;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -16,11 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.copycat.model.Photo;
-<<<<<<< HEAD
 import com.copycat.util.CoreUtil;
 import com.copycat.view.CategoryAdapter;
-=======
->>>>>>> 165e6daced5a721e5567d5fc5f7f78655054a34e
 import com.copycat.view.GalleryAdapter;
 import com.example.baiqizhang.copycat.R;
 
@@ -52,20 +51,9 @@ public class GalleryActivity extends AppCompatActivity {
         Intent intent = getIntent();
         //Toast.makeText(GalleryActivity.this, "" + index, Toast.LENGTH_SHORT).show();
 
-<<<<<<< HEAD
         //Get PhotoList by Category uri(absolutePath of it's banner named by category's name)
         String categoryUri = intent.getStringExtra("cUri");
         List<Photo> placeholders = CoreUtil.getPhotoListWithCategory(categoryUri,this);
-=======
-        //Content adapter
-        List<Photo> placeholders = new ArrayList<Photo>();
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.sample_2,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.img1_1,null));
-        placeholders.add(new Photo("","draw://" + R.drawable.sample_6,null));
->>>>>>> 165e6daced5a721e5567d5fc5f7f78655054a34e
 
         GalleryAdapter galleryAdapter = new GalleryAdapter(placeholders,this);
 
@@ -106,14 +94,8 @@ public class GalleryActivity extends AppCompatActivity {
                     String filePath = cursor.getString(columnIndex);
                     cursor.close();
 
-<<<<<<< HEAD
                     Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-=======
 
-
-//                    Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-
->>>>>>> 165e6daced5a721e5567d5fc5f7f78655054a34e
                 }
         }
     }
