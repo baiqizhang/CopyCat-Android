@@ -5,8 +5,7 @@ package com.copycat.model;
  */
 
 public class Post {
-
-    private String postId;
+    private int postId;
     private String photoURI;
     private User user;
     private int likeCount;
@@ -14,28 +13,28 @@ public class Post {
     private long timeStamp;
 
     public Post() {
-        this.postId = "";
+        this.postId = this.hashCode();
         this.photoURI = "";
         this.user = new User();
         this.likeCount = 0;
         this.geoTag = "Mountain View";
-        this.timeStamp = 0;
+        this.timeStamp = System.currentTimeMillis();
     }
 
-    public Post(String postId, String photoURI, User user, int likeCount, String geoTag, long timeStamp) {
-        this.postId = postId;
+    public Post(String photoURI, User user, int likeCount, String geoTag) {
+        this.postId = this.hashCode();
         this.photoURI = photoURI;
         this.user = user;
         this.likeCount = likeCount;
         this.geoTag = geoTag;
-        this.timeStamp = timeStamp;
+        this.timeStamp = System.currentTimeMillis();
     }
 
-    public String getPostId() {
+    public int getPostId() {
         return postId;
     }
 
-    public void setPostId(String postId) {
+    public void setPostId(int postId) {
         this.postId = postId;
     }
 
