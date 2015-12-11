@@ -57,8 +57,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(context, "pos:" + position,
-                    Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "pos:" + position,Toast.LENGTH_SHORT).show();
 
             if (position == 0 && source.equals("Gallery")) {
                 Intent intent = new Intent();

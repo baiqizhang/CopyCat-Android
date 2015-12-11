@@ -57,10 +57,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     new Intent(context, GalleryActivity.class);
             showGallery.putExtra("cUri", categories.get(position).getCategoryUri());
             showGallery.putExtra("title", categories.get(position).getCategoryName());
-            Toast.makeText(v.getContext(),categories.get(position).getCategoryUri(), Toast.LENGTH_SHORT).show();
             context.startActivity(showGallery); // start the Activity
-            Toast.makeText(context, "pos:" + position,
-                    Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "pos:" + position,Toast.LENGTH_SHORT).show();
         }
     }
 
