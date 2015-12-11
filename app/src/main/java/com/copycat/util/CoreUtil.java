@@ -9,19 +9,50 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.copycat.model.Category;
 import com.copycat.model.Photo;
 import com.copycat.util.db.DatabaseHelper;
+import com.copycat.util.remote.PostUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
-public class CoreUtil {
+public class CoreUtil implements LocationListener {
+
+    //Location
+    public String getCurrentCityName(Context context) {
+        LocationManager lManager;
+        lManager = (LocationManager)context.getSystemService(context.LOCATION_SERVICE);
+        Location loc = null;
+
+        try {
+            lManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000L, 500.0f, this);
+            loc = lManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            Log.d("lllll",loc.getLatitude()+" "+loc.getLongitude());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Toast.makeText(context,loc.getLatitude()+","+loc.getLongitude(),Toast.LENGTH_SHORT);
+        return "Mountain View";
+    }
+
     //Category
     public static List<Category> getCategoryListFromDB(Context context){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
@@ -40,7 +71,7 @@ public class CoreUtil {
 
             cList.add(new Category(cName,banner,cUri));
         }
-
+        db.close();
         return cList;
     }
 
@@ -306,5 +337,25 @@ public class CoreUtil {
         height*=scale;
         width*=scale;
         return Bitmap.createScaledBitmap(bitmap, width, height, false);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
