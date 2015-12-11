@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.copycat.controller.TimelineActivity;
 import com.copycat.model.Category;
 import com.copycat.model.Photo;
 import com.copycat.util.db.DatabaseHelper;
@@ -53,7 +54,7 @@ public class CoreUtil implements LocationListener {
         return loc;
     }
 
-    public static boolean setSetting(String key, String value, Context context) {
+    public static boolean addSetting(String key, String value, Context context) {
         try {
             DatabaseHelper dbHelper = new DatabaseHelper(context);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -62,7 +63,7 @@ public class CoreUtil implements LocationListener {
             values.put(DatabaseHelper.SETTING_KEY,key);
             values.put(DatabaseHelper.SETTING_VALUE, value);
 
-            db.update(DatabaseHelper.SETTING_TABLE_NAME, values, DatabaseHelper.SETTING_KEY + "=?", new String[]{key});
+            db.insert(DatabaseHelper.SETTING_TABLE_NAME, null, values);
             db.close();
             return true;
         } catch (SQLiteException e) {
@@ -93,6 +94,22 @@ public class CoreUtil implements LocationListener {
         } catch (SQLiteException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static boolean setSetting(String key, String value, Context context) {
+        try {
+            DatabaseHelper dbHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.SETTING_VALUE, value);
+            db.update(DatabaseHelper.SETTING_TABLE_NAME, values, DatabaseHelper.SETTING_KEY + " = ?",new String[] {key} );
+            db.close();
+            return true;
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -401,4 +418,6 @@ public class CoreUtil implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
+
+
 }
