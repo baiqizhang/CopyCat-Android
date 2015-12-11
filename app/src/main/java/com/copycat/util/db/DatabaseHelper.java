@@ -80,6 +80,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_USER_INFO =
             "DROP TABLE IF EXISTS " + UserInfoDb.TABLE_NAME;
 
+
+
+
+    /**********************************************************************/
+    public static final String SETTING_TABLE_NAME = "settingTbl";
+    public static final String SETTING_KEY = "sKey";
+    public static final String SETTING_VALUE = "sValue";
+    private static final String CREATE_SETTING_TABLE =
+            "CREATE TABLE " + SETTING_TABLE_NAME + " (" +
+                    SETTING_KEY + TEXT_TYPE + " NOT NULL UNIQUE," +
+                    SETTING_VALUE + TEXT_TYPE +
+                    " )";
+    private static final String SQL_DELETE_SETTING =
+            "DROP TABLE IF EXISTS " + SETTING_TABLE_NAME;
+
     /**********************************************************************/
 
     public DatabaseHelper(Context context) {super(context, DATABASE_NAME, null, DATABASE_VERSION);}
@@ -91,6 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_PHOTO_CATEGORY_TABLE);
         db.execSQL(CREATE_POST_TABLE);
         db.execSQL(CREATE_USER_TABLE);
+        db.execSQL(CREATE_SETTING_TABLE);
     }
 
     @Override
@@ -102,6 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_CP_RELATION);
         db.execSQL(SQL_DELETE_POST);
         db.execSQL(SQL_DELETE_USER_INFO);
+        db.execSQL(SQL_DELETE_SETTING);
 
         onCreate(db);
     }
