@@ -115,6 +115,7 @@ public class CoreUtil {
             DatabaseHelper dbHelper = new DatabaseHelper(context);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             db.delete(DatabaseHelper.CATEGORY_TABLE_NAME, DatabaseHelper.CATEGORY_URI + "=" + category.getCategoryUri(),null);
+            db.delete(DatabaseHelper.CP_RELATION_TABLE_NAME,DatabaseHelper.CATEGORY_URI + "=" + category.getCategoryUri(),null);
             db.close();
             return true;
         } catch (SQLiteException e) {
@@ -182,15 +183,15 @@ public class CoreUtil {
         return  null;
     }
 
-    public static boolean removePhotoListFromCategory(List<Photo> photoList,Category category, Context context){
+    public static boolean removePhotoList(List<Photo> photoList, Context context){
         try {
             DatabaseHelper dbHelper = new DatabaseHelper(context);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             for(Photo photo: photoList) {
                 db.delete(DatabaseHelper.CP_RELATION_TABLE_NAME,
-                        DatabaseHelper.CATEGORY_URI + " = " + category.getCategoryName() + "AND" +
-                                DatabaseHelper.PHOTO_URI + " = " + photo.getPhotoUrl(),
+                        DatabaseHelper.PHOTO_URI + " = " + photo.getPhotoUrl(),
                         null);
+                db.delete(DatabaseHelper.PHOTO_TABLE_NAME,DatabaseHelper.PHOTO_URI + " = " + photo.getPhotoUrl(),null);
             }
             db.close();
             return true;

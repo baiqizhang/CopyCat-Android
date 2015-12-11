@@ -58,6 +58,7 @@ public class CategoryActivity extends AppCompatActivity {
         mTitleTextView.setLetterSpacing(0.13f);
 
         List<Category> placeholders = CoreUtil.getCategoryListFromDB(this);
+        //placeholders.remove(0);
 
         categoryAdapter = new CategoryAdapter(placeholders,this);
 
