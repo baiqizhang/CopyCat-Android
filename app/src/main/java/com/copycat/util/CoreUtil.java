@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.copycat.controller.TimelineActivity;
 import com.copycat.model.Category;
 import com.copycat.model.Photo;
 import com.copycat.util.db.DatabaseHelper;
@@ -34,7 +35,7 @@ import java.util.Locale;
 public class CoreUtil implements LocationListener {
 
     //Location
-    public String getCurrentCityName(Context context) {
+    public Location getLocation(Context context) {
         LocationManager lManager;
         lManager = (LocationManager)context.getSystemService(context.LOCATION_SERVICE);
         Location loc = null;
@@ -49,8 +50,67 @@ public class CoreUtil implements LocationListener {
             e.printStackTrace();
         }
 
-        Toast.makeText(context,loc.getLatitude()+","+loc.getLongitude(),Toast.LENGTH_SHORT);
-        return "Mountain View";
+        //Toast.makeText(context,loc.getLatitude()+","+loc.getLongitude(),Toast.LENGTH_SHORT);
+        return loc;
+    }
+
+    public static boolean addSetting(String key, String value, Context context) {
+        try {
+            DatabaseHelper dbHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.SETTING_KEY,key);
+            values.put(DatabaseHelper.SETTING_VALUE, value);
+
+            db.insert(DatabaseHelper.SETTING_TABLE_NAME, null, values);
+            db.close();
+            return true;
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static String getSetting(String key, Context context) {
+        String value = "Setting Key Not Found";
+        try {
+            DatabaseHelper dbHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            Cursor cursor = db.query(
+                    DatabaseHelper.SETTING_TABLE_NAME,
+                    new String[]{DatabaseHelper.SETTING_VALUE},
+                    DatabaseHelper.SETTING_KEY + "= ?",
+                    new String[] {key},
+                    null, null, null, null);
+
+            if(cursor!=null) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    value = cursor.getString(0);
+                }
+            }
+            db.close();
+            return value;
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static boolean setSetting(String key, String value, Context context) {
+        try {
+            DatabaseHelper dbHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.SETTING_VALUE, value);
+            db.update(DatabaseHelper.SETTING_TABLE_NAME, values, DatabaseHelper.SETTING_KEY + " = ?",new String[] {key} );
+            db.close();
+            return true;
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     //Category
@@ -358,4 +418,6 @@ public class CoreUtil implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
+
+
 }
