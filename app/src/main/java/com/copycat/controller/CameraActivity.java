@@ -177,7 +177,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 fos.write(data);
                 fos.close();
                 List<Photo> tempPList = new ArrayList<Photo>();
-                tempPList.add(new Photo(pictureFile.getName(),pictureFile.getAbsolutePath()));
+                tempPList.add(new Photo(pictureFile.getName(),"file" + pictureFile.getAbsolutePath()));
                 CoreUtil.addPhotoListToCategory(tempPList, CoreUtil.getCategoryListFromDB(getContext()).get(0).getCategoryUri(),getContext());
             } catch (FileNotFoundException e) {
                 System.out.print("File not found: " + e.getMessage());

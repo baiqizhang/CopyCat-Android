@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,11 +25,13 @@ import com.copycat.view.GalleryAdapter;
 import com.example.baiqizhang.copycat.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class GalleryActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 666;
     RecyclerView mRecyclerView;
+    private static String CATEGORY_URI;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,8 +55,8 @@ public class GalleryActivity extends AppCompatActivity {
         //Toast.makeText(GalleryActivity.this, "" + index, Toast.LENGTH_SHORT).show();
 
         //Get PhotoList by Category uri(absolutePath of it's banner named by category's name)
-        String categoryUri = intent.getStringExtra("cUri");
-        List<Photo> placeholders = CoreUtil.getPhotoListWithCategory(categoryUri,this);
+        CATEGORY_URI = intent.getStringExtra("cUri");
+        List<Photo> placeholders = CoreUtil.getPhotoListWithCategory(CATEGORY_URI,this);
 
         GalleryAdapter galleryAdapter = new GalleryAdapter(placeholders,this);
 
@@ -93,8 +96,11 @@ public class GalleryActivity extends AppCompatActivity {
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     String filePath = cursor.getString(columnIndex);
                     cursor.close();
-
                     Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+//                    Photo tempPhoto = CoreUtil.storePhotoLocally(yourSelectedImage, Long.toString(new Date().getTime()), this);
+//                    List<Photo> tempPList = new ArrayList<Photo>();
+//                    tempPList.add(tempPhoto);
+//                    CoreUtil.addPhotoListToCategory(tempPList, CATEGORY_URI,this);
 
                 }
         }

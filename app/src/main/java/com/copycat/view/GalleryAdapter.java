@@ -40,7 +40,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         this.source = source;
     }
 
-
     // inner class to hold a reference to each item of RecyclerView
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public SquareImageView imageView;
@@ -70,6 +69,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 Intent intent = new Intent(context, PhotoPreviewActivity.class);
                 intent.putExtra("uri",photos.get(position).getPhotoUrl());
                 context.startActivity(intent);
+
             }
         }
     }
