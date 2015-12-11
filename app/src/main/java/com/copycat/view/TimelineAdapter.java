@@ -109,6 +109,8 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
             holder.usernameTextView.setText(posts.get(position).getUser().getUsername());
             holder.geoTagTextView.setText(posts.get(position).getGeoTag());
             holder.likeCountTextView.setText(String.valueOf(posts.get(position).getLikeCount()));
+            holder.pinCountTextView.setText(String.valueOf(posts.get(position).getPinCount()));
+
             holder.likeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -131,13 +133,17 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
             holder.pinButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (UserUtil.getCurrentUser()==null){
+                        Toast.makeText(context,"Please log in first",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     final Bitmap bitmap = ((BitmapDrawable)holder.imageView.getDrawable()).getBitmap();
                     Builder builder = new Builder(context);
 
                     final List<Category> categories = CoreUtil.getCategoryListFromDB(context);
                     String items[] = new String[categories.size()-1];
-                    for (int i=0;i<categories.size()-1;i++)
-                        items[i] = categories.get(i).getCategoryName();
+                    for (int i=1;i<categories.size();i++)
+                        items[i-1] = categories.get(i).getCategoryName();
 
                     builder.setTitle("Choose category")
                         .setItems(items, new DialogInterface.OnClickListener() {
@@ -145,8 +151,12 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
                                 Photo photo = CoreUtil.storePhotoLocally(bitmap, System.currentTimeMillis()+"", null, context);
                                 List<Photo> photoList = new ArrayList<Photo>();
                                 photoList.add(photo);
-                                CoreUtil.addPhotoListToCategory(photoList, categories.get(which).getCategoryUri(), context);
-                                Toast.makeText(context,"Added to category:"+categories.get(which).getCategoryName(),Toast.LENGTH_SHORT).show();
+                                CoreUtil.addPhotoListToCategory(photoList, categories.get(which+1).getCategoryUri(), context);
+                                Toast.makeText(context,"Added to category:"+categories.get(which+1).getCategoryName(),Toast.LENGTH_SHORT).show();
+
+                                UserUtil.userPin(posts.get(position));
+                                posts.get(position).incrementPinCount();
+                                holder.pinCountTextView.setText(String.valueOf(posts.get(position).getPinCount()));
                             }
                         }).show();
 
@@ -300,8 +310,9 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
         public TextView usernameTextView;
         //Profile image
         public CircleImageView profileImageView;
-        //likes
+        //likes / pins
         public TextView likeCountTextView;
+        public TextView pinCountTextView;
         public ImageButton likeButton;
         public ImageButton pinButton;
         //geotag
@@ -332,6 +343,7 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
                 profileImageView= (CircleImageView)itemView.findViewById(R.id.userImageView);
 
                 likeCountTextView = (TextView)itemView.findViewById(R.id.likeTextView);
+                pinCountTextView = (TextView)itemView.findViewById(R.id.pinCount);
                 likeButton = (ImageButton)itemView.findViewById(R.id.likeButton);
                 pinButton = (ImageButton)itemView.findViewById(R.id.pinButton);
 

@@ -34,8 +34,25 @@ public class Post {
         this.timeStamp = System.currentTimeMillis();
     }
 
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public int getPinCount() {
+        return pinCount;
+    }
+
+    public void setPinCount(int pinCount) {
+        this.pinCount = pinCount;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+
     public boolean isLiked() {
         return liked;
+
     }
 
     public void flipLiked() {

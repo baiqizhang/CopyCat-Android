@@ -52,10 +52,10 @@ public class WelcomeActivity extends AppCompatActivity {
         Cursor cursor = db.query(DatabaseHelper.CATEGORY_TABLE_NAME, new String[]{DatabaseHelper.CATEGORY_URI}, null, null, null, null, null, null);
 
         if(!cursor.moveToFirst()) {
-            Bitmap banner_people = BitmapFactory.decodeResource(this.getResources(), R.drawable.banner0);
-            Bitmap banner_city = BitmapFactory.decodeResource(this.getResources(), R.drawable.banner1);
-            Bitmap banner_nature = BitmapFactory.decodeResource(this.getResources(), R.drawable.banner2);
-            Bitmap banner_lifestyle = BitmapFactory.decodeResource(this.getResources(), R.drawable.banner3);
+            Bitmap banner_people = CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.banner0, 200, 70);
+            Bitmap banner_city = CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.banner1, 200, 70);
+            Bitmap banner_nature = CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.banner2, 200, 70);
+            Bitmap banner_lifestyle = CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.banner3, 200, 70);
 
             Category People = new Category("People", banner_people, null);
             Category City = new Category("City", banner_city, null);
@@ -97,8 +97,8 @@ public class WelcomeActivity extends AppCompatActivity {
             CoreUtil.addPhotoListToCategory(photoList, Nature.getCategoryUri(), this);
 
             photoList = new ArrayList<>();
-            Photo p3_1 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p3_1,300,300), "p3-1", null, this);
-            photoList.add(p3_1);
+            Photo p3_0 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p3_0,300,300), "p3-1", null, this);
+            photoList.add(p3_0);
 //            Photo p3_2 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p3_2,300,300), "p3-2", null, this);
 //            photoList.add(p3_2);
             CoreUtil.addPhotoListToCategory(photoList, Lifestyle.getCategoryUri(), this);

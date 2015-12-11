@@ -89,7 +89,7 @@
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:text="0"
-            android:id="@+id/textView7"
+            android:id="@+id/pinCount"
             android:layout_gravity="center_vertical"
             android:textColor="#f1f1f1"
             android:textSize="18sp"

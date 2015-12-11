@@ -109,5 +109,20 @@ public class UserUtil {
         return true;
     }
 
+    public static boolean userPin(final Post post) {
+        UserUtil.getCurrentUser().setPins(UserUtil.getCurrentUser().getPins() + 1);
+        new AsyncTask<String, Void, String>(){
+            @Override
+            protected String doInBackground(String... params) {
+                userSync();
+                ServerUtil.HTTPPostWithObject(post,
+                        "/CopyCatServer/PostUtil/PinPost");
+                return "OK";
+            }
+        }.execute();
+
+        return true;
+    }
+
 
 }
