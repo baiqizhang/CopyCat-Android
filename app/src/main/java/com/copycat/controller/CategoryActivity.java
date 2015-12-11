@@ -112,7 +112,7 @@ public class CategoryActivity extends AppCompatActivity {
                                     banner = chosenBannerBitmap;
                                 else
                                     banner = BitmapFactory.decodeResource(CategoryActivity.this.getResources(),
-                                                                            R.drawable.banner);
+                                                                            R.drawable.banner1);
                                 Category category = new Category(editText.getText().toString(), banner, null);
                                 CoreUtil.addCategory(category,CategoryActivity.this);
                                 categories.add(category);

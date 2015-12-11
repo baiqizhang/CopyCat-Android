@@ -8,13 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/category_height"
         android:id="@+id/timeline_imageView"
-        android:src="@drawable/banner"
+        android:src="@drawable/banner1"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="0dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="0dp"
         android:background="@color/design_snackbar_background_color"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:alpha="0.85"
+        android:adjustViewBounds="true" />
 
     <LinearLayout
         android:orientation="vertical"

@@ -4,7 +4,11 @@ package com.copycat.view;
  * Created by baiqizhang on 12/8/15.
  */
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +19,10 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.copycat.model.Category;
+import com.copycat.model.Photo;
 import com.copycat.model.Post;
 import com.copycat.model.User;
 import com.copycat.util.CoreUtil;
@@ -27,9 +33,12 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.support.v7.app.AlertDialog.*;
 
 
 public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleAdapterViewHolder> {
@@ -115,6 +124,24 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
             holder.pinButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    final Bitmap bitmap = ((BitmapDrawable)holder.imageView.getDrawable()).getBitmap();
+                    Builder builder = new Builder(context);
+
+                    final List<Category> categories = CoreUtil.getCategoryListFromDB(context);
+                    String items[] = new String[categories.size()-1];
+                    for (int i=0;i<categories.size()-1;i++)
+                        items[i] = categories.get(i).getCategoryName();
+
+                    builder.setTitle("Choose category")
+                        .setItems(items, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Photo photo = CoreUtil.storePhotoLocally(bitmap, System.currentTimeMillis()+"", null, context);
+                                List<Photo> photoList = new ArrayList<Photo>();
+                                photoList.add(photo);
+                                CoreUtil.addPhotoListToCategory(photoList, categories.get(which).getCategoryUri(), context);
+                                Toast.makeText(context,"Added to category:"+categories.get(which).getCategoryName(),Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
 
                 }
             });

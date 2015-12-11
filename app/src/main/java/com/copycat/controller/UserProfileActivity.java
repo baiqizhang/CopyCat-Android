@@ -33,17 +33,14 @@ public class UserProfileActivity extends AppCompatActivity {
     List<Photo> photos;
 
     private class MyFocusChangeListener implements View.OnFocusChangeListener {
-
         public void onFocusChange(View v, boolean hasFocus){
-
             if(v.getId() == R.id.usernameTextView && !hasFocus) {
-
                 InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
             }
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +53,6 @@ public class UserProfileActivity extends AppCompatActivity {
         }
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 
         //Profile image
         CircleImageView imageView = (CircleImageView)findViewById(R.id.userimageview);

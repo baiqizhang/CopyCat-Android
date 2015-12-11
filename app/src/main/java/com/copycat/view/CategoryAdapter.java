@@ -83,8 +83,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // get data from your itemsData at this position
-        //holder.banner.setImageBitmap(
-        //        CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.banner, 30, 100));
+        //holder.banner1.setImageBitmap(
+        //        CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.banner1, 30, 100));
         holder.banner.setImageBitmap(categories.get(position).getBanner());
         holder.categoryName.setText(categories.get(position).getCategoryName());
         holder.photoCount.setText("- "+ CoreUtil.getPhotoAmountInCategory(categories.get(position).getCategoryUri(), context) +" -");

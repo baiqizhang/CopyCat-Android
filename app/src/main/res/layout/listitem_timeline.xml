@@ -102,8 +102,9 @@
             android:layout_weight="0.01" />
 
         <ImageButton
-            android:layout_width="23dp"
-            android:layout_height="23dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="7dp"
             android:scaleType="fitCenter"
             android:gravity="center_vertical"
             android:background="@null"
@@ -111,7 +112,7 @@
             android:src="@drawable/pin"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="1dp"
-            android:padding="2dp" />
+            />
 
         <Space
             android:layout_width="0dp"
@@ -135,16 +136,16 @@
             android:layout_weight="0.01" />
 
         <ImageButton
-            android:layout_width="23dp"
-            android:layout_height="23dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="7dp"
             android:scaleType="fitCenter"
             android:gravity="center_vertical"
             android:background="@null"
             android:id="@+id/likeButton"
             android:src="@drawable/like2"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="1dp"
-            android:padding="2dp" />
+            android:layout_marginBottom="1dp" />
 
         <Space
             android:layout_width="0dp"
