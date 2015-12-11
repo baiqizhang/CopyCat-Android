@@ -43,6 +43,35 @@ public class CoreUtil {
         return cList;
     }
 
+    public static int getPhotoAmountInCategory(String categoryUri, Context context) {
+        try {
+            DatabaseHelper dbHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+            String[] columns = new String[2];
+            columns[0] = DatabaseHelper.CATEGORY_URI;
+
+            Cursor cursor = db.query(DatabaseHelper.CP_RELATION_TABLE_NAME,
+                    columns,
+                    DatabaseHelper.CATEGORY_URI + " = ?",
+                    new String[]{categoryUri},
+                    null,null,null,null);
+
+            int amount = 0;
+            if(cursor!=null) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    amount ++;
+                }
+            }
+            db.close();
+            return amount;
+
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
     public static Category addCategory(Category category, Context context){
         try {
             String cName = category.getCategoryName();

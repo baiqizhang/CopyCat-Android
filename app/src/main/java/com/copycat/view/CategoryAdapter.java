@@ -68,7 +68,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         this.context = context;
     }
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
@@ -88,7 +87,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         //        CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.banner, 30, 100));
         holder.banner.setImageBitmap(categories.get(position).getBanner());
         holder.categoryName.setText(categories.get(position).getCategoryName());
-        holder.photoCount.setText("- "+ categories.get(position).getCount() +" -");
+        holder.photoCount.setText("- "+ CoreUtil.getPhotoAmountInCategory(categories.get(position).getCategoryUri(),context) +" -");
         holder.position = position;
     }
 
