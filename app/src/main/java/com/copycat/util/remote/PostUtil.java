@@ -22,10 +22,11 @@ import java.util.*;
  */
 public class PostUtil {
 
-    private static final String DNS = "ec2-52-90-164-203.compute-1.amazonaws.com";
+//    private static final String DNS = "ec2-52-90-164-203.compute-1.amazonaws.com";
+    private static final String DNS = "172.29.92.23:8080";
     private static final Gson gson = new Gson();
     //Timeline
-    public static List<Post> getUserFeed(User user,int skipCount,int count){
+    public static List<Post> getUserFeed(User user){
         String json = gson.toJson(user);
         Log.v("user json:",json);
 
@@ -56,7 +57,7 @@ public class PostUtil {
     }
 
     //Post
-    public static boolean uploadUserPost(User user, Post post)
+    public static boolean uploadUserPost(Post post)
     {
         InputStream is = null;
         OutputStream os = null;
@@ -64,7 +65,7 @@ public class PostUtil {
         //can catch a variety of wonderful things
         try {
             //constants
-            URL url = new URL("http://myhost.com/ajax");
+            URL url = new URL("http://"+DNS+"/CopyCatServer/PostUtil/NewPost");
             String message = gson.toJson(post);
 
             conn = (HttpURLConnection) url.openConnection();
