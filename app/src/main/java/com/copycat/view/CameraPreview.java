@@ -1,4 +1,4 @@
-package com.copycat.controller;
+package com.copycat.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

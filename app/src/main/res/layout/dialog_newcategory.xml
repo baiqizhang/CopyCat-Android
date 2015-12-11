@@ -22,4 +22,29 @@
         android:layout_marginRight="10dp"
         android:maxLength="15"
         android:maxLines="1" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:id="@+id/banner"
+            android:src="@drawable/banner"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="8dp"
+            android:background="@null" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Banner"
+            android:id="@+id/textView9"
+            android:layout_gravity="center"
+            android:textColor="#f0f0f0" />
+    </FrameLayout>
+
 </LinearLayout>

@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -33,12 +32,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import java.net.URL;
+
 import java.util.List;
 
 
 import com.copycat.model.Photo;
 import com.copycat.util.CoreUtil;
+import com.copycat.view.CameraPreview;
 import com.example.baiqizhang.copycat.R;
 
 

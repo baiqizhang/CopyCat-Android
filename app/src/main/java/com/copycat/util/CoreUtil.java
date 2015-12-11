@@ -69,7 +69,7 @@ public class CoreUtil implements LocationListener {
             String cName = cursor.getString(1);
             Bitmap banner = BitmapFactory.decodeFile(cUri);
 
-            cList.add(new Category(cName,banner,cUri));
+            cList.add(0,new Category(cName,banner,cUri));
         }
         db.close();
         return cList;
@@ -206,7 +206,7 @@ public class CoreUtil implements LocationListener {
                 File f = new File(photoUri.substring(4));
                 String photoName = f.getName();
 
-                pList.add(new Photo(photoName, photoUri));
+                pList.add(0,new Photo(photoName, photoUri));
             }
             db.close();
             return pList;

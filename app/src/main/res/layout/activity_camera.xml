@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-            <com.copycat.controller.CameraPreview
+            <com.copycat.view.CameraPreview
                 android:id="@+id/cameraPreview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
