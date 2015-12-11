@@ -67,7 +67,7 @@ public class UserProfileActivity extends AppCompatActivity {
 //        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
 
         List<Photo> placeholders = CoreUtil.getPhotoListWithCategory(CoreUtil.getCategoryListFromDB(this).get(0).getCategoryUri(),this);
-        GalleryAdapter galleryAdapter = new GalleryAdapter(placeholders,this);
+        GalleryAdapter galleryAdapter = new GalleryAdapter(placeholders,this,"User");
 
         //RecyclerView
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.gridview);

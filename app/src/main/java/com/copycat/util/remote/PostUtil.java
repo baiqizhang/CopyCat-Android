@@ -58,9 +58,9 @@ public class PostUtil {
     //Post
     public static boolean uploadUserPost(User user, Post post)
     {
-        InputStream is;
-        OutputStream os;
-        HttpURLConnection conn;
+        InputStream is = null;
+        OutputStream os = null;
+        HttpURLConnection conn = null;
         //can catch a variety of wonderful things
         try {
             //constants
@@ -83,7 +83,7 @@ public class PostUtil {
             conn.connect();
 
             //setup send
-            OutputStream os = new BufferedOutputStream(conn.getOutputStream());
+            os = new BufferedOutputStream(conn.getOutputStream());
             os.write(message.getBytes());
             //clean up
             os.flush();
@@ -96,9 +96,16 @@ public class PostUtil {
         }
         finally {
             //clean up
-            os.close();
-            is.close();
-            conn.disconnect();
+            try {
+                if (os!=null)
+                    os.close();
+                if (is!=null)
+                    is.close();
+                if (conn!=null)
+                    conn.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
 

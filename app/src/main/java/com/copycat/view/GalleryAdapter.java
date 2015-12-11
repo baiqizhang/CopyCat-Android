@@ -25,13 +25,19 @@ import java.util.List;
  */
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder>  {
     private static final int RESULT_LOAD_IMAGE = 666;
-    public List<Photo> photos;
+    private List<Photo> photos;
     private Context context;
+    private String source = "Gallery";
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public GalleryAdapter(List<Photo> photos, Context context) {
         this.photos = photos;
         this.context = context;
+    }
+    public GalleryAdapter(List<Photo> photos, Context context,String source) {
+        this.photos = photos;
+        this.context = context;
+        this.source = source;
     }
 
 
@@ -53,8 +59,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                     Toast.LENGTH_SHORT).show();
 
             if (position == 0) {
-//                Intent intent = new Intent(
-//                        Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -84,6 +88,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        if (source.equals("Gallery"))
+            position--;
         ImageView mImageView = holder.imageView;
         mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mImageView.setPadding(1, 1, 1, 1);
@@ -91,7 +97,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         Photo photo = photos.get(position);
         String uri = photo.getPhotoUrl();
         Log.d("uri", uri.substring(0, 4));
-        if (position == 0){
+        if (position == 0 && source.equals("Gallery")){
             holder.imageView.setImageBitmap(
                     CoreUtil.decodeSampledBitmapFromResource(context.getResources(),R.drawable.addnew, 100, 100));
             return;
@@ -112,7 +118,10 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return photos.size();
+        if (source.equals("Gallery"))
+            return photos.size()+1;
+        else
+            return photos.size();
     }
 
 }
