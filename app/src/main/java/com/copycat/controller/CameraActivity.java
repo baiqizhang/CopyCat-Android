@@ -38,12 +38,12 @@ import java.util.List;
 
 import com.copycat.model.Photo;
 import com.copycat.util.CoreUtil;
-import com.copycat.view.CameraPreview;
+import com.copycat.view.CameraPreviewView;
 import com.example.baiqizhang.copycat.R;
 
 
 public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback {
-    CameraPreview preview = null;
+    CameraPreviewView preview = null;
     private SurfaceHolder cameraSurfaceHolder = null;
     private boolean previewing = false;
     RelativeLayout relativeLayout;
@@ -71,7 +71,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        preview = (CameraPreview) findViewById(R.id.cameraPreview);
+        preview = (CameraPreviewView) findViewById(R.id.cameraPreview);
 
         //get intent extra
         Intent intent = getIntent();

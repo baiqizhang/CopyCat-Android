@@ -107,7 +107,7 @@
             android:scaleType="fitCenter"
             android:gravity="center_vertical"
             android:background="@null"
-            android:id="@+id/imageButton"
+            android:id="@+id/pinButton"
             android:src="@drawable/pin"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="1dp"

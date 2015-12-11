@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,7 +44,7 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
 
 
     @Override
-    public void onBindViewHolder(final SimpleAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(final SimpleAdapterViewHolder holder, final int position) {
         Log.d("bind","pos:" + position);
         if (position < getItemCount()
                 && (customHeaderView != null ? position <= posts.size() : position < posts.size())
@@ -98,6 +99,25 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
             holder.usernameTextView.setText(posts.get(position).getUser().getName());
             holder.geoTagTextView.setText(posts.get(position).getGeoTag());
             holder.likeCountTextView.setText(String.valueOf(posts.get(position).getLikeCount()));
+            holder.likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (posts.get(position).isLiked()) {
+                        posts.get(position).decreaseLikeCount();
+                        posts.get(position).flipLiked();
+                    } else {
+                        posts.get(position).incrementLikeCount();
+                        posts.get(position).flipLiked();
+                    }
+                    holder.likeCountTextView.setText(String.valueOf(posts.get(position).getLikeCount()));
+                }
+            });
+            holder.pinButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
 
 //            ((ViewHolder) holder).itemView.setActivated(selectedItems.get(position, false));
             if (mDragStartListener != null) {
@@ -226,18 +246,11 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
 
     @Override
     public void onItemDismiss(int position) {
-//        remove(position);
-//        notifyItemRemoved(position);
-//        notifyDataSetChanged();
+        remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
         super.onItemDismiss(position);
     }
-//
-//    private int getRandomColor() {
-//        SecureRandom rgen = new SecureRandom();
-//        return Color.HSVToColor(150, new float[]{
-//                rgen.nextInt(359), 1, 1
-//        });
-//    }
 
     public void setOnDragStartListener(OnStartDragListener dragStartListener) {
         mDragStartListener = dragStartListener;
@@ -255,10 +268,14 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
         public CircleImageView profileImageView;
         //likes
         public TextView likeCountTextView;
+        public ImageButton likeButton;
+        public ImageButton pinButton;
         //geotag
         public TextView geoTagTextView;
         //loading
         public TextView loadingTextView;
+
+        boolean liked = false;
 
         public  SimpleAdapterViewHolder(View itemView, boolean isItem) {
             super(itemView);
@@ -279,7 +296,11 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
             if (isItem) {
                 imageView = (ImageView)itemView.findViewById(R.id.imageView);
                 profileImageView= (CircleImageView)itemView.findViewById(R.id.userImageView);
+
                 likeCountTextView = (TextView)itemView.findViewById(R.id.likeTextView);
+                likeButton = (ImageButton)itemView.findViewById(R.id.likeButton);
+                pinButton = (ImageButton)itemView.findViewById(R.id.pinButton);
+
                 geoTagTextView = (TextView)itemView.findViewById(R.id.geoTagTextView);
                 loadingTextView = (TextView)itemView.findViewById(R.id.loadingTextView);
                 usernameTextView = (TextView)itemView.findViewById(R.id.usernameTextView);

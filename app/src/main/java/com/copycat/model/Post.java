@@ -11,6 +11,7 @@ public class Post {
     private String photoURI;
     private User user;
     private int likeCount;
+    private boolean liked;
     private String geoTag;
     private long timeStamp;
 
@@ -30,6 +31,14 @@ public class Post {
         this.likeCount = likeCount;
         this.geoTag = geoTag;
         this.timeStamp = System.currentTimeMillis();
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void flipLiked() {
+        this.liked = !this.liked;
     }
 
     public int getPostId() {
@@ -54,6 +63,16 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+
+
+    public int incrementLikeCount(){
+        return ++this.likeCount;
+    }
+
+    public int decreaseLikeCount(){
+        return --this.likeCount;
     }
 
     public int getLikeCount() {

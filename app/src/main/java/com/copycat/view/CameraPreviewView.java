@@ -8,13 +8,13 @@ import android.hardware.Camera;
 
 
 /** A basic Camera preview class */
-public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
+public class CameraPreviewView extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder mHolder;
     private Camera mCamera;
 
     public Camera getCamera() {return mCamera;}
 
-    public CameraPreview(Context context,AttributeSet attrs) {
+    public CameraPreviewView(Context context, AttributeSet attrs) {
         super(context,attrs);
         mCamera = getCameraInstance();
 

@@ -29,11 +29,11 @@
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:scaleType="centerCrop"
-
             android:text="No"
             android:id="@+id/share"
-            android:src="@drawable/sendto"
-            android:background="@null" />
+            android:background="@null"
+            android:src="@drawable/share"
+            android:padding="13dp" />
 
         <Space
             android:layout_width="20px"

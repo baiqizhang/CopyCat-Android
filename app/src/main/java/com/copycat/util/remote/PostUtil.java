@@ -118,7 +118,34 @@ public class PostUtil {
         return null;
     }
 
-    //Post
+    public static String getGeo() {
+        String parsedString = "";
+        URLConnection conn = null;
+        HttpURLConnection httpConn = null;
+        try {
+
+            URL url = new URL("http://maps.googleapis.com/maps/api/geocode/xml?latlng=53.244921,-2.479539&sensor=true");
+            conn = url.openConnection();
+
+            httpConn = (HttpURLConnection) conn;
+            httpConn.setAllowUserInteraction(false);
+            httpConn.setInstanceFollowRedirects(true);
+            httpConn.setRequestMethod("GET");
+            httpConn.connect();
+
+            InputStream is = httpConn.getInputStream();
+            parsedString = convertInputStreamToString(is);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (httpConn!=null)
+                httpConn.disconnect();
+        }
+        return "Mountain View";
+    }
+
+        //Post
     public static boolean uploadUserPost(Post post)
     {
         InputStream is = null;
