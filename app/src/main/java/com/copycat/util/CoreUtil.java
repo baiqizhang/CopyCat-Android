@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.widget.Toast;
 
 import com.copycat.model.Category;
 import com.copycat.model.Photo;
@@ -114,7 +115,8 @@ public class CoreUtil {
         try {
             DatabaseHelper dbHelper = new DatabaseHelper(context);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
-            db.delete(DatabaseHelper.CATEGORY_TABLE_NAME, DatabaseHelper.CATEGORY_URI + "=" + category.getCategoryUri(),null);
+            db.delete(DatabaseHelper.CATEGORY_TABLE_NAME, DatabaseHelper.CATEGORY_URI + "= ?" ,new String[] {category.getCategoryUri()});
+            db.delete(DatabaseHelper.CP_RELATION_TABLE_NAME,DatabaseHelper.CATEGORY_URI + "= ?" ,new String[] {category.getCategoryUri()});
             db.close();
             return true;
         } catch (SQLiteException e) {
@@ -168,9 +170,9 @@ public class CoreUtil {
 
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                 String photoUri = cursor.getString(1);
-                Bitmap photo = BitmapFactory.decodeFile(photoUri);
+                Bitmap photo = BitmapFactory.decodeFile(photoUri.substring(4));
 
-                File f = new File(photoUri);
+                File f = new File(photoUri.substring(4));
                 String photoName = f.getName();
 
                 pList.add(new Photo(photoName, photoUri));
@@ -182,15 +184,16 @@ public class CoreUtil {
         return  null;
     }
 
-    public static boolean removePhotoListFromCategory(List<Photo> photoList,Category category, Context context){
+    public static boolean removePhotoList(List<Photo> photoList, Context context){
         try {
             DatabaseHelper dbHelper = new DatabaseHelper(context);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             for(Photo photo: photoList) {
                 db.delete(DatabaseHelper.CP_RELATION_TABLE_NAME,
-                        DatabaseHelper.CATEGORY_URI + " = " + category.getCategoryName() + "AND" +
-                                DatabaseHelper.PHOTO_URI + " = " + photo.getPhotoUrl(),
-                        null);
+                        DatabaseHelper.PHOTO_URI + " = ?",
+                        new String[] {photo.getPhotoUrl()});
+                db.delete(DatabaseHelper.PHOTO_TABLE_NAME, DatabaseHelper.PHOTO_URI + " = ?", new String[]{photo.getPhotoUrl()});
+                Toast.makeText(context, "Delete:" + photo.getPhotoUrl(), Toast.LENGTH_LONG);
             }
             db.close();
             return true;

@@ -1,5 +1,6 @@
 package com.copycat.controller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,9 +15,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.copycat.model.Photo;
 import com.copycat.util.CapturePhotoUtil;
 import com.copycat.util.CoreUtil;
 import com.example.baiqizhang.copycat.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -26,6 +31,7 @@ public class PhotoViewActivity extends AppCompatActivity {
     Bitmap bitmap;
     ImageView imageView;
 
+    Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +93,9 @@ public class PhotoViewActivity extends AppCompatActivity {
         mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                List<Photo> temp = new ArrayList<Photo>();
+                temp.add(new Photo("",uri));
+                CoreUtil.removePhotoList(temp,context);
                 Toast.makeText(PhotoViewActivity.this,"Deleted",Toast.LENGTH_SHORT).show();
                 finish();
             }
