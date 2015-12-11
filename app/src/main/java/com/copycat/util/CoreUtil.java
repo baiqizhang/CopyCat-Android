@@ -224,7 +224,7 @@ public class CoreUtil implements LocationListener {
                         DatabaseHelper.PHOTO_URI + " = ?",
                         new String[] {photo.getPhotoUrl()});
                 db.delete(DatabaseHelper.PHOTO_TABLE_NAME, DatabaseHelper.PHOTO_URI + " = ?", new String[]{photo.getPhotoUrl()});
-                Toast.makeText(context, "Delete:" + photo.getPhotoUrl(), Toast.LENGTH_LONG);
+                //Toast.makeText(context, "Delete:" + photo.getPhotoUrl(), Toast.LENGTH_LONG);
             }
             db.close();
             return true;
