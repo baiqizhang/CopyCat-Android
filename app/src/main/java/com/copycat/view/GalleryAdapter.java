@@ -88,20 +88,22 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if (source.equals("Gallery"))
-            position--;
         ImageView mImageView = holder.imageView;
         mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mImageView.setPadding(1, 1, 1, 1);
 
-        Photo photo = photos.get(position);
-        String uri = photo.getPhotoUrl();
-        Log.d("uri", uri.substring(0, 4));
+        //+ image
         if (position == 0 && source.equals("Gallery")){
             holder.imageView.setImageBitmap(
                     CoreUtil.decodeSampledBitmapFromResource(context.getResources(),R.drawable.addnew, 100, 100));
             return;
         }
+        if (source.equals("Gallery"))
+            position--;
+
+        Photo photo = photos.get(position);
+        String uri = photo.getPhotoUrl();
+        Log.d("uri", uri.substring(0, 4));
 
         if (uri.substring(0,4).equals("draw")){
             int id = Integer.valueOf(uri.substring(7));
