@@ -164,7 +164,6 @@ public class PhotoViewActivity extends AppCompatActivity {
 
             // params comes from the execute() call: params[0] is the url.
             PostUtil.uploadUserPost(post);
-            PostUtil.getGeo();
             return "200";
         }
         // onPostExecute displays the results of the AsyncTask.

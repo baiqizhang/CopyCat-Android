@@ -5,20 +5,21 @@ import com.copycat.util.remote.UserUtil;
 /**
  * Created by fanluo on 11/13/15.
  */
-
 public class Post {
     private int postId;
     private String photoURI;
     private User user;
     private int likeCount;
+    private int pinCount;
     private boolean liked;
+
     private String geoTag;
     private long timeStamp;
 
     public Post() {
         this.postId = this.hashCode();
         this.photoURI = "";
-        this.user = UserUtil.getCurrentUser();
+        this.user = new User("Admin","Admin");
         this.likeCount = 0;
         this.geoTag = "Mountain View";
         this.timeStamp = System.currentTimeMillis();
@@ -40,6 +41,7 @@ public class Post {
     public void flipLiked() {
         this.liked = !this.liked;
     }
+
 
     public int getPostId() {
         return postId;
@@ -65,8 +67,6 @@ public class Post {
         this.user = user;
     }
 
-
-
     public int incrementLikeCount(){
         return ++this.likeCount;
     }
@@ -75,8 +75,12 @@ public class Post {
         return --this.likeCount;
     }
 
-    public int getLikeCount() {
-        return likeCount;
+    public int incrementPinCount(){
+        return ++this.pinCount;
+    }
+
+    public int decreasePinCount(){
+        return --this.pinCount;
     }
 
     public void setLikeCount(int likeCount) {
@@ -99,3 +103,4 @@ public class Post {
         this.timeStamp = timeStamp;
     }
 }
+

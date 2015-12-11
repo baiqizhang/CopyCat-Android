@@ -26,6 +26,7 @@ import com.copycat.model.Photo;
 import com.copycat.model.Post;
 import com.copycat.model.User;
 import com.copycat.util.CoreUtil;
+import com.copycat.util.remote.UserUtil;
 import com.example.baiqizhang.copycat.R;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
@@ -105,17 +106,23 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
                         }
                     });
 
-            holder.usernameTextView.setText(posts.get(position).getUser().getName());
+            holder.usernameTextView.setText(posts.get(position).getUser().getUsername());
             holder.geoTagTextView.setText(posts.get(position).getGeoTag());
             holder.likeCountTextView.setText(String.valueOf(posts.get(position).getLikeCount()));
             holder.likeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (UserUtil.getCurrentUser()==null){
+                        Toast.makeText(context,"Please log in first",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     if (posts.get(position).isLiked()) {
                         posts.get(position).decreaseLikeCount();
+                        UserUtil.userUnLike(posts.get(position));
                         posts.get(position).flipLiked();
                     } else {
                         posts.get(position).incrementLikeCount();
+                        UserUtil.userLike(posts.get(position));
                         posts.get(position).flipLiked();
                     }
                     holder.likeCountTextView.setText(String.valueOf(posts.get(position).getLikeCount()));

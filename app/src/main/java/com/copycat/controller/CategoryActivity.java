@@ -52,19 +52,6 @@ public class CategoryActivity extends AppCompatActivity {
         TextView mTitleTextView = (TextView) findViewById(R.id.toolbar_title);
         mTitleTextView.setLetterSpacing(0.13f);
 
-        categories = CoreUtil.getCategoryListFromDB(this);
-        categories.remove(categories.size() - 1);
-
-        categoryAdapter = new CategoryAdapter(categories,this);
-
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.category_recyclerview);
-
-        // use a linear layout manager
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setHasFixedSize(false);
-        mRecyclerView.setAdapter(categoryAdapter);
-
         //Back button
         ImageButton mBackButton = (ImageButton) findViewById(R.id.toolbar_back);
         mBackButton.setOnClickListener(new View.OnClickListener() {
@@ -156,5 +143,22 @@ public class CategoryActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        categories = CoreUtil.getCategoryListFromDB(this);
+        categories.remove(0);
+
+        categoryAdapter = new CategoryAdapter(categories,this);
+
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.category_recyclerview);
+
+        // use a linear layout manager
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setHasFixedSize(false);
+        mRecyclerView.setAdapter(categoryAdapter);
+
+    }
 }
 

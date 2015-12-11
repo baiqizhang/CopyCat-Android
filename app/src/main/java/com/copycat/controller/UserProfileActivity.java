@@ -2,19 +2,14 @@ package com.copycat.controller;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -24,7 +19,6 @@ import com.copycat.util.remote.UserUtil;
 import com.copycat.view.GalleryAdapter;
 import com.example.baiqizhang.copycat.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -59,28 +53,19 @@ public class UserProfileActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (UserUtil.getCurrentUser() == null) {
-                    Intent loginIntent = new Intent(UserProfileActivity.this, LoginActivity.class);
-                    startActivity(loginIntent);
-                }
+//                if (UserUtil.getCurrentUser() == null) {
+                Intent loginIntent = new Intent(UserProfileActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
+//                }
             }
         });
 
         //Username
-        final EditText editText = (EditText)findViewById(R.id.usernameTextView);
-        editText.setText(UserUtil.getCurrentUser().getName());
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                UserUtil.getCurrentUser().setName(v.getText().toString());
-                return true;
-            }
-        });
-        MyFocusChangeListener ofcListener = new MyFocusChangeListener();
-        editText.setOnFocusChangeListener(ofcListener);
-
-        if (!editText.getText().toString().equals("Anonymous"))
-            editText.clearFocus();
+        final TextView textView = (TextView)findViewById(R.id.usernameTextView);
+        if (UserUtil.getCurrentUser()==null)
+            textView.setText("Not logged in");
+        else
+            textView.setText(UserUtil.getCurrentUser().getUsername());
 
 //        Drawable color = new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark));
 //        Drawable image = getResources().getDrawable(R.drawable.sample_6);
@@ -104,10 +89,32 @@ public class UserProfileActivity extends AppCompatActivity {
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText.onEditorAction(0);
                 finish();
             }
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Username
+        final TextView textView = (TextView)findViewById(R.id.usernameTextView);
+        if (UserUtil.getCurrentUser()==null)
+            textView.setText("Not logged in");
+        else
+            textView.setText(UserUtil.getCurrentUser().getUsername());
+
+        final TextView pinTextView = (TextView)findViewById(R.id.pins);
+        if (UserUtil.getCurrentUser()==null)
+            pinTextView.setText("N/A");
+        else
+            pinTextView.setText(String.valueOf(UserUtil.getCurrentUser().getPins()));
+
+        final TextView likeTextView = (TextView)findViewById(R.id.likes);
+        if (UserUtil.getCurrentUser()==null)
+            likeTextView.setText("N/A");
+        else
+            likeTextView.setText(String.valueOf(UserUtil.getCurrentUser().getLikes()));
+
+    }
 }

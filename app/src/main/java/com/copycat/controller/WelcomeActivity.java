@@ -72,42 +72,42 @@ public class WelcomeActivity extends AppCompatActivity {
             List<Photo> photoList = new ArrayList<>();
             Photo p0_1 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p0_1,300,300), "p0-1", null, this);
             photoList.add(p0_1);
-            Photo p0_2 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p0_2,300,300), "p0-2", null, this);
-            photoList.add(p0_2);
-            Photo p0_3 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p0_3,300,300), "p0-3", null, this);
-            photoList.add(p0_3);
+//            Photo p0_2 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p0_2,300,300), "p0-2", null, this);
+//            photoList.add(p0_2);
+//            Photo p0_3 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p0_3,300,300), "p0-3", null, this);
+//            photoList.add(p0_3);
             CoreUtil.addPhotoListToCategory(photoList, People.getCategoryUri(), this);
 
             photoList = new ArrayList<>();
             Photo p1_1 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p1_1,300,300), "p1-1", null, this);
             photoList.add(p1_1);
-            Photo p1_2 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p1_2,300,300), "p1-2", null, this);
-            photoList.add(p1_2);
-            Photo p1_3 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p1_3,300,300), "p1-3", null, this);
-            photoList.add(p1_3);
+//            Photo p1_2 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p1_2,300,300), "p1-2", null, this);
+//            photoList.add(p1_2);
+//            Photo p1_3 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p1_3,300,300), "p1-3", null, this);
+//            photoList.add(p1_3);
             CoreUtil.addPhotoListToCategory(photoList, City.getCategoryUri(), this);
 
             photoList = new ArrayList<>();
             Photo p2_1 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p2_1,300,300), "p2-1", null, this);
             photoList.add(p2_1);
-            Photo p2_2 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p2_2,300,300), "p2-2", null, this);
-            photoList.add(p2_2);
-            Photo p2_3 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p2_0,300,300), "p2-3", null, this);
-            photoList.add(p2_3);
+//            Photo p2_2 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p2_2,300,300), "p2-2", null, this);
+//            photoList.add(p2_2);
+//            Photo p2_3 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p2_0,300,300), "p2-3", null, this);
+//            photoList.add(p2_3);
             CoreUtil.addPhotoListToCategory(photoList, Nature.getCategoryUri(), this);
 
             photoList = new ArrayList<>();
             Photo p3_1 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p3_1,300,300), "p3-1", null, this);
             photoList.add(p3_1);
-            Photo p3_2 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p3_2,300,300), "p3-2", null, this);
-            photoList.add(p3_2);
+//            Photo p3_2 = CoreUtil.storePhotoLocally(CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.p3_2,300,300), "p3-2", null, this);
+//            photoList.add(p3_2);
             CoreUtil.addPhotoListToCategory(photoList, Lifestyle.getCategoryUri(), this);
 
 
             photoList = new ArrayList<>();
             photoList.add(p1_1);
-            photoList.add(p0_3);
-            photoList.add(p1_3);
+//            photoList.add(p0_3);
+//            photoList.add(p1_3);
             CoreUtil.addPhotoListToCategory(photoList, UserCategory.getCategoryUri(), this);
         }
 

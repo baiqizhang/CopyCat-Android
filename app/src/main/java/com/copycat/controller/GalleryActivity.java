@@ -14,12 +14,14 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.copycat.model.Category;
 import com.copycat.model.Photo;
 import com.copycat.util.CoreUtil;
 import com.copycat.view.CategoryAdapter;
@@ -78,8 +80,16 @@ public class GalleryActivity extends AppCompatActivity {
             }
         });
 
+        //Add button
+        ImageButton mDelButton = (ImageButton) findViewById(R.id.delCategory);
+        mDelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CoreUtil.removeCategory(new Category("",null,CATEGORY_URI),GalleryActivity.this);
+                finish();
+            }
+        });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent imageReturnedIntent) {

@@ -69,7 +69,7 @@ public class CoreUtil implements LocationListener {
             String cName = cursor.getString(1);
             Bitmap banner = BitmapFactory.decodeFile(cUri);
 
-            cList.add(0,new Category(cName,banner,cUri));
+            cList.add(new Category(cName,banner,cUri));
         }
         db.close();
         return cList;

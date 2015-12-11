@@ -6,13 +6,23 @@ package com.copycat.model;
 
 public class User {
     private long userId;
-    private String name;
-    private int followerCount;
-    private int followingCount;
+    private String username;
+    private String password;
+    private int pins;
+    private int likes;
     private String profilePictureURI;
 
-    public User(String name) {
-        this.name = name;
+    public User(String username,String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public long getUserId() {
@@ -23,28 +33,28 @@ public class User {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public int getFollowerCount() {
-        return followerCount;
+    public int getPins() {
+        return pins;
     }
 
-    public void setFollowerCount(int followerCount) {
-        this.followerCount = followerCount;
+    public void setPins(int pins) {
+        this.pins = pins;
     }
 
-    public int getFollowingCount() {
-        return followingCount;
+    public int getLikes() {
+        return likes;
     }
 
-    public void setFollowingCount(int followingCount) {
-        this.followingCount = followingCount;
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
     public String getProfilePictureURI() {

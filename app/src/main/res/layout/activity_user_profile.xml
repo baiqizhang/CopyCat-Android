@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username"
@@ -102,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:id="@+id/textView3"
+                    android:id="@+id/pins"
                     android:textColor="#ffffff"
                     android:textAlignment="center" />
 
@@ -142,7 +142,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:id="@+id/textView5"
+                    android:id="@+id/likes"
                     android:textColor="#ffffff"
                     android:textAlignment="center" />
 
