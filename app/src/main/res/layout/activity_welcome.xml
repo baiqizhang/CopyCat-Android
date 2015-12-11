@@ -20,16 +20,14 @@
         android:nestedScrollingEnabled="true" />
 
     <ImageButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:scaleType="fitCenter"
         android:background="@null"
         android:src="@drawable/circleuser"
 
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
         android:id="@+id/welcome_SettingsButton"
-        />
+        android:padding="10dp" />
 
     <LinearLayout
         android:orientation="vertical"

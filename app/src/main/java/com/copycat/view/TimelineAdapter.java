@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,24 +46,36 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
         if (position < getItemCount()
                 && (customHeaderView != null ? position <= posts.size() : position < posts.size())
                 && (customHeaderView != null ? position > 0 : true)) {
-
-            Picasso.with(context)
-                    .load(posts.get(position).getPhotoURI())
-                    .resize(300, 300)
-//                    .centerCrop()
-                    .into(holder.image, new com.squareup.picasso.Callback() {
+            final int pos = position;
+            holder.imageView.getViewTreeObserver()
+                    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        // Wait until layout to call Picasso
                         @Override
-                        public void onSuccess() {
-                            if (holder.loadingTextView != null) {
-                                holder.loadingTextView.setVisibility(View.GONE);
-                            }
-                        }
+                        public void onGlobalLayout() {
+                            // Ensure we call this only once
+                            holder.imageView.getViewTreeObserver()
+                                    .removeOnGlobalLayoutListener(this);
 
-                        @Override
-                        public void onError() {
 
+                            Picasso.with(context)
+                                    .load(posts.get(pos).getPhotoURI())
+                                    .resize(holder.imageView.getWidth(),0)
+                                    .into(holder.imageView,new com.squareup.picasso.Callback() {
+                                        @Override
+                                        public void onSuccess() {
+                                            if (holder.loadingTextView != null) {
+                                                holder.loadingTextView.setVisibility(View.GONE);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onError() {
+
+                                        }
+                                    });
                         }
                     });
+
             holder.geoTagTextView.setText(posts.get(position).getGeoTag());
             holder.likeCountTextView.setText(String.valueOf(posts.get(position).getLikeCount()));
 
@@ -78,7 +91,7 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
 //                    }
 //                });
 
-                ((SimpleAdapterViewHolder) holder).image.setOnTouchListener(new View.OnTouchListener() {
+                ((SimpleAdapterViewHolder) holder).imageView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
                         return false;
@@ -215,7 +228,7 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
     public class SimpleAdapterViewHolder extends UltimateRecyclerviewViewHolder {
 
         //public TextView tvtinfo_text;
-        public ImageView image;
+        public ImageView imageView;
         //user name
         public TextView usernameTextView;
         //Profile image
@@ -244,7 +257,7 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
 //                }
 //            }));
             if (isItem) {
-                image = (ImageView)itemView.findViewById(R.id.imageView);
+                imageView = (ImageView)itemView.findViewById(R.id.imageView);
                 profileImageView= (CircleImageView)itemView.findViewById(R.id.userImageView);
                 likeCountTextView = (TextView)itemView.findViewById(R.id.likeTextView);
                 geoTagTextView = (TextView)itemView.findViewById(R.id.geoTagTextView);
