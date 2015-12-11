@@ -85,7 +85,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             } else if (uri.substring(0, 4).equals("file")) {
                 Bitmap tempPhoto = BitmapFactory.decodeFile(uri.substring(4));
                 overlay.setImageBitmap(tempPhoto);
-                return;
             }
         }
 

@@ -68,7 +68,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 Toast.makeText(context, "" + position,
                         Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, PhotoPreviewActivity.class);
-                intent.putExtra("uri",photos.get(position).getPhotoUrl());
+                intent.putExtra("uri",photos.get(position-1).getPhotoUrl());
                 context.startActivity(intent);
             }
         }
@@ -92,15 +92,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mImageView.setPadding(1, 1, 1, 1);
 
+        holder.position = position;
+
         //+ image
         if (position == 0 && source.equals("Gallery")){
             holder.imageView.setImageBitmap(
                     CoreUtil.decodeSampledBitmapFromResource(context.getResources(),R.drawable.addnew, 100, 100));
-            //return;
-        }
-        else if (source.equals("Gallery")) {
-            position--;
-
+        } else {
+            if (source.equals("Gallery"))
+                position--;
             Photo photo = photos.get(position);
             String uri = photo.getPhotoUrl();
             Log.d("uri", uri.substring(0, 4));
@@ -112,10 +112,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             } else if (uri.substring(0, 4).equals("file")) {
                 Bitmap tempPhoto = BitmapFactory.decodeFile(uri.substring(4));
                 holder.imageView.setImageBitmap(tempPhoto);
-                return;
             }
         }
-        holder.position = position;
 
     }
 

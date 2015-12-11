@@ -1,6 +1,8 @@
 package com.copycat.controller;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
@@ -43,9 +45,11 @@ public class PhotoPreviewActivity extends AppCompatActivity {
             int id = Integer.valueOf(uri.substring(7));
             imageView.setImageBitmap(
                     CoreUtil.decodeSampledBitmapFromResource(getResources(), id, 100, 100));
-        } else if (uri.substring(0,4).equals("file")){
-
+        } else if (uri.substring(0, 4).equals("file")) {
+            Bitmap tempPhoto = BitmapFactory.decodeFile(uri.substring(4));
+            imageView.setImageBitmap(tempPhoto);
         }
+
 
 
         //Buttons

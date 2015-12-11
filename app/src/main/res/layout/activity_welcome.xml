@@ -124,14 +124,7 @@
         <Space
             android:layout_width="20px"
             android:layout_height="20px"
-            android:layout_weight="0.6" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Camera"
-            android:id="@+id/welcome_cameraButton"
-            android:layout_gravity="center_horizontal" />
+            android:layout_weight="0.53" />
 
     </LinearLayout>
 
