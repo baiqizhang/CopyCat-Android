@@ -61,6 +61,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 ((Activity)context).startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
             } else {
@@ -69,7 +70,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 Intent intent = new Intent(context, PhotoPreviewActivity.class);
                 intent.putExtra("uri",photos.get(position).getPhotoUrl());
                 context.startActivity(intent);
-
             }
         }
     }
@@ -96,26 +96,27 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         if (position == 0 && source.equals("Gallery")){
             holder.imageView.setImageBitmap(
                     CoreUtil.decodeSampledBitmapFromResource(context.getResources(),R.drawable.addnew, 100, 100));
-            return;
+            //return;
         }
-        if (source.equals("Gallery"))
+        else if (source.equals("Gallery")) {
             position--;
 
-        Photo photo = photos.get(position);
-        String uri = photo.getPhotoUrl();
-        Log.d("uri", uri.substring(0, 4));
+            Photo photo = photos.get(position);
+            String uri = photo.getPhotoUrl();
+            Log.d("uri", uri.substring(0, 4));
 
-        if (uri.substring(0,4).equals("draw")){
-            int id = Integer.valueOf(uri.substring(7));
-            holder.imageView.setImageBitmap(
-                    CoreUtil.decodeSampledBitmapFromResource(context.getResources(),id, 100, 100));
-        } else if (uri.substring(0,4).equals("file")){
-            Bitmap tempPhoto = BitmapFactory.decodeFile(uri.substring(4));
-            holder.imageView.setImageBitmap(tempPhoto);
-            return;
+            if (uri.substring(0, 4).equals("draw")) {
+                int id = Integer.valueOf(uri.substring(7));
+                holder.imageView.setImageBitmap(
+                        CoreUtil.decodeSampledBitmapFromResource(context.getResources(), id, 100, 100));
+            } else if (uri.substring(0, 4).equals("file")) {
+                Bitmap tempPhoto = BitmapFactory.decodeFile(uri.substring(4));
+                holder.imageView.setImageBitmap(tempPhoto);
+                return;
+            }
         }
-
         holder.position = position;
+
     }
 
     @Override

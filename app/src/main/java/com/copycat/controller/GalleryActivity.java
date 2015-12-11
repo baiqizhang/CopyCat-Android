@@ -97,11 +97,13 @@ public class GalleryActivity extends AppCompatActivity {
                     String filePath = cursor.getString(columnIndex);
                     cursor.close();
                     Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-//                    Photo tempPhoto = CoreUtil.storePhotoLocally(yourSelectedImage, Long.toString(new Date().getTime()), this);
-//                    List<Photo> tempPList = new ArrayList<Photo>();
-//                    tempPList.add(tempPhoto);
-//                    CoreUtil.addPhotoListToCategory(tempPList, CATEGORY_URI,this);
-
+                    Photo tempPhoto = CoreUtil.storePhotoLocally(yourSelectedImage, Long.toString(new Date().getTime()),filePath, this);
+                    List<Photo> tempPList = new ArrayList<Photo>();
+                    tempPList.add(tempPhoto);
+                    boolean result = CoreUtil.addPhotoListToCategory(tempPList, CATEGORY_URI,this);
+                    if(result) {
+                        Toast.makeText(this,CATEGORY_URI + "\nLoad Photo into Category\n" + filePath, Toast.LENGTH_LONG).show();
+                    }
                 }
         }
     }

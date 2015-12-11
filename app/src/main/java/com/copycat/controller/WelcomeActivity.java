@@ -56,12 +56,12 @@ public class WelcomeActivity extends AppCompatActivity {
         Animal = CoreUtil.addCategory(Animal, this);
         City = CoreUtil.addCategory(City,this);
 
-        Photo pA = CoreUtil.storePhotoLocally(BitmapFactory.decodeResource(this.getResources(), R.drawable.banner),"pA",this);
+        Photo pA = CoreUtil.storePhotoLocally(BitmapFactory.decodeResource(this.getResources(), R.drawable.banner),"pA",null,this);
         photoList.add(pA);
         CoreUtil.addPhotoListToCategory(photoList, Animal.getCategoryUri(), this);
 
-        Photo bB = CoreUtil.storePhotoLocally(BitmapFactory.decodeResource(this.getResources(), R.drawable.sample_0),"bB",this);
-        Photo pC = CoreUtil.storePhotoLocally(BitmapFactory.decodeResource(this.getResources(), R.drawable.sample_6),"pC",this);
+        Photo bB = CoreUtil.storePhotoLocally(BitmapFactory.decodeResource(this.getResources(), R.drawable.sample_0),"bB",null,this);
+        Photo pC = CoreUtil.storePhotoLocally(BitmapFactory.decodeResource(this.getResources(), R.drawable.sample_6),"pC",null,this);
         photoList = new ArrayList<>();
         photoList.add(bB);
         photoList.add(pC);

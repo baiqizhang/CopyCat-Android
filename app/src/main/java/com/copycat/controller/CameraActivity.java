@@ -69,7 +69,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
         preview = (CameraPreview) findViewById(R.id.cameraPreview);
 
         //get intent extra
@@ -143,23 +142,28 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     @Override
     public void surfaceChanged(SurfaceHolder holder,
                                int format, int width, int height) {
-
+        onPause();
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
+        camera.startPreview();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        if (camera != null) {
+            // Call stopPreview() to stop updating the preview surface.
+            camera.stopPreview();
+            camera.setPreviewCallback(null);
+            camera.release();
+            camera = null;
+        }
     }
 
     /**
      * A safe way to get an instance of the Camera object.
      */
-
 
     private PictureCallback mPicture = new PictureCallback() {
 
@@ -177,8 +181,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 fos.write(data);
                 fos.close();
                 List<Photo> tempPList = new ArrayList<Photo>();
-                tempPList.add(new Photo(pictureFile.getName(),"file" + pictureFile.getAbsolutePath()));
-                CoreUtil.addPhotoListToCategory(tempPList, CoreUtil.getCategoryListFromDB(getContext()).get(0).getCategoryUri(),getContext());
+                Photo tempPhoto = new Photo(pictureFile.getName(),"file" + pictureFile.getAbsolutePath());
+                tempPList.add(tempPhoto);
+                CoreUtil.addPhotoListToCategory(tempPList, CoreUtil.getCategoryListFromDB(getContext()).get(0).getCategoryUri(), getContext());
             } catch (FileNotFoundException e) {
                 System.out.print("File not found: " + e.getMessage());
             } catch (IOException e) {

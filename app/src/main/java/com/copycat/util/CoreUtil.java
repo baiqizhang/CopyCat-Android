@@ -171,35 +171,49 @@ public class CoreUtil {
         }
     }
 
-    public static Photo storePhotoLocally(Bitmap bitmapImage,String imageName, Context context) {
+    public static Photo storePhotoLocally(Bitmap bitmapImage,String imageName, String imagePath, Context context) {
 
-        //store locally
-        ContextWrapper cw = new ContextWrapper(context);
-        // path to /data/data/yourapp/app_data/photoImageDir
-        File directory = cw.getDir("photoImageDir", Context.MODE_PRIVATE);
-        File myPath=new File(directory,imageName +".png");
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(myPath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        if(imagePath==null) {
+            //store locally
+            ContextWrapper cw = new ContextWrapper(context);
+            // path to /data/data/yourapp/app_data/photoImageDir
+            File directory = cw.getDir("photoImageDir", Context.MODE_PRIVATE);
+            File myPath = new File(directory, imageName + ".png");
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(myPath);
+                // Use the compress method on the BitMap object to write image to the OutputStream
+                bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+
+            //insert into db
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.PHOTO_URI, myPath.getAbsolutePath());
+            values.put(DatabaseHelper.PHOTO_NAME, imageName);
+
+            DatabaseHelper dbHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.insert(DatabaseHelper.PHOTO_TABLE_NAME, null, values);
+            db.close();
+
+            return new Photo(imageName, "file" + myPath.getAbsolutePath());
+        } else {
+            //register in db
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.PHOTO_URI, imagePath);
+            values.put(DatabaseHelper.PHOTO_NAME, imageName);
+
+            DatabaseHelper dbHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.insert(DatabaseHelper.PHOTO_TABLE_NAME, null, values);
+            db.close();
+
+            return new Photo(imageName, "file" + imagePath);
         }
-
-        //insert into db
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.PHOTO_URI, myPath.getAbsolutePath());
-        values.put(DatabaseHelper.PHOTO_NAME, imageName);
-
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.insert(DatabaseHelper.PHOTO_TABLE_NAME, null, values);
-        db.close();
-
-        return new Photo(imageName, "file" + myPath.getAbsolutePath());
     }
 
     private Bitmap loadImageFromStorage(String absolutePath)
