@@ -5,22 +5,30 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.copycat.model.Category;
 import com.copycat.model.Photo;
 import com.copycat.util.CoreUtil;
 import com.copycat.util.db.DatabaseHelper;
+import com.copycat.util.remote.PostUtil;
 import com.example.baiqizhang.copycat.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -83,6 +91,7 @@ public class WelcomeActivity extends AppCompatActivity {
         }
 
         db.close();
+
         mTimelineButton = (ImageButton)findViewById(R.id.welcome_InspireButton);
         mGalleryButton = (ImageButton)findViewById(R.id.welcome_galleryButton);
         mSettingsButton = (ImageButton)findViewById(R.id.welcome_SettingsButton);
