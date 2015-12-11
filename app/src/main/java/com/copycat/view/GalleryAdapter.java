@@ -66,6 +66,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 Intent intent = new Intent(context, PhotoPreviewActivity.class);
                 intent.putExtra("uri",photos.get(position).getPhotoUrl());
                 context.startActivity(intent);
+
+
+
             }
         }
     }
