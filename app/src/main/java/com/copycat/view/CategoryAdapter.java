@@ -21,6 +21,7 @@ import com.copycat.controller.GalleryActivity;
 import com.copycat.model.Category;
 import com.copycat.util.CoreUtil;
 import com.example.baiqizhang.copycat.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             Intent showGallery =
                     new Intent(context, GalleryActivity.class);
             showGallery.putExtra("cUri", categories.get(position).getCategoryUri());
+            showGallery.putExtra("title", categories.get(position).getCategoryName());
             Toast.makeText(v.getContext(),categories.get(position).getCategoryUri(), Toast.LENGTH_SHORT).show();
             context.startActivity(showGallery); // start the Activity
             Toast.makeText(context, "pos:" + position,
@@ -87,7 +89,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         //        CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.banner, 30, 100));
         holder.banner.setImageBitmap(categories.get(position).getBanner());
         holder.categoryName.setText(categories.get(position).getCategoryName());
-        holder.photoCount.setText("- "+ CoreUtil.getPhotoAmountInCategory(categories.get(position).getCategoryUri(),context) +" -");
+        holder.photoCount.setText("- "+ CoreUtil.getPhotoAmountInCategory(categories.get(position).getCategoryUri(), context) +" -");
         holder.position = position;
     }
 

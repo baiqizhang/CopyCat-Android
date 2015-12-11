@@ -33,9 +33,10 @@ import java.util.List;
 
 public class GalleryActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 666;
-    RecyclerView mRecyclerView;
-    GalleryAdapter galleryAdapter;
     private static String CATEGORY_URI;
+    private RecyclerView mRecyclerView;
+    private GalleryAdapter galleryAdapter;
+    private List<Photo> photos;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,8 +58,10 @@ public class GalleryActivity extends AppCompatActivity {
         //Get PhotoList by Category uri(absolutePath of it's banner named by category's name)
         Intent intent = getIntent();
         CATEGORY_URI = intent.getStringExtra("cUri");
-        List<Photo> placeholders = CoreUtil.getPhotoListWithCategory(CATEGORY_URI,this);
-        galleryAdapter = new GalleryAdapter(placeholders,this);
+        String title = intent.getStringExtra("title");
+        mTitleTextView.setText(title);
+        photos = CoreUtil.getPhotoListWithCategory(CATEGORY_URI,this);
+        galleryAdapter = new GalleryAdapter(photos,this);
 
 
         //RecyclerView
@@ -101,6 +104,7 @@ public class GalleryActivity extends AppCompatActivity {
                     List<Photo> tempPList = new ArrayList<Photo>();
                     tempPList.add(tempPhoto);
                     boolean result = CoreUtil.addPhotoListToCategory(tempPList, CATEGORY_URI,this);
+                    photos.add(tempPhoto);
                     galleryAdapter.notifyDataSetChanged();
                 }
         }

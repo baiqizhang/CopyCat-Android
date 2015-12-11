@@ -37,22 +37,26 @@
                 android:fontFamily="sans-serif-condensed" />
 
             <ImageButton
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
                 android:scaleType="fitCenter"
+                android:paddingTop="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:layout_marginRight="15dp"
                 android:layout_gravity="right"
                 android:id="@+id/addCategory"
                 android:textSize="25sp"
                 android:fontFamily="sans-serif-condensed"
                 android:src="@drawable/addrow"
-                android:background="@null" />
+                android:background="@null"
+                android:paddingBottom="8dp" />
 
             <ImageButton
-                android:layout_width="@dimen/barbutton_size"
-                android:layout_height="@dimen/barbutton_size"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:scaleType="fitCenter"
-                android:layout_marginRight="15dp"
+                android:padding="8dp"
                 android:layout_gravity="left"
                 android:id="@+id/toolbar_back"
                 android:textSize="25sp"

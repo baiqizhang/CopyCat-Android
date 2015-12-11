@@ -296,4 +296,12 @@ public class CoreUtil {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
     }
+
+    public static Bitmap scaleBitmap(Bitmap bitmap, double scale) {
+        int height = bitmap.getHeight();
+        int width = bitmap.getWidth();
+        height*=scale;
+        width*=scale;
+        return Bitmap.createScaledBitmap(bitmap, width, height, false);
+    }
 }
