@@ -75,7 +75,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         Intent intent = getIntent();
         String uri = intent.getStringExtra("uri");
         overlay = (ImageView) findViewById(R.id.imageView1);
-//        overlay.setImageURI(Uri.parse("file:///storage/emulated/0/DCIM/Camera/Baoshu.jpg"));
 
         if(uri!=null) {
             if (uri.substring(0, 4).equals("draw")) {

@@ -1,6 +1,8 @@
 package com.copycat.controller;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
@@ -8,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.copycat.util.CoreUtil;
 import com.example.baiqizhang.copycat.R;
 
 /**
@@ -30,6 +34,22 @@ public class PhotoViewActivity extends AppCompatActivity {
         }
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+        //get intent extra
+        Intent intent = getIntent();
+        final String uri = intent.getStringExtra("uri");
+
+        ImageView imageView = (ImageView)findViewById(R.id.imageView);
+        if (uri.substring(0,4).equals("draw")){
+            int id = Integer.valueOf(uri.substring(7));
+            imageView.setImageBitmap(
+                    CoreUtil.decodeSampledBitmapFromResource(getResources(), id, 200, 200));
+        } else if (uri.substring(0, 4).equals("file")) {
+            Bitmap tempPhoto = BitmapFactory.decodeFile(uri.substring(4));
+            imageView.setImageBitmap(tempPhoto);
+        }
+
 
         ImageButton mShareButton = (ImageButton)findViewById(R.id.share);
         mShareButton.setOnClickListener(new View.OnClickListener() {

@@ -48,6 +48,8 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
 
             Picasso.with(context)
                     .load(posts.get(position).getPhotoURI())
+                    .resize(300, 300)
+                    .centerCrop()
                     .into(holder.image, new com.squareup.picasso.Callback() {
                         @Override
                         public void onSuccess() {

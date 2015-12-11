@@ -44,7 +44,7 @@ public class PhotoPreviewActivity extends AppCompatActivity {
         if (uri.substring(0,4).equals("draw")){
             int id = Integer.valueOf(uri.substring(7));
             imageView.setImageBitmap(
-                    CoreUtil.decodeSampledBitmapFromResource(getResources(), id, 100, 100));
+                    CoreUtil.decodeSampledBitmapFromResource(getResources(), id, 200, 200));
         } else if (uri.substring(0, 4).equals("file")) {
             Bitmap tempPhoto = BitmapFactory.decodeFile(uri.substring(4));
             imageView.setImageBitmap(tempPhoto);

@@ -14,16 +14,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.copycat.controller.PhotoPreviewActivity;
+import com.copycat.controller.PhotoViewActivity;
 import com.copycat.model.Photo;
 import com.copycat.util.CoreUtil;
 import com.example.baiqizhang.copycat.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 /**
  * Created by baiqizhang on 11/18/15.
  */
-public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder>  {
+public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
     private static final int RESULT_LOAD_IMAGE = 666;
     private List<Photo> photos;
     private Context context;
@@ -34,20 +36,21 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         this.photos = photos;
         this.context = context;
     }
-    public GalleryAdapter(List<Photo> photos, Context context,String source) {
+
+    public GalleryAdapter(List<Photo> photos, Context context, String source) {
         this.photos = photos;
         this.context = context;
         this.source = source;
     }
 
     // inner class to hold a reference to each item of RecyclerView
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public SquareImageView imageView;
         public int position;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-            imageView = (SquareImageView)itemLayoutView.findViewById(R.id.galleryImageView);
+            imageView = (SquareImageView) itemLayoutView.findViewById(R.id.galleryImageView);
 
             itemLayoutView.setOnClickListener(this);
         }
@@ -57,18 +60,22 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             Toast.makeText(context, "pos:" + position,
                     Toast.LENGTH_SHORT).show();
 
-            if (position == 0) {
+            if (position == 0 && source.equals("Gallery")) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                ((Activity)context).startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
+                ((Activity) context).startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
             } else {
-                Toast.makeText(context, "" + position,
-                        Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, PhotoPreviewActivity.class);
-                intent.putExtra("uri",photos.get(position-1).getPhotoUrl());
+                Intent intent;
+                if (source.equals("Gallery")) {
+                    intent = new Intent(context, PhotoPreviewActivity.class);
+                    intent.putExtra("uri", photos.get(position - 1).getPhotoUrl());
+                }else{
+                    intent = new Intent(context, PhotoViewActivity.class);
+                    intent.putExtra("uri", photos.get(position).getPhotoUrl());
+                }
                 context.startActivity(intent);
             }
         }
@@ -95,9 +102,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         holder.position = position;
 
         //+ image
-        if (position == 0 && source.equals("Gallery")){
+        if (position == 0 && source.equals("Gallery")) {
             holder.imageView.setImageBitmap(
-                    CoreUtil.decodeSampledBitmapFromResource(context.getResources(),R.drawable.addnew, 100, 100));
+                    CoreUtil.decodeSampledBitmapFromResource(context.getResources(), R.drawable.addnew, 100, 100));
         } else {
             if (source.equals("Gallery"))
                 position--;
@@ -107,9 +114,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
             if (uri.substring(0, 4).equals("draw")) {
                 int id = Integer.valueOf(uri.substring(7));
+//                Picasso.with(context).load(id).resize(200,50).centerCrop().into(holder.imageView);
                 holder.imageView.setImageBitmap(
                         CoreUtil.decodeSampledBitmapFromResource(context.getResources(), id, 100, 100));
             } else if (uri.substring(0, 4).equals("file")) {
+//                Picasso.with(context).load(uri.substring(4)).resize(200,50).centerCrop().into(holder.imageView);
                 Bitmap tempPhoto = BitmapFactory.decodeFile(uri.substring(4));
                 holder.imageView.setImageBitmap(tempPhoto);
             }
@@ -120,7 +129,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     @Override
     public int getItemCount() {
         if (source.equals("Gallery"))
-            return photos.size()+1;
+            return photos.size() + 1;
         else
             return photos.size();
     }
