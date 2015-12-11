@@ -1,6 +1,8 @@
 package com.copycat.controller;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBar;
@@ -14,6 +16,7 @@ import android.widget.ImageButton;
 import com.copycat.model.Category;
 import com.copycat.model.Photo;
 import com.copycat.util.CoreUtil;
+import com.copycat.util.db.DatabaseHelper;
 import com.example.baiqizhang.copycat.R;
 
 import java.util.ArrayList;
@@ -44,35 +47,40 @@ public class WelcomeActivity extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        List<Photo> photoList = new ArrayList<>();
-        Bitmap banner_city = BitmapFactory.decodeResource(this.getResources(), R.drawable.banner);
-        Bitmap banner_animal = BitmapFactory.decodeResource(this.getResources(), R.drawable.sample_4);
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query(DatabaseHelper.CATEGORY_TABLE_NAME, new String[]{DatabaseHelper.CATEGORY_URI}, null, null, null, null, null, null);
 
-        Category Animal = new Category("Animal", banner_animal, null);
-        Category City = new Category("City", banner_city, null);
-        Category UserCategory = new Category("UserCategory", banner_animal,null);
+        if(!cursor.moveToFirst()) {
+            List<Photo> photoList = new ArrayList<>();
+            Bitmap banner_city = BitmapFactory.decodeResource(this.getResources(), R.drawable.banner);
+            Bitmap banner_animal = BitmapFactory.decodeResource(this.getResources(), R.drawable.sample_4);
 
-        UserCategory = CoreUtil.addCategory(UserCategory,this);
-        Animal = CoreUtil.addCategory(Animal, this);
-        City = CoreUtil.addCategory(City,this);
+            Category Animal = new Category("Animal", banner_animal, null);
+            Category City = new Category("City", banner_city, null);
+            Category UserCategory = new Category("UserCategory", banner_animal, null);
 
-        Photo pA = CoreUtil.storePhotoLocally(BitmapFactory.decodeResource(this.getResources(), R.drawable.banner),"pA",null,this);
-        photoList.add(pA);
-        CoreUtil.addPhotoListToCategory(photoList, Animal.getCategoryUri(), this);
+            UserCategory = CoreUtil.addCategory(UserCategory, this);
+            Animal = CoreUtil.addCategory(Animal, this);
+            City = CoreUtil.addCategory(City, this);
 
-        Photo bB = CoreUtil.storePhotoLocally(BitmapFactory.decodeResource(this.getResources(), R.drawable.sample_0),"bB",null,this);
-        Photo pC = CoreUtil.storePhotoLocally(BitmapFactory.decodeResource(this.getResources(), R.drawable.sample_6),"pC",null,this);
-        photoList = new ArrayList<>();
-        photoList.add(bB);
-        photoList.add(pC);
-        CoreUtil.addPhotoListToCategory(photoList, City.getCategoryUri(), this);
+            Photo pA = CoreUtil.storePhotoLocally(BitmapFactory.decodeResource(this.getResources(), R.drawable.banner), "pA", null, this);
+            photoList.add(pA);
+            CoreUtil.addPhotoListToCategory(photoList, Animal.getCategoryUri(), this);
 
-        photoList = new ArrayList<>();
-        photoList.add(pA);
-        photoList.add(bB);
-        photoList.add(pC);
-        CoreUtil.addPhotoListToCategory(photoList, UserCategory.getCategoryUri(), this);
+            Photo bB = CoreUtil.storePhotoLocally(BitmapFactory.decodeResource(this.getResources(), R.drawable.sample_0), "bB", null, this);
+            Photo pC = CoreUtil.storePhotoLocally(BitmapFactory.decodeResource(this.getResources(), R.drawable.sample_6), "pC", null, this);
+            photoList = new ArrayList<>();
+            photoList.add(bB);
+            photoList.add(pC);
+            CoreUtil.addPhotoListToCategory(photoList, City.getCategoryUri(), this);
 
+            photoList = new ArrayList<>();
+            photoList.add(pA);
+            photoList.add(bB);
+            photoList.add(pC);
+            CoreUtil.addPhotoListToCategory(photoList, UserCategory.getCategoryUri(), this);
+        }
         mTimelineButton = (ImageButton)findViewById(R.id.welcome_InspireButton);
         mGalleryButton = (ImageButton)findViewById(R.id.welcome_galleryButton);
         mSettingsButton = (ImageButton)findViewById(R.id.welcome_SettingsButton);
