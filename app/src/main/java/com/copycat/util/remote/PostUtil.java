@@ -22,22 +22,78 @@ import java.util.*;
  */
 public class PostUtil {
 
-//    private static final String DNS = "ec2-52-90-164-203.compute-1.amazonaws.com";
-    private static final String DNS = "172.29.92.23:8080";
+    private static final String DNS = "ec2-52-90-164-203.compute-1.amazonaws.com";
+//    private static final String DNS = "172.29.92.23:8080";
     private static final Gson gson = new Gson();
     //Timeline
     public static List<Post> getUserFeed(User user){
-        String json = gson.toJson(user);
-        Log.v("user json:",json);
+//        InputStream is = null;
+//        OutputStream os = null;
+//        HttpURLConnection conn = null;
+//        String contentAsString="";
+//        //can catch a variety of wonderful things
+//        try {
+//            //constants
+//            URL url = new URL("http://"+DNS+"/CopyCatServer/PostUtil/GetPost");
+//            String message = gson.toJson(user);
+//
+//            conn = (HttpURLConnection) url.openConnection();
+//            conn.setReadTimeout( 10000 /*milliseconds*/ );
+//            conn.setConnectTimeout(15000 /* milliseconds */);
+//            conn.setRequestMethod("GET");
+//            conn.setDoInput(true);
+//            conn.setDoOutput(true);
+//            conn.setFixedLengthStreamingMode(message.getBytes().length);
+//
+//            //make some HTTP header nicety
+//            conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+//            conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
+//
+//            //open
+//            conn.connect();
+//
+//            //setup send
+//            os = new BufferedOutputStream(conn.getOutputStream());
+//            os.write(message.getBytes());
+//            //clean up
+//            os.flush();
+//
+//            //do somehting with response
+//            is = conn.getInputStream();
+//            contentAsString = convertInputStreamToString(is);
+//        } catch (Exception e ){
+//            e.printStackTrace();
+//        }
+//        finally {
+//            //clean up
+//            try {
+//                if (os!=null)
+//                    os.close();
+//                if (is!=null)
+//                    is.close();
+//                if (conn!=null)
+//                    conn.disconnect();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        if (!contentAsString.equals(""))
+//            return gson.fromJson(contentAsString,new TypeToken<List<Post>>(){}.getType());
+//        else
+//            return new ArrayList<>();
 
+//        String json = gson.toJson(user);
+//        Log.v("user json:",json);
+//
         String parsedString = "";
-
+        URLConnection conn = null;
+        HttpURLConnection httpConn = null;
         try {
 
             URL url = new URL("http://"+DNS+"/CopyCatServer/PostUtil/GetPost");
-            URLConnection conn = url.openConnection();
+            conn = url.openConnection();
 
-            HttpURLConnection httpConn = (HttpURLConnection) conn;
+            httpConn = (HttpURLConnection) conn;
             httpConn.setAllowUserInteraction(false);
             httpConn.setInstanceFollowRedirects(true);
             httpConn.setRequestMethod("GET");
@@ -48,9 +104,15 @@ public class PostUtil {
 
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (httpConn!=null)
+                httpConn.disconnect();
         }
         Log.v("get json:",parsedString);
-        return gson.fromJson(parsedString,new TypeToken<List<Post>>(){}.getType());
+        if (!parsedString.equals(""))
+            return gson.fromJson(parsedString,new TypeToken<List<Post>>(){}.getType());
+        else
+            return new ArrayList<>();
     }
     public static List<Post> getUserTimeline(User user,int skipCount,int count){
         return null;
@@ -119,9 +181,6 @@ public class PostUtil {
         return false;
     }
     public static boolean userUnLike(User user, Post post){return false;}
-
-
-
 
     //Helper
     public static String convertInputStreamToString(InputStream ists)

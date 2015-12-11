@@ -1,5 +1,6 @@
 package com.copycat.controller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -9,9 +10,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.copycat.model.Photo;
 import com.copycat.util.CoreUtil;
@@ -25,7 +30,20 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfileActivity extends AppCompatActivity {
+    List<Photo> photos;
 
+    private class MyFocusChangeListener implements View.OnFocusChangeListener {
+
+        public void onFocusChange(View v, boolean hasFocus){
+
+            if(v.getId() == R.id.usernameTextView && !hasFocus) {
+
+                InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,22 +70,31 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
-        Drawable color = new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark));
-        Drawable image = getResources().getDrawable(R.drawable.sample_6);
+        //Username
+        final EditText editText = (EditText)findViewById(R.id.usernameTextView);
+        editText.setText(UserUtil.getCurrentUser().getName());
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                UserUtil.getCurrentUser().setName(v.getText().toString());
+                return true;
+            }
+        });
+        MyFocusChangeListener ofcListener = new MyFocusChangeListener();
+        editText.setOnFocusChangeListener(ofcListener);
 
-        LayerDrawable ld = new LayerDrawable(new Drawable[]{color, image});
-        imageView.setImageDrawable(ld);
+        if (!editText.getText().toString().equals("Anonymous"))
+            editText.clearFocus();
+
+//        Drawable color = new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark));
+//        Drawable image = getResources().getDrawable(R.drawable.sample_6);
+//
+//        LayerDrawable ld = new LayerDrawable(new Drawable[]{color, image});
+//        imageView.setImageDrawable(ld);
 
 //        //Content adapter
-//        List<Photo> placeholders = new ArrayList<Photo>();
-//        placeholders.add(new Photo("","draw://" + R.drawable.sample_0));
-//        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
-//        placeholders.add(new Photo("","draw://" + R.drawable.sample_2));
-//        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
-//        placeholders.add(new Photo("","draw://" + R.drawable.img1_1));
-
-        List<Photo> placeholders = CoreUtil.getPhotoListWithCategory(CoreUtil.getCategoryListFromDB(this).get(0).getCategoryUri(),this);
-        GalleryAdapter galleryAdapter = new GalleryAdapter(placeholders,this,"User");
+        photos = CoreUtil.getPhotoListWithCategory(CoreUtil.getCategoryListFromDB(this).get(0).getCategoryUri(),this);
+        GalleryAdapter galleryAdapter = new GalleryAdapter(photos,this,"User");
 
         //RecyclerView
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.gridview);
@@ -81,7 +108,8 @@ public class UserProfileActivity extends AppCompatActivity {
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            finish();
+                editText.onEditorAction(0);
+                finish();
             }
         });
     }

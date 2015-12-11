@@ -3,12 +3,17 @@ package com.copycat.model;
 /**
  * Created by ningtuffy on 11/13/15.
  */
+
 public class User {
     private long userId;
     private String name;
     private int followerCount;
     private int followingCount;
     private String profilePictureURI;
+
+    public User(String name) {
+        this.name = name;
+    }
 
     public long getUserId() {
         return userId;

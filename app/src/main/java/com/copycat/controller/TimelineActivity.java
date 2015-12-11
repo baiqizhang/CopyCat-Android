@@ -182,7 +182,7 @@ public class TimelineActivity extends AppCompatActivity {
         protected String doInBackground(String... urls) {
 
             // params comes from the execute() call: params[0] is the url.
-            list = PostUtil.getUserFeed(null,0,0);
+            list = PostUtil.getUserFeed(null);
             return "200";
         }
         // onPostExecute displays the results of the AsyncTask.

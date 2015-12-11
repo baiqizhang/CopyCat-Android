@@ -6,6 +6,7 @@ package com.copycat.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,39 +44,58 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
 
     @Override
     public void onBindViewHolder(final SimpleAdapterViewHolder holder, int position) {
+        Log.d("bind","pos:" + position);
         if (position < getItemCount()
                 && (customHeaderView != null ? position <= posts.size() : position < posts.size())
                 && (customHeaderView != null ? position > 0 : true)) {
             final int pos = position;
-            holder.imageView.getViewTreeObserver()
-                    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                        // Wait until layout to call Picasso
+//            holder.imageView.getViewTreeObserver()
+//                    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//                        // Wait until layout to call Picasso
+//                        @Override
+//                        public void onGlobalLayout() {
+//                            // Ensure we call this only once
+//                            holder.imageView.getViewTreeObserver()
+//                                    .removeOnGlobalLayoutListener(this);
+//
+//
+//                            Picasso.with(context)
+//                                    .load(posts.get(pos).getPhotoURI())
+//                                    .resize(holder.imageView.getWidth(),0)
+//                                    .into(holder.imageView,new com.squareup.picasso.Callback() {
+//                                        @Override
+//                                        public void onSuccess() {
+//                                            if (holder.loadingTextView != null) {
+//                                                holder.loadingTextView.setVisibility(View.GONE);
+//                                            }
+//                                        }
+//
+//                                        @Override
+//                                        public void onError() {
+//                                            holder.imageView.setImageBitmap(null);
+//                                        }
+//                                    });
+//                        }
+//                    });
+
+            Picasso.with(context)
+                    .load(posts.get(pos).getPhotoURI())
+                    .resize(600, 0)
+                    .into(holder.imageView, new com.squareup.picasso.Callback() {
                         @Override
-                        public void onGlobalLayout() {
-                            // Ensure we call this only once
-                            holder.imageView.getViewTreeObserver()
-                                    .removeOnGlobalLayoutListener(this);
+                        public void onSuccess() {
+                            if (holder.loadingTextView != null) {
+                                holder.loadingTextView.setVisibility(View.GONE);
+                            }
+                        }
 
-
-                            Picasso.with(context)
-                                    .load(posts.get(pos).getPhotoURI())
-                                    .resize(holder.imageView.getWidth(),0)
-                                    .into(holder.imageView,new com.squareup.picasso.Callback() {
-                                        @Override
-                                        public void onSuccess() {
-                                            if (holder.loadingTextView != null) {
-                                                holder.loadingTextView.setVisibility(View.GONE);
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onError() {
-
-                                        }
-                                    });
+                        @Override
+                        public void onError() {
+                            holder.imageView.setImageBitmap(null);
                         }
                     });
 
+            holder.usernameTextView.setText(posts.get(position).getUser().getName());
             holder.geoTagTextView.setText(posts.get(position).getGeoTag());
             holder.likeCountTextView.setText(String.valueOf(posts.get(position).getLikeCount()));
 
@@ -262,6 +282,7 @@ public class TimelineAdapter extends UltimateViewAdapter<TimelineAdapter.SimpleA
                 likeCountTextView = (TextView)itemView.findViewById(R.id.likeTextView);
                 geoTagTextView = (TextView)itemView.findViewById(R.id.geoTagTextView);
                 loadingTextView = (TextView)itemView.findViewById(R.id.loadingTextView);
+                usernameTextView = (TextView)itemView.findViewById(R.id.usernameTextView);
             }
 
         }

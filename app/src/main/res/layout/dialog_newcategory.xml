@@ -19,5 +19,7 @@
         android:id="@+id/dialogEditText"
         android:hint="Category Name"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:maxLength="15"
+        android:maxLines="1" />
 </LinearLayout>

@@ -38,14 +38,19 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username"
                 android:id="@+id/usernameTextView"
                 android:layout_gravity="center_vertical"
                 android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:background="@null"
+                android:minLines="1"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
+                android:maxLength="15" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -175,7 +180,7 @@
         android:id="@+id/userimageview"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@android:drawable/sym_def_app_icon"
+        android:src="@drawable/applogo"
         app:civ_border_width="2dp"
         app:civ_border_color="#FFFFFFFF"
         android:layout_centerHorizontal="true"

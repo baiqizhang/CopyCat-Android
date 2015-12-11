@@ -1,5 +1,7 @@
 package com.copycat.model;
 
+import com.copycat.util.remote.UserUtil;
+
 /**
  * Created by fanluo on 11/13/15.
  */
@@ -15,7 +17,7 @@ public class Post {
     public Post() {
         this.postId = this.hashCode();
         this.photoURI = "";
-        this.user = new User();
+        this.user = UserUtil.getCurrentUser();
         this.likeCount = 0;
         this.geoTag = "Mountain View";
         this.timeStamp = System.currentTimeMillis();

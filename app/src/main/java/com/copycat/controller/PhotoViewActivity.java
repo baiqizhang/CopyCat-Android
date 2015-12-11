@@ -5,10 +5,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -16,10 +21,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.copycat.model.Photo;
+import com.copycat.model.Post;
+import com.copycat.model.User;
 import com.copycat.util.CapturePhotoUtil;
 import com.copycat.util.CoreUtil;
+import com.copycat.util.remote.PostUtil;
+import com.copycat.util.remote.UserUtil;
 import com.example.baiqizhang.copycat.R;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +74,22 @@ public class PhotoViewActivity extends AppCompatActivity {
         mShareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG,40,baos);
+                byte[] byteImage_photo = baos.toByteArray();
+                String encodedImage =Base64.encodeToString(byteImage_photo, Base64.DEFAULT);
+                Post post = new Post(encodedImage, UserUtil.getCurrentUser(),0,"Mountain View");
+
+                ConnectivityManager connMgr = (ConnectivityManager)
+                        getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                if (networkInfo != null && networkInfo.isConnected()) {
+                    NewPostTask task = new NewPostTask();
+                    task.post = post;
+                    task.execute();
+                } else {
+                    Log.e("error","No network connection available.");
+                }
                 Toast.makeText(PhotoViewActivity.this, "shared", Toast.LENGTH_SHORT).show();
             }
         });
@@ -100,5 +126,21 @@ public class PhotoViewActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private class NewPostTask extends AsyncTask<String, Void, String> {
+        public Post post;
+        @Override
+        protected String doInBackground(String... urls) {
+
+            // params comes from the execute() call: params[0] is the url.
+            PostUtil.uploadUserPost(post);
+            return "200";
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("result:", post.toString());
+        }
     }
 }
