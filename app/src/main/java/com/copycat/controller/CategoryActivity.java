@@ -39,7 +39,7 @@ import java.util.List;
 
 public class CategoryActivity extends AppCompatActivity {
     CategoryAdapter categoryAdapter;
-
+    List<Category> categories;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +57,10 @@ public class CategoryActivity extends AppCompatActivity {
         TextView mTitleTextView = (TextView) findViewById(R.id.toolbar_title);
         mTitleTextView.setLetterSpacing(0.13f);
 
-        List<Category> placeholders = CoreUtil.getCategoryListFromDB(this);
-        //placeholders.remove(0);
+        categories = CoreUtil.getCategoryListFromDB(this);
+        categories.remove(0);
 
-        categoryAdapter = new CategoryAdapter(placeholders,this);
+        categoryAdapter = new CategoryAdapter(categories,this);
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.category_recyclerview);
 
@@ -101,6 +101,7 @@ public class CategoryActivity extends AppCompatActivity {
                                                                             R.drawable.banner);
                                 Category category = new Category(editText.getText().toString(), banner, null);
                                 CoreUtil.addCategory(category,CategoryActivity.this);
+                                categories.add(category);
                                 categoryAdapter.notifyDataSetChanged();
                             }
                         })

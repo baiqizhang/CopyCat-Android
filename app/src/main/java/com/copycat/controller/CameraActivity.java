@@ -12,6 +12,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -99,6 +101,13 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        try {
+                            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                            r.play();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         // get an image from the camera
                         preview.getCamera().takePicture(null, null, mPicture);
                         Handler handler = new Handler();

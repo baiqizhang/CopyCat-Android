@@ -81,6 +81,8 @@ public class WelcomeActivity extends AppCompatActivity {
             photoList.add(pC);
             CoreUtil.addPhotoListToCategory(photoList, UserCategory.getCategoryUri(), this);
         }
+
+        db.close();
         mTimelineButton = (ImageButton)findViewById(R.id.welcome_InspireButton);
         mGalleryButton = (ImageButton)findViewById(R.id.welcome_galleryButton);
         mSettingsButton = (ImageButton)findViewById(R.id.welcome_SettingsButton);
