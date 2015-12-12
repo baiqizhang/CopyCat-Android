@@ -52,6 +52,8 @@ public class WelcomeActivity extends AppCompatActivity {
         Cursor cursor = db.query(DatabaseHelper.CATEGORY_TABLE_NAME, new String[]{DatabaseHelper.CATEGORY_URI}, null, null, null, null, null, null);
 
         if(!cursor.moveToFirst()) {
+            CoreUtil.addSetting("save","no",this);
+
             Bitmap banner_people = CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.banner0, 200, 70);
             Bitmap banner_city = CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.banner1, 200, 70);
             Bitmap banner_nature = CoreUtil.decodeSampledBitmapFromResource(this.getResources(), R.drawable.banner2, 200, 70);

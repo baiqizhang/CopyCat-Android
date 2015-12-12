@@ -32,11 +32,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Toast;
 
 import java.util.List;
 
 
 import com.copycat.model.Photo;
+import com.copycat.util.CapturePhotoUtil;
 import com.copycat.util.CoreUtil;
 import com.copycat.view.CameraPreviewView;
 import com.example.baiqizhang.copycat.R;
@@ -191,6 +193,13 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 Photo tempPhoto = new Photo(pictureFile.getName(),"file" + pictureFile.getAbsolutePath());
                 tempPList.add(tempPhoto);
                 CoreUtil.addPhotoListToCategory(tempPList, CoreUtil.getCategoryListFromDB(getContext()).get(0).getCategoryUri(), getContext());
+
+                if (CoreUtil.getSetting("save", CameraActivity.this).equals("yes")){
+                    Bitmap bitmap = BitmapFactory.decodeFile( pictureFile.getAbsolutePath());
+                    CapturePhotoUtil.insertImage(CameraActivity.this.getContentResolver(), bitmap, bitmap.toString(), "by copycat");
+                    Toast.makeText(CameraActivity.this, "Saved to system library", Toast.LENGTH_SHORT).show();;
+                }
+
             } catch (FileNotFoundException e) {
                 System.out.print("File not found: " + e.getMessage());
             } catch (IOException e) {

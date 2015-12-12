@@ -92,6 +92,17 @@ public class UserProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        //settings
+        ImageButton mSettingsButton = (ImageButton)findViewById(R.id.settingButton);
+        mSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent showSettings =
+                        new Intent(UserProfileActivity.this, SettingActivity.class);
+                startActivity(showSettings); // start the Activity
+            }
+        });
     }
 
     @Override
